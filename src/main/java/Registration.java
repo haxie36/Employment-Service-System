@@ -1,10 +1,12 @@
+package main.java;
+
 public class Registration {
     private Profile profile = null;
-    private ServiceArea serviceArea;
-    private ClientList clientList;
-    private SpecialtyCatalog specialtyCatalog;
-    private Profiles profiles;
-    private Office office;
+    private final ServiceArea serviceArea;
+    private final ClientList clientList;
+    private final SpecialtyCatalog specialtyCatalog;
+    private final Profiles profiles;
+    private final Office office;
 
     public Registration(ServiceArea serviceArea, ClientList clientList,
                         SpecialtyCatalog specialtyCatalog, Profiles profiles,

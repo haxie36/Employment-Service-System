@@ -1,0 +1,17 @@
+package main.java;
+
+public class SpecialtyCatalog {
+    private final String[] specialties;
+
+    public SpecialtyCatalog(String[] specialties) {
+        this.specialties = specialties;
+    }
+
+    public boolean isRealSpecialty(String specialty) {
+        for (int i=0; i<specialties.length; i++) {
+            if (specialty.equals(specialties[i]))
+                return true;
+        }
+        return false;
+    }
+}
