@@ -12,6 +12,17 @@ public class Profile {
     private short experience;
 
     public Profile() {}
+    public Profile(String id, String RNKOPP, String name, LocalDate birthday, String specialty, short experience) {
+        this.isServed = true;
+        this.id = id;
+        this.RNKOPP = RNKOPP;
+        this.name = name;
+        this.birthday = birthday;
+        this.specialty = specialty;
+        this.experience = experience;
+    }
+    // Для тесту ClientList
+    public Profile(String id) { this.id = id; }
 
     public boolean isServiceArea(String area, ServiceArea sa){
         return isServed = sa.isServiceArea(area);
