@@ -14,6 +14,12 @@ public class ID {
         this.id = id;
         this.RNKOPP = RNKOPP;
     }
+    public ID(String id) {
+        this.id = id;
+        name =  "test";
+        birthday = LocalDate.now();
+        RNKOPP = "test";
+    }
 
     public String getName() {return name;}
     public LocalDate getBirthday() {return birthday;}

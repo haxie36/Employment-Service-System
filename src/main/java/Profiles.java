@@ -7,8 +7,20 @@ public class Profiles {
         profiles = new Profile[0];
     }
 
-    public Profiles(Profile[] clientList) {
-        this.profiles = clientList;
+    public Profiles(Profile[] profiles) {
+        this.profiles = profiles;
+    }
+
+    public boolean isRegistered(ID ID) {
+        String id = ID.getId();
+        return isRegistered(id);
+    }
+    public boolean isRegistered(String id) {
+        for (int i=0; i<profiles.length; i++) {
+            if (id.equals(profiles[i].getId()))
+                return true;
+        }
+        return false;
     }
 
     public boolean add(Profile profile) {

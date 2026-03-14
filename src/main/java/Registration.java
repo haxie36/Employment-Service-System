@@ -3,16 +3,15 @@ package main.java;
 public class Registration {
     private Profile profile = null;
     private final ServiceArea serviceArea;
-    private final ClientList clientList;
+
     private final SpecialtyCatalog specialtyCatalog;
     private final Profiles profiles;
     private final Office office;
 
-    public Registration(ServiceArea serviceArea, ClientList clientList,
+    public Registration(ServiceArea serviceArea,
                         SpecialtyCatalog specialtyCatalog, Profiles profiles,
                         Office office) {
         this.serviceArea = serviceArea;
-        this.clientList = clientList;
         this.specialtyCatalog = specialtyCatalog;
         this.profiles = profiles;
         this.office = office;
@@ -28,7 +27,7 @@ public class Registration {
     }
 
     public boolean isRegistered(ID ID){
-        return profile.isRegistered(ID, clientList);
+        return profile.isRegistered(ID, profiles);
     }
 
     public boolean isRealSpecialty(String specialty){
@@ -42,7 +41,6 @@ public class Registration {
     public void saveProfile(){
         if (profile!=null){
             profiles.add(profile);
-            clientList.add(profile);
             profile.printCertification(office);
             profile = null;
         }

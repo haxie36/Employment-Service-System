@@ -21,15 +21,15 @@ public class Profile {
         this.specialty = specialty;
         this.experience = experience;
     }
-    // Для тесту ClientList
+    // Для тесту Profiles
     public Profile(String id) { this.id = id; }
 
     public boolean isServiceArea(String area, ServiceArea sa){
         return isServed = sa.isServiceArea(area);
     }
 
-    public boolean isRegistered(ID ID, ClientList cl){
-        boolean is = cl.isRegistered(ID);
+    public boolean isRegistered(ID ID, Profiles ps){
+        boolean is = ps.isRegistered(ID);
         if(!is){
             id = ID.getId();
             RNKOPP = ID.getRNKOPP();
