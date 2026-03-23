@@ -6,23 +6,17 @@ public class ID {
     private String name;
     private LocalDate birthday;
     public String id;
-    private String RNKOPP;
+    private String RNOKPP;
 
-    public ID(String name, LocalDate birthday, String id, String RNKOPP) {
+    public ID(String name, LocalDate birthday, String id, String RNOKPP) {
         this.name = name;
         this.birthday = birthday;
         this.id = id;
-        this.RNKOPP = RNKOPP;
-    }
-    public ID(String id) {
-        this.id = id;
-        name =  "test";
-        birthday = LocalDate.now();
-        RNKOPP = "test";
+        this.RNOKPP = RNOKPP;
     }
 
     public String getName() {return name;}
     public LocalDate getBirthday() {return birthday;}
     public String getId() {return id;}
-    public String getRNKOPP() {return RNKOPP;}
+    public String getRNOKPP() {return RNOKPP;}
 }

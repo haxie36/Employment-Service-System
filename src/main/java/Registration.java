@@ -3,7 +3,6 @@ package main.java;
 public class Registration {
     private Profile profile = null;
     private final ServiceArea serviceArea;
-
     private final SpecialtyCatalog specialtyCatalog;
     private final Profiles profiles;
     private final Office office;
@@ -34,15 +33,18 @@ public class Registration {
         return profile.isRealSpecialty(specialty, specialtyCatalog);
     }
 
-    public void record(short exp){
+    public boolean record(short exp){
         profile.setExperience(exp);
+        return true;
     }
 
-    public void saveProfile(){
+    public boolean saveProfile(){
         if (profile!=null){
             profiles.add(profile);
             profile.printCertification(office);
             profile = null;
+            return true;
         }
+        return false;
     }
 }

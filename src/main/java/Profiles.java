@@ -49,7 +49,9 @@ public class Profiles {
 
     public Profile getProfile(ID ID) {
         String id = ID.getId();
-
+        return getProfile(id);
+    }
+    public Profile getProfile(String id) {
         for (int i=0; i<profiles.length; i++) {
             Profile profile = profiles[i];
 
@@ -63,9 +65,9 @@ public class Profiles {
     public Profile[] getProfiles() { return profiles; }
     public void clear(){ profiles = new Profile[0]; }
 
-    public void delete(Profile profile) {
+    public boolean delete(Profile profile) {
         String id = profile.getId();
-        delete(id);
+        return delete(id);
     }
     public boolean delete(String id){
         for (int i=0; i<profiles.length; i++) {

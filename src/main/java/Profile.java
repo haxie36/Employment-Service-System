@@ -5,17 +5,17 @@ import java.time.LocalDate;
 public class Profile {
     private boolean isServed;
     private String id;
-    private String RNKOPP;
+    private String RNOKPP;
     private String name;
     private LocalDate birthday;
     private String specialty;
     private short experience;
 
     public Profile() {}
-    public Profile(String id, String RNKOPP, String name, LocalDate birthday, String specialty, short experience) {
+    public Profile(String id, String RNOKPP, String name, LocalDate birthday, String specialty, short experience) {
         this.isServed = true;
         this.id = id;
-        this.RNKOPP = RNKOPP;
+        this.RNOKPP = RNOKPP;
         this.name = name;
         this.birthday = birthday;
         this.specialty = specialty;
@@ -32,7 +32,7 @@ public class Profile {
         boolean is = ps.isRegistered(ID);
         if(!is){
             id = ID.getId();
-            RNKOPP = ID.getRNKOPP();
+            RNOKPP = ID.getRNOKPP();
             name = ID.getName();
             birthday = ID.getBirthday();
         }
@@ -51,13 +51,13 @@ public class Profile {
 
     public boolean isServed() {return isServed;}
     public String getId() {return id;}
-    public String getRNKOPP() {return RNKOPP;}
+    public String getRNOKPP() {return RNOKPP;}
     public String getName() {return name;}
     public LocalDate getBirthday() {return birthday;}
     public String getSpecialty() {return specialty;}
     public short getExperience() {return experience;}
     public void setId(String id) {this.id = id;}
-    public void setRNKOPP(String RNKOPP){this.RNKOPP = RNKOPP;}
+    public void setRNOKPP(String RNOKPP){this.RNOKPP = RNOKPP;}
     public void setName(String name) {this.name = name;}
     public void setBirthday(LocalDate birthday) {this.birthday = birthday;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}
