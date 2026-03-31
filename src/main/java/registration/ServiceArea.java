@@ -1,4 +1,4 @@
-package main.java;
+package registration;
 
 public class ServiceArea {
     private final String[] serviceArea;
@@ -6,6 +6,7 @@ public class ServiceArea {
     public ServiceArea(String[] serviceArea) {
         this.serviceArea = serviceArea;
     }
+    public ServiceArea() {serviceArea = new String[]{"1"};}
 
     public boolean isServiceArea(String area) {
         for (int i=0; i<serviceArea.length; i++) {

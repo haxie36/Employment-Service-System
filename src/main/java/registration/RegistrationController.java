@@ -1,15 +1,18 @@
-package main.java;
+package registration;
 
-public class Registration {
+import common.*;
+
+public class RegistrationController {
     private Profile profile = null;
     private final ServiceArea serviceArea;
     private final SpecialtyCatalog specialtyCatalog;
     private final Profiles profiles;
     private final Office office;
 
-    public Registration(ServiceArea serviceArea,
-                        SpecialtyCatalog specialtyCatalog, Profiles profiles,
-                        Office office) {
+    public RegistrationController(ServiceArea serviceArea,
+                                  SpecialtyCatalog specialtyCatalog,
+                                  Profiles profiles,
+                                  Office office) {
         this.serviceArea = serviceArea;
         this.specialtyCatalog = specialtyCatalog;
         this.profiles = profiles;
@@ -33,9 +36,8 @@ public class Registration {
         return profile.isRealSpecialty(specialty, specialtyCatalog);
     }
 
-    public boolean record(short exp){
-        profile.setExperience(exp);
-        return true;
+    public boolean record(int exp){
+        return profile.setExperience(exp);
     }
 
     public boolean saveProfile(){
@@ -46,5 +48,15 @@ public class Registration {
             return true;
         }
         return false;
+    }
+
+    public boolean register(RegInput input){
+        newProfile();
+        if (!isServiceArea(input.address)) return false;
+        if (isRegistered(input.passport)) return false;
+        if (!isRealSpecialty(input.specialty)) return false;
+        if (!record(input.experience)) return false;
+
+        return saveProfile();
     }
 }

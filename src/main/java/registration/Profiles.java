@@ -1,4 +1,7 @@
-package main.java;
+package registration;
+
+import common.ID;
+import common.Profile;
 
 public class Profiles {
     private Profile[] profiles;

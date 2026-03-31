@@ -1,7 +1,7 @@
-package main.java.Test;
+package drivers;
 
-import main.java.Profile;
-import main.java.Profiles;
+import common.Profile;
+import registration.Profiles;
 
 import java.util.Arrays;
 

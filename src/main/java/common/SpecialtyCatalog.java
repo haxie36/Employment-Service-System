@@ -1,4 +1,4 @@
-package main.java;
+package common;
 
 public class SpecialtyCatalog {
     private final String[] specialties;
@@ -6,6 +6,7 @@ public class SpecialtyCatalog {
     public SpecialtyCatalog(String[] specialties) {
         this.specialties = specialties;
     }
+    public SpecialtyCatalog() {specialties = new String[]{"1"};}
 
     public boolean isRealSpecialty(String specialty) {
         for (int i=0; i<specialties.length; i++) {
