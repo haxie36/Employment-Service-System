@@ -6,6 +6,8 @@ import application.RecSystem;
 import registration.Profiles;
 import registration.RegistrationController;
 import registration.ServiceArea;
+import retraining.RetrainingController;
+import retraining.Retrainings;
 import vacancy.Vacancies;
 import vacancy.VacancyController;
 
@@ -22,6 +24,9 @@ public class Office {
     private Vacancies vacancies;
     private VacancyController vacancyController;
 
+    private Retrainings retrainings;
+    private RetrainingController retrainingController;
+
     public Office() {
         profiles = new Profiles();
         serviceArea = new ServiceArea(new String[]{"1"});
@@ -31,9 +36,12 @@ public class Office {
         vacancies = new Vacancies();
         applications = new Applications();
         recSystem = new RecSystem();
-        applicationController = new ApplicationController(vacancies, applications, profiles, recSystem, this);
+        applicationController = new ApplicationController(vacancies, applications, profiles, recSystem);
 
-        vacancyController = new VacancyController(vacancies, applications, specialtyCatalog, this);
+        vacancyController = new VacancyController(vacancies, applications, specialtyCatalog);
+
+        retrainings = new Retrainings();
+        retrainingController = new RetrainingController(profiles, specialtyCatalog, retrainings);
     }
 
     public void printCertification(Profile profile) {

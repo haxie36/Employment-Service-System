@@ -1,22 +1,19 @@
 package vacancy;
 
 import application.Applications;
-import common.Office;
 import common.SpecialtyCatalog;
 import common.Vacancy;
 
 public class VacancyController {
     private Vacancy vacancy = null;
-    private Vacancies vacancies;
-    private Applications applications;
-    private SpecialtyCatalog specialtyCatalog;
-    private Office office;
+    private final Vacancies vacancies;
+    private final Applications applications;
+    private final SpecialtyCatalog specialtyCatalog;
 
-    public VacancyController(Vacancies vacancies, Applications applications, SpecialtyCatalog specialtyCatalog, Office office) {
+    public VacancyController(Vacancies vacancies, Applications applications, SpecialtyCatalog specialtyCatalog) {
         this.vacancies = vacancies;
         this.applications = applications;
         this.specialtyCatalog = specialtyCatalog;
-        this.office = office;
     }
 
     public Vacancy newVacancy(){
@@ -49,7 +46,7 @@ public class VacancyController {
         if (vacancy!=null){
             setVacancyId(); //temp
             vacancies.add(vacancy);
-            vacancy = null;
+            clear();
             return true;
         }
         return false;
@@ -59,7 +56,7 @@ public class VacancyController {
         vacancy.setId(String.valueOf(vacancies.getVacancies().length+1));
     }
 
-    public boolean createVacancy(VacancyInput input){
+    public boolean createVacancy(VacInput input){
         newVacancy();
         if (!setVacancyCompany(input.company)) return false;
         if (!setVacancyContact(input.contact)) return false;
@@ -73,4 +70,6 @@ public class VacancyController {
     public boolean changeVacancyStatus(String id, int status){
         return vacancies.getVacancy(id).changeStatus(status, applications);
     }
+
+    public void clear(){vacancy = null;}
 }

@@ -44,7 +44,7 @@ public class RegistrationController {
         if (profile!=null){
             profiles.add(profile);
             profile.printCertification(office);
-            profile = null;
+            clear();
             return true;
         }
         return false;
@@ -59,4 +59,6 @@ public class RegistrationController {
 
         return saveProfile();
     }
+
+    public void clear(){profile = null;}
 }

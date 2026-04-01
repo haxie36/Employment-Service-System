@@ -3,23 +3,20 @@ package application;
 import common.Application;
 import vacancy.Vacancies;
 import common.Vacancy;
-import common.Office;
 import registration.Profiles;
 
 public class ApplicationController {
     private Application application = null;
-    private Applications applications;
-    private Vacancies vacancies;
-    private Profiles profiles;
-    private RecSystem recSystem;
-    private Office office;
+    private final Applications applications;
+    private final Vacancies vacancies;
+    private final Profiles profiles;
+    private final RecSystem recSystem;
 
-    public ApplicationController(Vacancies vacancies, Applications applications, Profiles profiles, RecSystem recSystem, Office office) {
+    public ApplicationController(Vacancies vacancies, Applications applications, Profiles profiles, RecSystem recSystem) {
         this.vacancies = vacancies;
         this.applications = applications;
         this.profiles = profiles;
         this.recSystem = recSystem;
-        this.office = office;
     }
 
     public Application newApplication() {
@@ -36,10 +33,12 @@ public class ApplicationController {
     }
 
     public boolean setVacancy(Vacancy vacancy){
+        application.setVacancy(vacancy);
         application.setVacancyId(vacancy.getId());
         return true;
     }
     public boolean setVacancy(String vacancyId){
+        application.setVacancy(vacancies.getVacancy(vacancyId));
         application.setVacancyId(vacancyId);
         return true;
     }
@@ -48,7 +47,7 @@ public class ApplicationController {
         if (application!=null){
             setApplicationId(); //temp
             applications.add(application);
-            application = null;
+            clear();
             return true;
         }
         return false;
@@ -58,11 +57,13 @@ public class ApplicationController {
         application.setId(String.valueOf(applications.getApplications().length+1));
     }
 
-    public boolean apply(ApplicationInput input){
+    public boolean apply(AppInput input){
         newApplication();
         if (!findProfile(input.profileId)) return false;
         if (!setVacancy(input.vacancyId)) return false;
 
         return saveApplication();
     }
+
+    public void clear(){application = null;}
 }

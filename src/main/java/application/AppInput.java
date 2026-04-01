@@ -1,6 +1,6 @@
 package application;
 
-public class ApplicationInput {
+public class AppInput {
     public String profileId;
     public String vacancyId;
 }
