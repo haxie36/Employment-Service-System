@@ -2,12 +2,15 @@ package common;
 
 import application.ApplicationStatus;
 import application.RecSystem;
+import interfaces.HasId;
+import retraining.Retrainings;
 import vacancy.Vacancies;
 import registration.Profiles;
 
 import java.time.LocalDate;
 
-public class Application {
+//The application for the vacancy
+public class Application implements HasId {
     String id;
     String profileId;
     Profile profile;
@@ -30,17 +33,18 @@ public class Application {
         this.status = status;
     }
 
+    //Checks if the profile is registered, if is, set its as own
     public boolean findProfile(String profileId, Profiles profiles) {
-        Profile profile = profiles.getProfile(profileId);
+        Profile profile = profiles.getById(profileId);
         if(profile == null) return false;
         this.profile = profile;
         this.profileId = profileId;
         return true;
     }
 
-    public Vacancy[] getRecommendations(RecSystem recSystem, Profiles profiles, Vacancies vacancies) {
-        Profile profile = profiles.getProfile(profileId);
-        return recSystem.getRecommendations(profile, vacancies);
+    //Gets the recommendations for the profile
+    public Vacancy[] getRecommendations(RecSystem recSystem, Profiles profiles, Vacancies vacancies, Retrainings retrainings) {
+        return recSystem.getRecommendations(profile, vacancies, retrainings);
     }
 
     public String getId() {return id;}

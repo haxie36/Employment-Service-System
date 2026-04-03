@@ -12,41 +12,45 @@ import vacancy.Vacancies;
 import vacancy.VacancyController;
 
 public class Office {
-    private Profiles profiles;
-    private ServiceArea serviceArea;
-    private SpecialtyCatalog specialtyCatalog;
-    private RegistrationController registrationController;
+    private final Profiles profiles;
+    private final ServiceArea serviceArea;
+    private final SpecialtyCatalog specialtyCatalog;
+    private final RegistrationController registrationController;
 
-    private Applications applications;
-    private RecSystem recSystem;
-    private ApplicationController applicationController;
+    private final Applications applications;
+    private final RecSystem recSystem;
+    private final ApplicationController applicationController;
 
-    private Vacancies vacancies;
-    private VacancyController vacancyController;
+    private final Vacancies vacancies;
+    private final VacancyController vacancyController;
 
-    private Retrainings retrainings;
-    private RetrainingController retrainingController;
+    private final Retrainings retrainings;
+    private final RetrainingController retrainingController;
 
     public Office() {
+        //Collections
         profiles = new Profiles();
-        serviceArea = new ServiceArea(new String[]{"1"});
-        specialtyCatalog = new SpecialtyCatalog(new String[]{"1"});
-        registrationController = new RegistrationController(serviceArea, specialtyCatalog, profiles, this);
-
         vacancies = new Vacancies();
         applications = new Applications();
-        recSystem = new RecSystem();
-        applicationController = new ApplicationController(vacancies, applications, profiles, recSystem);
-
-        vacancyController = new VacancyController(vacancies, applications, specialtyCatalog);
-
         retrainings = new Retrainings();
+
+        //Validators and stuff
+        serviceArea = new ServiceArea();
+        specialtyCatalog = new SpecialtyCatalog();
+        recSystem = new RecSystem();
+
+        //Controllers
+        registrationController = new RegistrationController(serviceArea, specialtyCatalog, profiles, this);
+        applicationController = new ApplicationController(vacancies, applications, profiles, retrainings, recSystem);
+        vacancyController = new VacancyController(vacancies, applications, specialtyCatalog);
         retrainingController = new RetrainingController(profiles, specialtyCatalog, retrainings);
     }
 
-    public void printCertification(Profile profile) {
+    //Prints certification (formates profile's info)
+    public String printCertification(Profile profile) {
         System.out.println("Printing Certification...");
         System.out.println("Imagine it's printed!");
+        return "";
     }
 
     public static void main(String[] args) {

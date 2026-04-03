@@ -45,6 +45,6 @@ public class DRPsAdd {
     }
 
     private static void print(Profiles profiles) {
-        System.out.println(Arrays.toString(profiles.getProfiles()));
+        System.out.println(Arrays.toString(profiles.getAll()));
     }
 }

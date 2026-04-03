@@ -2,11 +2,12 @@ package retraining;
 
 import common.Profile;
 import common.SpecialtyCatalog;
+import interfaces.HasId;
 import registration.Profiles;
 
 import java.time.LocalDate;
 
-public class Retraining {
+public class Retraining implements HasId {
     String id;
     LocalDate startDate;
     LocalDate endDate;
@@ -29,20 +30,23 @@ public class Retraining {
         this.status = RetrainingStatus.fromId(status);
     }
 
+    //Check for the specialty being real or not, if is, set as own
     public boolean isRealSpecialty(String specialty, SpecialtyCatalog specialtyCatalog) {
         boolean is = specialtyCatalog.isRealSpecialty(specialty);
         if (is){setSpecialty(specialty);}
         return is;
     }
 
+    //Check is profile is registered, if is, set as own
     public boolean findProfile(String profileId, Profiles profiles) {
-        Profile profile = profiles.getProfile(id);
+        Profile profile = profiles.getById(id);
         if(profile == null) return false;
         this.profile = profile;
         this.profileId = profileId;
         return true;
     }
 
+    //Check for dates being valid
     public boolean isValidPeriod(LocalDate startDate, LocalDate endDate){
         boolean result = startDate != null && endDate != null &&
                 !startDate.isBefore(LocalDate.now()) &&
@@ -54,6 +58,7 @@ public class Retraining {
         }return result;
     }
 
+    //Auto-assign statuses based on start and end dates
     private void assignStatus() {
         if (startDate == null || endDate == null) {status=RetrainingStatus.NEW;}
         else if (startDate.isBefore(LocalDate.now()) && !endDate.isBefore(LocalDate.now())) {status=RetrainingStatus.IN_PROGRESS;}

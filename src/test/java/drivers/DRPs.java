@@ -25,7 +25,7 @@ public class DRPs {
         }
 
         print(profiles);
-        if (profiles.getProfiles().length != 0) {
+        if (profiles.getAll().length != 0) {
             profiles.clear();
             print(profiles);
         }
@@ -44,13 +44,13 @@ public class DRPs {
 
         // #3
         System.out.println("#3");
-        String id0 = profiles.getProfiles()[0].getId();
+        String id0 = profiles.getAll()[0].getId();
         profiles.delete(id0);
         System.out.println(profiles.isRegistered(id0));
         print(profiles);
     }
 
     private static void print(Profiles profiles) {
-        System.out.println("profiles: " + Arrays.toString(profiles.getProfiles()));
+        System.out.println("profiles: " + Arrays.toString(profiles.getAll()));
     }
 }

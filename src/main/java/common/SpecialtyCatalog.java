@@ -1,5 +1,6 @@
 package common;
 
+//Checks if the specialty is real
 public class SpecialtyCatalog {
     private final String[] specialties;
 
