@@ -24,9 +24,7 @@ public class EntityCollection<T extends HasId> { //A custom collection class
 
         T[] newItems = (T[]) new HasId[items.length + 1];
 
-        for (int i = 0; i < items.length; i++) {
-            newItems[i] = items[i];
-        }
+        System.arraycopy(items, 0, newItems, 0, items.length);
 
         newItems[items.length] = item;
         items = newItems;

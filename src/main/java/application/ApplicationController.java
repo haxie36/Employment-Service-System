@@ -8,7 +8,6 @@ import registration.Profiles;
 
 public class ApplicationController {
     private Application application = null;
-    private Application selectedApplication = null;
     private final Applications applications;
     private final Vacancies vacancies;
     private final Profiles profiles;
@@ -29,8 +28,8 @@ public class ApplicationController {
     }
 
     //Check if profile is registered, if is, set as application's own
-    public boolean isRegistered(String id){ //Find out if the profile exists, if it does set it as application's profile
-        return application.findProfile(id, profiles);
+    public boolean isRegistered(String passportNumber){ //Find out if the profile exists, if it does set it as application's profile
+        return application.isRegistered(passportNumber, profiles);
     }
 
     //Get the recommendations for the application's profile
@@ -69,23 +68,16 @@ public class ApplicationController {
         return saveApplication();
     }
 
-    //Select, edit and delete
-    public Application selectApplication(String applicationId){
-        return selectedApplication = applications.getById(applicationId);
+    //Edit and delete
+    public void changeApplicationStatus(Application app, int status){
+        app.setStatus(ApplicationStatus.fromId(status));
     }
 
-    public void changeApplicationStatus(int status){
-        selectedApplication.setStatus(ApplicationStatus.fromId(status));
-    }
-
-    public boolean deleteApplication(){
-        boolean result = applications.delete(selectedApplication.getId());
-        clear();
-        return result;
+    public boolean deleteApplication(Application app){
+        return applications.delete(app.getId());
     }
 
     public void clear(){
         application = null;
-        selectedApplication = null;
     }
 }

@@ -19,15 +19,18 @@ public class Profiles extends EntityCollection<Profile> {
         return isRegistered(id);
     }
     public boolean isRegistered(String id) {
-        for (int i=0; i<items.length; i++) {
-            if (id.equals(items[i].getId()))
+        for (Profile profile : items) {
+            if (id.equals(profile.getId()))
                 return true;
         }
         return false;
     }
 
-    public Profile getById(ID ID) {
-        String id = ID.getPassportNumber();
-        return getById(id);
+    public Profile getByPassport(String passportNumber) {
+        for (Profile profile : items) {
+            if (passportNumber.equals(profile.getPassportNumber()))
+                return profile;
+        }
+        return null;
     }
 }

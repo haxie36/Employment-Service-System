@@ -91,6 +91,6 @@ public class Vacancy implements HasId {
 
     @Override
     public String toString() {
-        return specialty + " - " + company;
+        return title + "--" + status.getName();
     }
 }

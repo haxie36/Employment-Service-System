@@ -1,6 +1,5 @@
 package application;
 
-import retraining.Retraining;
 import retraining.RetrainingStatus;
 import retraining.Retrainings;
 import vacancy.Vacancies;
@@ -9,7 +8,6 @@ import common.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 //Recommendations...

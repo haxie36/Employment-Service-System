@@ -10,8 +10,8 @@ public class SpecialtyCatalog {
     public SpecialtyCatalog() {specialties = new String[]{"1"};}
 
     public boolean isRealSpecialty(String specialty) {
-        for (int i=0; i<specialties.length; i++) {
-            if (specialty.equals(specialties[i]))
+        for (String s : specialties) {
+            if (specialty.equals(s))
                 return true;
         }
         return false;

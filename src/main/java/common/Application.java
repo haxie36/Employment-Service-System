@@ -34,11 +34,11 @@ public class Application implements HasId {
     }
 
     //Checks if the profile is registered, if is, set its as own
-    public boolean findProfile(String profileId, Profiles profiles) {
-        Profile profile = profiles.getById(profileId);
+    public boolean isRegistered(String passportNumber, Profiles profiles) {
+        Profile profile = profiles.getByPassport(passportNumber);
         if(profile == null) return false;
         this.profile = profile;
-        this.profileId = profileId;
+        this.profileId = profile.getId();
         return true;
     }
 

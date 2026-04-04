@@ -6,7 +6,6 @@ import common.Vacancy;
 
 public class VacancyController {
     private Vacancy vacancy = null;
-    private Vacancy selectedVacancy = null;
     private final Vacancies vacancies;
     private final Applications applications;
     private final SpecialtyCatalog specialtyCatalog;
@@ -74,25 +73,16 @@ public class VacancyController {
         return saveVacancy();
     }
 
-    //Select, edit and delete
-    public Vacancy selectVacancy(String vacancyId){
-        return selectedVacancy = vacancies.getById(vacancyId);
+    //Edit and delete
+    public boolean changeVacancyStatus(Vacancy vac, int status) {
+        return vac.changeStatus(status, applications);
     }
 
-    public boolean changeVacancyStatus(int status) {
-        if(selectedVacancy !=null) {
-            return selectedVacancy.changeStatus(status, applications);
-        }return false;
-    }
-
-    public boolean deleteVacancy(){
-        boolean result = vacancies.delete(selectedVacancy.getId());
-        clear();
-        return result;
+    public boolean deleteVacancy(Vacancy vac){
+        return vacancies.delete(vac.getId());
     }
 
     public void clear(){
         vacancy = null;
-        selectedVacancy = null;
     }
 }

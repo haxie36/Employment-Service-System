@@ -4,7 +4,6 @@ import common.*;
 
 public class RegistrationController {
     private Profile profile = null;
-    private Profile selectedProfile = null;
     private final ServiceArea serviceArea;
     private final SpecialtyCatalog specialtyCatalog;
     private final Profiles profiles;
@@ -78,26 +77,18 @@ public class RegistrationController {
         return saveProfile();
     }
 
-    //Select, edit and delete
-    public Profile selectProfile(String profileId){
-        return selectedProfile = profiles.getById(profileId);
+    //Edit and delete
+    public boolean editProfile(Profile prof, RegInput input){
+        prof.setPassportInfo(input.passport);
+        prof.setSpecialty(input.specialty);
+        return prof.setExperience(input.experience);
     }
 
-    //Change the retraining's status (cancel or retract it)
-    public boolean editProfile(RegInput input){
-        selectedProfile.setPassportInfo(input.passport);
-        selectedProfile.setSpecialty(input.specialty);
-        return selectedProfile.setExperience(input.experience);
-    }
-
-    public boolean deleteRetraining(){
-        boolean result = profiles.delete(selectedProfile.getId());
-        clear();
-        return result;
+    public boolean deleteProfile(Profile prof){
+        return profiles.delete(prof.getId());
     }
 
     public void clear(){
         profile = null;
-        selectedProfile = null;
     }
 }

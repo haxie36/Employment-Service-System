@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class RetrainingController {
     private Retraining retraining = null;
-    private Retraining selectedRetraining = null;
     private final Profiles profiles;
     private final SpecialtyCatalog specialtyCatalog;
     private final Retrainings retrainings;
@@ -55,29 +54,23 @@ public class RetrainingController {
         return saveRetraining();
     }
 
-    //Select, edit and delete
-    public Retraining selectRetraining(String retrainingId){
-        return selectedRetraining = retrainings.getById(retrainingId);
-    }
+    //Edit and delete
 
     //Check for dates being valid and set as retraining's own
-    public boolean isValidPeriod(LocalDate startDate, LocalDate endDate){
-        return selectedRetraining.isValidPeriod(startDate, endDate);
+    public boolean isValidPeriod(Retraining retr, LocalDate startDate, LocalDate endDate){
+        return retr.isValidPeriod(startDate, endDate);
     }
 
     //Change the retraining's status (cancel or retract it)
-    public void changeRetainingStatus(int status){
-        selectedRetraining.setStatus(status);
+    public void changeRetainingStatus(Retraining retr, int status){
+        retr.setStatus(status);
     }
 
-    public boolean deleteRetraining(){
-        boolean result = retrainings.delete(selectedRetraining.getId());
-        clear();
-        return result;
+    public boolean deleteRetraining(Retraining retr){
+        return retrainings.delete(retr.getId());
     }
 
     public void clear(){
         retraining = null;
-        selectedRetraining = null;
     }
 }
