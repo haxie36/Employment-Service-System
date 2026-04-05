@@ -3,6 +3,14 @@ package application;
 import common.Vacancy;
 
 public class AppInput {
-    public String profileId;
-    public Vacancy vacancy;
+    private final String profileId;
+    private final Vacancy vacancy;
+
+    public AppInput(String profileId, Vacancy vacancy) {
+        this.profileId = profileId;
+        this.vacancy = vacancy;
+    }
+
+    public String getProfileId() {return profileId;}
+    public Vacancy getVacancy() {return vacancy;}
 }

@@ -17,6 +17,7 @@ public enum VacancyStatus {
         return id;
     }
     public String getName() {return name;}
+    public String toString(){return name;}
 
     public static VacancyStatus fromId(int id) {
         for (VacancyStatus status : values()) {

@@ -19,6 +19,7 @@ public enum RetrainingStatus {
         return id;
     }
     public String getName() {return name;}
+    public String toString(){return name;}
 
     public static RetrainingStatus fromId(int id) {
         for (RetrainingStatus status : values()) {

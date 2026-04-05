@@ -8,20 +8,20 @@ import java.time.LocalDate;
 
 public class Profile implements HasId {
     private String id;
+    private String name;
+    private LocalDate birthDate;
     private String passportNumber;
     private String RNOKPP;
-    private String name;
-    private LocalDate birthday;
     private String specialty;
     private int experience;
 
     public Profile() {}
-    public Profile(String id, String passportNumber, String RNOKPP, String name, LocalDate birthday, String specialty, int experience) {
+    public Profile(String id, String passportNumber, String RNOKPP, String name, LocalDate birthDate, String specialty, int experience) {
         this.id = id;
         this.passportNumber = passportNumber;
         this.RNOKPP = RNOKPP;
         this.name = name;
-        this.birthday = birthday;
+        this.birthDate = birthDate;
         this.specialty = specialty;
         this.experience = experience;
     }
@@ -34,10 +34,10 @@ public class Profile implements HasId {
     }
 
     //Checks if profile is already registered, if not, set info from ID as own
-    public boolean isRegistered(ID ID, Profiles profiles){
-        boolean is = profiles.isRegistered(ID);
+    public boolean isRegistered(Passport Passport, Profiles profiles){
+        boolean is = profiles.isRegistered(Passport);
         if(!is){
-            setPassportInfo(ID);
+            setPassportInfo(Passport);
         }
         return is;
     }
@@ -56,17 +56,17 @@ public class Profile implements HasId {
     }
 
     public String getId() {return id;}
+    public String getName() {return name;}
+    public LocalDate getBirthDate() {return birthDate;}
     public String getPassportNumber() {return passportNumber;}
     public String getRNOKPP() {return RNOKPP;}
-    public String getName() {return name;}
-    public LocalDate getBirthday() {return birthday;}
     public String getSpecialty() {return specialty;}
     public int getExperience() {return experience;}
     public void setId(String id) {this.id = id;}
+    public void setName(String name) {this.name = name;}
     public void setPassportNumber(String passportNumber) {this.passportNumber = passportNumber;}
     public void setRNOKPP(String RNOKPP){this.RNOKPP = RNOKPP;}
-    public void setName(String name) {this.name = name;}
-    public void setBirthday(LocalDate birthday) {this.birthday = birthday;}
+    public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}
     public boolean setExperience(int experience) {
         if (experience>=0) {
@@ -75,14 +75,23 @@ public class Profile implements HasId {
         } return false;
     }
 
-    public void setPassportInfo(ID ID){
-        setPassportNumber(ID.getPassportNumber());
-        setRNOKPP(ID.getRNOKPP());
-        setName(ID.getName());
-        setBirthday(ID.getBirthday());
+    public boolean existsByPassportExcept(String passportNumber, Profiles profiles){
+        return profiles.existsByPassportExcept(id, passportNumber);
+    }
+    public boolean existsByRNOKPPExcept(String RNOKPP, Profiles profiles){
+        return profiles.existsByRNOKPPExcept(id, RNOKPP);
     }
 
+    public void setPassportInfo(Passport Passport){
+        setPassportNumber(Passport.getPassportNumber());
+        setRNOKPP(Passport.getRNOKPP());
+        setName(Passport.getName());
+        setBirthDate(Passport.getBirthday());
+    }
+
+    public static String getClassName() {return "Profile";}
+
     public String toString(){
-        return id;
+        return "("+id+") "+name+" -- "+specialty;
     }
 }

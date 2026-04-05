@@ -3,6 +3,12 @@ package common;
 import application.ApplicationController;
 import application.Applications;
 import application.RecSystem;
+import gui.application.ApplicationUIController;
+import gui.main.MainUIController;
+import gui.main.MainWindow;
+import gui.profile.ProfileUIController;
+import gui.retraining.RetrainingUIController;
+import gui.vacancy.VacancyUIController;
 import registration.Profiles;
 import registration.RegistrationController;
 import registration.ServiceArea;
@@ -12,38 +18,35 @@ import vacancy.Vacancies;
 import vacancy.VacancyController;
 
 public class Office {
-    private final Profiles profiles;
-    private final ServiceArea serviceArea;
-    private final SpecialtyCatalog specialtyCatalog;
-    private final RegistrationController registrationController;
-
-    private final Applications applications;
-    private final RecSystem recSystem;
-    private final ApplicationController applicationController;
-
-    private final Vacancies vacancies;
-    private final VacancyController vacancyController;
-
-    private final Retrainings retrainings;
-    private final RetrainingController retrainingController;
-
     public Office() {
         //Collections
-        profiles = new Profiles();
-        vacancies = new Vacancies();
-        applications = new Applications();
-        retrainings = new Retrainings();
+        Profiles profiles = new Profiles();
+        Applications applications = new Applications();
+        Vacancies vacancies = new Vacancies(applications);
+        Retrainings retrainings = new Retrainings();
 
         //Validators and stuff
-        serviceArea = new ServiceArea();
-        specialtyCatalog = new SpecialtyCatalog();
-        recSystem = new RecSystem();
+        ServiceArea serviceArea = new ServiceArea();
+        SpecialtyCatalog specialtyCatalog = new SpecialtyCatalog();
+        RecSystem recSystem = new RecSystem();
 
         //Controllers
-        registrationController = new RegistrationController(serviceArea, specialtyCatalog, profiles, this);
-        applicationController = new ApplicationController(vacancies, applications, profiles, retrainings, recSystem);
-        vacancyController = new VacancyController(vacancies, applications, specialtyCatalog);
-        retrainingController = new RetrainingController(profiles, specialtyCatalog, retrainings);
+        RegistrationController registrationController = new RegistrationController(serviceArea, specialtyCatalog, profiles, this);
+        ApplicationController applicationController = new ApplicationController(vacancies, applications, profiles, retrainings, recSystem);
+        VacancyController vacancyController = new VacancyController(vacancies, applications, specialtyCatalog);
+        RetrainingController retrainingController = new RetrainingController(profiles, specialtyCatalog, retrainings);
+
+        //GUI
+        MainWindow mainWindow = new MainWindow();
+
+        //GUI Controllers
+        ProfileUIController  profileUIController = new ProfileUIController(mainWindow, registrationController, profiles);
+        ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow, applicationController,applications);
+        VacancyUIController vacancyUIController = new VacancyUIController(mainWindow, vacancyController,vacancies);
+        RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow, retrainingController,retrainings);
+        MainUIController mainUIController = new MainUIController(mainWindow,
+                profileUIController, applicationUIController,
+                vacancyUIController, retrainingUIController);
     }
 
     //Prints certification (formates profile's info)

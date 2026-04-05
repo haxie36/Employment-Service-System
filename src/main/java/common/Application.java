@@ -61,4 +61,11 @@ public class Application implements HasId {
     public void setVacancy(Vacancy vacancy) {this.vacancy = vacancy;}
     public void setApplicationDate(LocalDate applicationDate) {this.applicationDate = applicationDate;}
     public void setStatus(ApplicationStatus status) {this.status = status;}
+
+    public static String getClassName() {return "Application";}
+
+    public String toString(){
+        return "("+id+") "+profile.getName()+"--"+vacancy.getTitle()
+                +" ["+status.getName()+"]";
+    }
 }

@@ -1,9 +1,8 @@
-package retraining;
+package common;
 
-import common.Profile;
-import common.SpecialtyCatalog;
 import interfaces.HasId;
 import registration.Profiles;
+import retraining.RetrainingStatus;
 
 import java.time.LocalDate;
 
@@ -78,4 +77,11 @@ public class Retraining implements HasId {
     public void setProfileId(String profileId) {this.profileId = profileId;}
     public void setStatus(int status) {this.status = RetrainingStatus.fromId(status);}
     public void setStatus(RetrainingStatus status) {this.status = status;}
+
+    public static String getClassName() {return "Retraining";}
+
+    public String toString(){
+        return "("+id+") "+specialty+" -- "+profile.getName()
+                +" ["+status.getName()+"]";
+    }
 }

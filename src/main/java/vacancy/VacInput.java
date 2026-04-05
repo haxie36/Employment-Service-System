@@ -1,11 +1,11 @@
 package vacancy;
 
 public class VacInput {
-    public String company;
-    public String contact;
-    public String specialty;
-    public int minExperience;
-    public String description;
+    private String company;
+    private String contact;
+    private String specialty;
+    private int minExperience;
+    private String description;
 
     public VacInput(String company, String contact, String specialty, int minExperience, String description){
         this.company = company;
@@ -14,4 +14,10 @@ public class VacInput {
         this.minExperience = minExperience;
         this.description = description;
     }
+
+    public String getCompany() {return company;}
+    public String getContact() {return contact;}
+    public String getSpecialty() {return specialty;}
+    public int getMinExperience() {return minExperience;}
+    public String getDescription() {return description;}
 }

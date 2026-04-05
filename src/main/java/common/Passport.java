@@ -3,13 +3,13 @@ package common;
 import java.time.LocalDate;
 
 //Passport info...
-public class ID {
+public class Passport {
     private final String name;
     private final LocalDate birthday;
     public final String passportNumber;
     private final String RNOKPP;
 
-    public ID(String name, LocalDate birthday, String passportNumber, String RNOKPP) {
+    public Passport(String name, LocalDate birthday, String passportNumber, String RNOKPP) {
         this.name = name;
         this.birthday = birthday;
         this.passportNumber = passportNumber;

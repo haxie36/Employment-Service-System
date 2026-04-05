@@ -18,6 +18,7 @@ public enum ApplicationStatus {
         return id;
     }
     public String getName() {return name;}
+    public String toString(){return name;}
 
     public static ApplicationStatus fromId(int id) {
         for (ApplicationStatus status : values()) {

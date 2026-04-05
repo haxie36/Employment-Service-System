@@ -66,4 +66,5 @@ public class EntityCollection<T extends HasId> { //A custom collection class
     public T[] getAll() {
         return items;
     }
+    public void setAll(T[] items) {this.items = items;}
 }

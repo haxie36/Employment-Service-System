@@ -1,88 +1,80 @@
 package vacancy;
 
 import application.Applications;
+import common.LogicController;
 import common.SpecialtyCatalog;
 import common.Vacancy;
 
-public class VacancyController {
-    private Vacancy vacancy = null;
-    private final Vacancies vacancies;
+public class VacancyController extends LogicController<Vacancy, VacInput> {
     private final Applications applications;
     private final SpecialtyCatalog specialtyCatalog;
 
     public VacancyController(Vacancies vacancies, Applications applications, SpecialtyCatalog specialtyCatalog) {
-        this.vacancies = vacancies;
+        super(vacancies);
         this.applications = applications;
         this.specialtyCatalog = specialtyCatalog;
     }
 
+    @Override
     //Create a new empty Vacancy
-    public void newVacancy(){
-        vacancy = new Vacancy();
+    public void newCreation(){
+        creation = new Vacancy();
     }
 
     //Set vacancy's company name...
     public boolean setVacancyCompany(String company){
-        return vacancy.setCompany(company);
+        return creation.setCompany(company);
     }
     //Set vacancy's company contact number...
     public boolean setVacancyContact(String contact){
-        vacancy.setContact(contact);
+        creation.setContact(contact);
         return true;
     }
 
     //Check for specialty being real, if is, set as vacancy's own
     public boolean isRealSpecialty(String specialty){
-        return vacancy.isRealSpecialty(specialty, specialtyCatalog);
+        return creation.isRealSpecialty(specialty, specialtyCatalog);
     }
 
     //Check for experience being a valid number, if is, set as vacancy's own
     public boolean setVacancyExperience(int experience){
-        return vacancy.setMinExperience(experience);
+        return creation.setMinExperience(experience);
     }
 
     //Check if description is 3 or more signs long, if is, set as vacancy's own
     public boolean setVacancyDescription(String description){
-        return vacancy.setDescription(description);
+        return creation.setDescription(description);
     }
 
     //End the creation of the Vacancy by saving it in the collection
-    public boolean saveVacancy(){
-        if (vacancy!=null){
-            setVacancyId(); //temp
-            vacancies.add(vacancy);
+    public boolean save(){
+        if (creation !=null){
+            setCreationId(); //temp
+            collection.add(creation);
             clear();
             return true;
         }
         return false;
     }
     //temp
-    private void setVacancyId(){
-        vacancy.setId(String.valueOf(vacancies.getAll().length+1));
+    private void setCreationId(){
+        creation.setId(String.valueOf(collection.getAll().length+1));
     }
 
     //All in one
-    public boolean createVacancy(VacInput input){
-        newVacancy();
-        if (!setVacancyCompany(input.company)) return false;
-        if (!setVacancyContact(input.contact)) return false;
-        if (!isRealSpecialty(input.specialty)) return false;
-        if (!setVacancyExperience(input.minExperience)) return false;
-        if (!setVacancyDescription(input.description)) return false;
+    public boolean create(VacInput input){
+        newCreation();
+        if (!setVacancyCompany(input.getCompany())) return false;
+        if (!setVacancyContact(input.getContact())) return false;
+        if (!isRealSpecialty(input.getSpecialty())) return false;
+        if (!setVacancyExperience(input.getMinExperience())) return false;
+        if (!setVacancyDescription(input.getDescription())) return false;
 
-        return saveVacancy();
+        return save();
     }
 
-    //Edit and delete
+    //Edit
     public boolean changeVacancyStatus(Vacancy vac, int status) {
         return vac.changeStatus(status, applications);
-    }
-
-    public boolean deleteVacancy(Vacancy vac){
-        return vacancies.delete(vac.getId());
-    }
-
-    public void clear(){
-        vacancy = null;
     }
 }

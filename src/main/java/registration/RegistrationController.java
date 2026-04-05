@@ -2,93 +2,77 @@ package registration;
 
 import common.*;
 
-public class RegistrationController {
-    private Profile profile = null;
+public class RegistrationController extends LogicController<Profile, RegInput>{
     private final ServiceArea serviceArea;
     private final SpecialtyCatalog specialtyCatalog;
-    private final Profiles profiles;
     private final Office office;
 
     public RegistrationController(ServiceArea serviceArea,
                                   SpecialtyCatalog specialtyCatalog,
                                   Profiles profiles,
                                   Office office) {
+        super(profiles);
         this.serviceArea = serviceArea;
         this.specialtyCatalog = specialtyCatalog;
-        this.profiles = profiles;
         this.office = office;
     }
 
-    //Create a new empty Profile
-    public void newProfile(){
-        profile = new Profile();
-    }
+    @Override
+    //New Profile
+    public void newCreation() {creation = new Profile();}
 
     //Check if the address being serviced
     public boolean isServiceArea(String area){
-        return profile.isServiceArea(area, serviceArea);
+        return creation.isServiceArea(area, serviceArea);
     }
 
     //Check for profile being dy registered, if isn't, set the Passport info (ID) as profiles
-    public boolean isRegistered(ID ID){
-        return profile.isRegistered(ID, profiles);
+    public boolean isRegistered(Passport Passport){
+        return creation.isRegistered(Passport, (Profiles) collection);
     }
 
     //Check if the specialty is real, if is, set
     public boolean isRealSpecialty(String specialty){
-        return profile.isRealSpecialty(specialty, specialtyCatalog);
+        return creation.isRealSpecialty(specialty, specialtyCatalog);
     }
 
     public boolean record(int exp){
-        return profile.setExperience(exp);
-    }
-
-    //End the registrations by saving the profile in the collection
-    public boolean saveProfile(){
-        if (profile!=null){
-            setProfileId(); //temp
-            profiles.add(profile);
-            clear();
-            return true;
-        }
-        return false;
-    }
-    //temp
-    private void setProfileId(){
-        profile.setId(String.valueOf(profiles.getAll().length+1));
+        return creation.setExperience(exp);
     }
 
     //Prints certification (formates profile's info)
     public String printCertification(){
-        if (profile!=null){
-            return profile.printCertification(office);
+        if (creation !=null){
+            return creation.printCertification(office);
         }
         return null;
     }
 
     //All in one
-    public boolean register(RegInput input){
-        newProfile();
-        if (!isServiceArea(input.address)) return false;
-        if (isRegistered(input.passport)) return false;
-        if (!isRealSpecialty(input.specialty)) return false;
-        if (!record(input.experience)) return false;
+    public boolean create(RegInput input){
+        newCreation();
+        if (!isServiceArea(input.getAddress()))
+            throw new IllegalArgumentException("Address is not valid!");
+        if (isRegistered(input.getPassport()))
+            throw new IllegalArgumentException("Profile is already registered!");
+        if (!isRealSpecialty(input.getSpecialty()))
+            throw new IllegalArgumentException("Invalid Specialty!");;
+        if (!record(input.getExperience()))
+            throw new IllegalArgumentException("Invalid Experience!");;
 
-        return saveProfile();
+        return save();
     }
 
-    //Edit and delete
+    //Edit
     public boolean editProfile(Profile prof, RegInput input){
-        prof.setPassportInfo(input.passport);
-        prof.setSpecialty(input.specialty);
-        return prof.setExperience(input.experience);
-    }
+        if (prof.existsByPassportExcept(input.getPassport().getPassportNumber(), (Profiles) collection))
+            throw new IllegalArgumentException("Profile with this passport already exists");
+        if (prof.existsByRNOKPPExcept(input.getPassport().getRNOKPP(), (Profiles) collection))
+            throw new IllegalArgumentException("Profile with this RNOKPP already exists");
 
-    public boolean deleteProfile(Profile prof){
-        return profiles.delete(prof.getId());
-    }
-
-    public void clear(){
-        profile = null;
+        prof.setPassportInfo(input.getPassport());
+        if (prof.isRealSpecialty(input.getSpecialty(), specialtyCatalog))
+            throw new IllegalArgumentException("Invalid Specialty!");
+        return prof.setExperience(input.getExperience());
     }
 }

@@ -1,17 +1,22 @@
 package registration;
 
-import common.ID;
+import common.Passport;
 
 public class RegInput {
-    public String address;
-    public ID passport;
-    public String specialty;
-    public int experience;
+    private final String address;
+    private final Passport passport;
+    private final String specialty;
+    private final int experience;
 
-    public RegInput(String address, ID passport, String specialty, int experience) {
+    public RegInput(String address, Passport passport, String specialty, int experience) {
         this.address = address;
         this.passport = passport;
         this.specialty = specialty;
         this.experience = experience;
     }
+
+    public String getAddress() {return address;}
+    public Passport getPassport() {return passport;}
+    public String getSpecialty() {return specialty;}
+    public int getExperience() {return experience;}
 }

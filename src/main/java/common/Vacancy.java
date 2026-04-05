@@ -89,8 +89,9 @@ public class Vacancy implements HasId {
     }
     public void setStatus(VacancyStatus status) {this.status = status;}
 
-    @Override
+    public static String getClassName() {return "Vacancy";}
+
     public String toString() {
-        return title + "--" + status.getName();
+        return "("+id+") "+title+" ["+status.getName()+"]";
     }
 }

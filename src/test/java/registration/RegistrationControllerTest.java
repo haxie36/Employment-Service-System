@@ -19,7 +19,7 @@ class RegistrationControllerTest {
                 new Profiles(new Profile[]{new Profile("2")}),
                 new Office()
         );
-        reg.newProfile();
+        reg.newCreation();
     }
 
     @Test
@@ -36,7 +36,7 @@ class RegistrationControllerTest {
 
     @Test
     void testRegistered_success() {
-        boolean result = reg.isRegistered(new ID(
+        boolean result = reg.isRegistered(new Passport(
                 "1",
                 LocalDate.now(),
                 "1",
@@ -46,7 +46,7 @@ class RegistrationControllerTest {
 
     @Test
     void testRegistered_invalid() {
-        boolean result = reg.isRegistered(new ID(
+        boolean result = reg.isRegistered(new Passport(
                 "2",
                 LocalDate.now(),
                 "2",
@@ -79,18 +79,18 @@ class RegistrationControllerTest {
     }
 
     @Test
-    void testRegister() {
+    void testCreate() {
         RegInput[] inputs = new RegInput[]{
-                new RegInput("2", new ID("1", LocalDate.now(), "1","1"), "1", 1),
-                new RegInput("1", new ID("1", LocalDate.now(), "2","1"), "1", 1),
-                new RegInput("1", new ID("1", LocalDate.now(), "1","1"), "2", 1),
-                new RegInput("1", new ID("1", LocalDate.now(), "1","1"), "1", -1),
-                new RegInput("1", new ID("1", LocalDate.now(), "1","1"), "1", 1)
+                new RegInput("2", new Passport("1", LocalDate.now(), "1","1"), "1", 1),
+                new RegInput("1", new Passport("1", LocalDate.now(), "2","1"), "1", 1),
+                new RegInput("1", new Passport("1", LocalDate.now(), "1","1"), "2", 1),
+                new RegInput("1", new Passport("1", LocalDate.now(), "1","1"), "1", -1),
+                new RegInput("1", new Passport("1", LocalDate.now(), "1","1"), "1", 1)
         };
         boolean[] outputs = new boolean[]{false,false,false,false,true};
 
         for (int i = 0; i < outputs.length; i++) {
-            boolean result = reg.register(inputs[i]);
+            boolean result = reg.create(inputs[i]);
             assertEquals(outputs[i], result);
         }
     }
