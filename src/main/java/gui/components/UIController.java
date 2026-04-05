@@ -24,7 +24,8 @@ public abstract class UIController<T extends HasId> {
     }
 
     protected void updateList(){
-        mainWindow.setListPanel(new ListPanel<>(collection.getAll()));
+        mainWindow.getListPanel().clearSelection();
+        mainWindow.getListPanel().updateList(collection.getAll());
         mainWindow.getRightPanel().setContent(new EmptyPanel());
     }
 }

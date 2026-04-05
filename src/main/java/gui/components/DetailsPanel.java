@@ -3,7 +3,7 @@ package gui.components;
 import javax.swing.*;
 import java.awt.*;
 
-public class DetailsPanel<T> extends JPanel {
+public abstract class DetailsPanel<T> extends JPanel {
     private Runnable onEdit;
     private Runnable onDelete;
     private Runnable onAdditional;
@@ -39,7 +39,8 @@ public class DetailsPanel<T> extends JPanel {
         revalidate(); repaint();
     }
 
-    public void setBtnPanel(JPanel btnPanel) {}
+    public abstract void update(T Object);
+
     public void setOnEdit (Runnable onEdit) {this.onEdit = onEdit;}
     public void setOnDelete (Runnable onDelete) {this.onDelete = onDelete;}
     public void setOnAdditional (Runnable onAdditional) {this.onAdditional = onAdditional;}
