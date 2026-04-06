@@ -3,6 +3,7 @@ package gui.application;
 import application.ApplicationController;
 import application.ApplicationCollection;
 import application.Application;
+import gui.base.ListPanel;
 import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
@@ -19,10 +20,15 @@ public class ApplicationUIController extends UIController<Application> {
     public void open(){
         super.open();
         RightPanel rightPanel = mainWindow.getRightPanel();
+        ListPanel<Application> listPanel = mainWindow.getListPanel();
 
         rightPanel.getNewButton().addActionListener(e -> {
-            rightPanel.setContent(new ApplicationFormPanel());
+            //rightPanel.setContent(new ApplicationFormPanel());
             mainWindow.getListPanel().clearSelection();
         });
+    }
+
+    protected String getTitle() {
+        return "Application";
     }
 }

@@ -12,7 +12,7 @@ import vacancy.VacancyController;
 import javax.swing.*;
 
 public class VacancyUIController extends UIController<Vacancy> {
-    private VacancyController vacancyController;
+    private final VacancyController vacancyController;
 
     public VacancyUIController(MainWindow mainWindow,
                                VacancyController vacancyController, VacancyCollection vacancyCollection) {
@@ -25,7 +25,7 @@ public class VacancyUIController extends UIController<Vacancy> {
         RightPanel rightPanel = mainWindow.getRightPanel();
         ListPanel<Vacancy> listPanel = mainWindow.getListPanel();
 
-        //+ New button shows a creation form
+        //+ NEW BUTTON shows a creation form
         rightPanel.getNewButton().addActionListener(e -> {
             listPanel.clearSelection();
             VacancyFormPanel vacForm= new VacancyFormPanel();
@@ -35,13 +35,12 @@ public class VacancyUIController extends UIController<Vacancy> {
                     vacancyController.create(vacForm.getInputData());
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Vacancy Created Successfully!");
-                    rightPanel.setContent(new EmptyPanel()); //Return to the default state
                     updateList(); //Updating the list with a new vacancy
                 } catch (IllegalArgumentException ie) {
                     vacForm.setStatusText(ie.getMessage()); //If something goes wrong, change the status
                 }
             });
-            //Press "Cancel" to cancel...
+            //Press "CANCEL" to cancel...
             vacForm.setOnCancel(() -> {rightPanel.setContent(new EmptyPanel());});
 
             //Show the form and clear selection
@@ -49,17 +48,17 @@ public class VacancyUIController extends UIController<Vacancy> {
             listPanel.clearSelection();
         });
 
-        //Details and editing
+        //DETAILS and EDITing (SELECTION)
         listPanel.getList().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 //Get selected
                 Vacancy selectedVacancy = listPanel.getList().getSelectedValue();
-                //Create details panel
+                //Create DETAILS panel
                 VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(selectedVacancy);
-                //Press "Edit" to edit...
+                //Press "EDIT" to edit...
                 vacancyDetailsPanel.setOnEdit(() -> {
                     VacancyEditPanel vacancyEditPanel = new VacancyEditPanel(selectedVacancy);
-                    //Apply changes
+                    //Apply changes (SAVE)
                     vacancyEditPanel.setOnSave(() -> {
                         try {
                             //Edit and update the list
@@ -77,14 +76,14 @@ public class VacancyUIController extends UIController<Vacancy> {
                             vacancyEditPanel.setStatusText(ie.getMessage());
                         }
                     });
-                    //Cancel changes
+                    //CANCEL changes
                     vacancyEditPanel.setOnCancel(() -> {
                         rightPanel.setContent(vacancyDetailsPanel);
                     });
-                    //Set the edit panel in place
+                    //Set the edit panel
                     rightPanel.setContent(vacancyEditPanel);
                 });
-                //Delete selected
+                //DELETE selected
                 vacancyDetailsPanel.setOnDelete(() -> {
                     vacancyController.delete(selectedVacancy);
                     //FeedBack
@@ -95,6 +94,9 @@ public class VacancyUIController extends UIController<Vacancy> {
                 rightPanel.setContent(vacancyDetailsPanel);
             }
         });
+    }
 
+    protected String getTitle() {
+        return "Vacancy";
     }
 }

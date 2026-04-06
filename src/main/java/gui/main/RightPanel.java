@@ -12,7 +12,7 @@ public class RightPanel extends JPanel {
 
     public RightPanel() {
         this.title = new JLabel("");
-        this.newButton = new CustomButton("+ New");
+        this.newButton = new CustomButton("+ New  ");
         JPanel top = new JPanel(new BorderLayout());
         this.content = new JPanel();
 

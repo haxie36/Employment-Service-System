@@ -24,7 +24,7 @@ public class ProfileUIController extends UIController<Profile> {
         RightPanel rightPanel = mainWindow.getRightPanel();
         ListPanel<Profile> listPanel = mainWindow.getListPanel();
 
-        //+ New button shows a registration form
+        //+ NEW BUTTON shows a registration form
         rightPanel.getNewButton().addActionListener(a -> {
             listPanel.clearSelection();
             RegistrationFormPanel regForm = new RegistrationFormPanel();
@@ -34,7 +34,6 @@ public class ProfileUIController extends UIController<Profile> {
                     registrationController.create(regForm.getInputData());
                     //FeedBack message
                     JOptionPane.showMessageDialog(regForm, "Registration Successful");
-                    rightPanel.setContent(new EmptyPanel()); //Return to the default state
                     updateList(); //Updates the list with a new profile
                 } catch (IllegalArgumentException ie) {
                     regForm.setStatusText(ie.getMessage()); //If it fails, change the status of a form
@@ -48,17 +47,17 @@ public class ProfileUIController extends UIController<Profile> {
             listPanel.clearSelection();
         });
 
-        //Profile details and editing
+        //DETAILS and EDITing (SELECTION)
         listPanel.getList().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                //Get selected profile
+                //Get selected
                 Profile selectedProfile = listPanel.getSelectedItem();
-                //Create details panel
+                //Create DETAILS panel
                 ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(selectedProfile);
-                //Upon pressing "Edit" open an edit form
+                //Upon pressing "EDIT" open an edit form
                 profileDetailsPanel.setOnEdit(() -> {
                     ProfileEditPanel profileEditPanel = new ProfileEditPanel(selectedProfile);
-                    //Apply changes
+                    //Apply changes (SAVE)
                     profileEditPanel.setOnSave(() -> {
                         try {
                             //Edit and update the list
@@ -76,23 +75,27 @@ public class ProfileUIController extends UIController<Profile> {
                             profileEditPanel.setStatusText(ie.getMessage());
                         }
                     });
-                    //Cancel changes
+                    //CANCEL changes
                     profileEditPanel.setOnCancel(() -> {
                         rightPanel.setContent(profileDetailsPanel);
                     });
-                    //Set the edit panel in place
+                    //Set the edit panel
                     rightPanel.setContent(profileEditPanel);
                 });
-                //Upon pressing "Delete"... Delete the Object...
+                //DELETE selected
                 profileDetailsPanel.setOnDelete(() -> {
                     registrationController.delete(selectedProfile);
                     //FeedBack message
                     JOptionPane.showMessageDialog(profileDetailsPanel, "Profile Delete Successful");
                     updateList(); //And update the list
                 });
-                //Set the details panel in place
+                //Set the panel
                 rightPanel.setContent(profileDetailsPanel);
             }
         });
+    }
+
+    protected String getTitle() {
+        return "Profile";
     }
 }

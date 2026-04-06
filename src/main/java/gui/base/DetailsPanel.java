@@ -33,7 +33,7 @@ public abstract class DetailsPanel<T> extends JPanel {
         add(details, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
     }
-    public DetailsPanel(T Object, String additionalBtnText){
+    public DetailsPanel(String additionalBtnText){
         this();
         additionalBtn.setText(additionalBtnText);
         additionalBtn.addActionListener(e -> {onAdditional.run();});

@@ -1,5 +1,6 @@
 package gui.retraining;
 
+import gui.base.ListPanel;
 import retraining.Retraining;
 import gui.base.UIController;
 import gui.main.MainWindow;
@@ -19,5 +20,10 @@ public class RetrainingUIController extends UIController<Retraining> {
     public void open(){
         super.open();
         RightPanel rightPanel = mainWindow.getRightPanel();
+        ListPanel<Retraining> listPanel = mainWindow.getListPanel();
+    }
+
+    protected String getTitle() {
+        return "Retraining";
     }
 }

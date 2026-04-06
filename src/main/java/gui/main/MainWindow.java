@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("Vacancy Processing and Recommendation System (Employment Center)");
-        setSize(1000,1000);
+        setSize(800,800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
