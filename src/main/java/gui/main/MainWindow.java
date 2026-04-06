@@ -1,6 +1,6 @@
 package gui.main;
 
-import gui.components.ListPanel;
+import gui.base.ListPanel;
 
 import javax.swing.*;
 import java.awt.*;

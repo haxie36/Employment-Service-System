@@ -1,17 +1,18 @@
 package gui.retraining;
 
-import common.Retraining;
-import gui.components.UIController;
+import retraining.Retraining;
+import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
 import retraining.RetrainingController;
-import retraining.Retrainings;
+import retraining.RetrainingCollection;
 
 public class RetrainingUIController extends UIController<Retraining> {
     private final RetrainingController retrainingController;
 
-    public RetrainingUIController(MainWindow mainWindow, RetrainingController retrainingController,Retrainings retrainings) {
-        super(mainWindow, retrainings);
+    public RetrainingUIController(MainWindow mainWindow,
+                                  RetrainingController retrainingController, RetrainingCollection retrainingCollection) {
+        super(mainWindow, retrainingCollection);
         this.retrainingController = retrainingController;
     }
 

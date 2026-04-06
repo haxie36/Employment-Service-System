@@ -1,4 +1,6 @@
-package gui.components;
+package gui.base;
+
+import gui.components.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;

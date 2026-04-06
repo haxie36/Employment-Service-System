@@ -1,8 +1,9 @@
-package common;
+package registration;
 
-import interfaces.HasId;
-import registration.Profiles;
-import registration.ServiceArea;
+import base.HasId;
+import common.Office;
+import common.Passport;
+import common.SpecialtyCatalog;
 
 import java.time.LocalDate;
 
@@ -34,8 +35,8 @@ public class Profile implements HasId {
     }
 
     //Checks if profile is already registered, if not, set info from ID as own
-    public boolean isRegistered(Passport Passport, Profiles profiles){
-        boolean is = profiles.isRegistered(Passport);
+    public boolean isRegistered(Passport Passport, ProfileCollection profileCollection){
+        boolean is = profileCollection.isRegistered(Passport);
         if(!is){
             setPassportInfo(Passport);
         }
@@ -75,11 +76,11 @@ public class Profile implements HasId {
         } return false;
     }
 
-    public boolean existsByPassportExcept(String passportNumber, Profiles profiles){
-        return profiles.existsByPassportExcept(id, passportNumber);
+    public boolean existsByPassportExcept(String passportNumber, ProfileCollection profileCollection){
+        return profileCollection.existsByPassportExcept(id, passportNumber);
     }
-    public boolean existsByRNOKPPExcept(String RNOKPP, Profiles profiles){
-        return profiles.existsByRNOKPPExcept(id, RNOKPP);
+    public boolean existsByRNOKPPExcept(String RNOKPP, ProfileCollection profileCollection){
+        return profileCollection.existsByRNOKPPExcept(id, RNOKPP);
     }
 
     public void setPassportInfo(Passport Passport){

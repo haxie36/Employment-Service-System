@@ -1,8 +1,9 @@
-package common;
+package retraining;
 
-import interfaces.HasId;
-import registration.Profiles;
-import retraining.RetrainingStatus;
+import base.HasId;
+import common.SpecialtyCatalog;
+import registration.Profile;
+import registration.ProfileCollection;
 
 import java.time.LocalDate;
 
@@ -37,8 +38,8 @@ public class Retraining implements HasId {
     }
 
     //Check is profile is registered, if is, set as own
-    public boolean findProfile(String profileId, Profiles profiles) {
-        Profile profile = profiles.getById(id);
+    public boolean findProfile(String profileId, ProfileCollection profileCollection) {
+        Profile profile = profileCollection.getById(id);
         if(profile == null) return false;
         this.profile = profile;
         this.profileId = profileId;

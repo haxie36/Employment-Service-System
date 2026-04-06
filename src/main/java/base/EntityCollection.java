@@ -1,6 +1,4 @@
-package common;
-
-import interfaces.HasId;
+package base;
 
 public class EntityCollection<T extends HasId> { //A custom collection class
     protected T[] items;

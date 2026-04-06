@@ -3,7 +3,7 @@ package gui.profile;
 import common.Passport;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
-import gui.components.FormPanel;
+import gui.base.FormPanel;
 import gui.components.Row;
 import registration.RegInput;
 
@@ -37,8 +37,7 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
         form.add(new Row(new JLabel("Specialty:"), specialtyField));
         form.add(new Row(new JLabel("Experience:"), experienceField));
 
-        revalidate();
-        repaint();
+        revalidate(); repaint();
     }
 
     @Override

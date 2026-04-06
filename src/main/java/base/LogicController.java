@@ -1,6 +1,4 @@
-package common;
-
-import interfaces.HasId;
+package base;
 
 public abstract class LogicController<T extends HasId, I> {
     protected T creation = null;

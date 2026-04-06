@@ -1,9 +1,10 @@
-package common;
+package vacancy;
 
+import application.Application;
 import application.ApplicationStatus;
-import application.Applications;
-import interfaces.HasId;
-import vacancy.VacancyStatus;
+import application.ApplicationCollection;
+import base.HasId;
+import common.SpecialtyCatalog;
 
 public class Vacancy implements HasId {
     private String id;
@@ -37,10 +38,11 @@ public class Vacancy implements HasId {
     }
 
     //Change own status and change own applications' statuses
-    public boolean changeStatus(int status, Applications applications){
+    public boolean changeStatus(int status, ApplicationCollection applicationCollection){
+        if (status > 2) return false;
         setStatus(VacancyStatus.fromId(status));
-        Application[] apps = applications.getAll();
-        if (status!=0){
+        Application[] apps = applicationCollection.getAll();
+        if (status!=VacancyStatus.OPEN.getId()){
             for (Application app : apps) {
                 if (app.getStatus() == ApplicationStatus.ACTIVE) {
                     app.setStatus(ApplicationStatus.RETRACTED);
@@ -53,8 +55,7 @@ public class Vacancy implements HasId {
                 }
             }
         }
-
-        return false;
+        return true;
     }
 
     public String getId() {return id;}
@@ -66,12 +67,15 @@ public class Vacancy implements HasId {
     public String getDescription() {return description;}
     public VacancyStatus getStatus() {return status;}
     public void setId(String id) {this.id = id;}
-    public void setTitle(String title) {this.title = title;}
+    public boolean setTitle(String title) {
+        if (title == null) return false;
+        this.title = title;
+        return true;
+    }
     public boolean setCompany(String company) {
-        if (company.length()>=3){
+        if (company.length()<3) return false;
         this.company = company;
         return true;
-        }return false;
     }
     public void setContact(String contact) {this.contact = contact;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}

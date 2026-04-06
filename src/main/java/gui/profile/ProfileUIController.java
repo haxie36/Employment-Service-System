@@ -1,12 +1,12 @@
 package gui.profile;
 
-import common.Profile;
-import gui.components.EmptyPanel;
-import gui.components.ListPanel;
-import gui.components.UIController;
+import registration.Profile;
+import gui.base.EmptyPanel;
+import gui.base.ListPanel;
+import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import registration.Profiles;
+import registration.ProfileCollection;
 import registration.RegistrationController;
 
 import javax.swing.*;
@@ -14,18 +14,19 @@ import javax.swing.*;
 public class ProfileUIController extends UIController<Profile> {
     private final RegistrationController registrationController;
 
-    public ProfileUIController(MainWindow mainWindow, RegistrationController registrationController,Profiles profiles) {
-        super(mainWindow, profiles);
+    public ProfileUIController(MainWindow mainWindow, RegistrationController registrationController, ProfileCollection profileCollection) {
+        super(mainWindow, profileCollection);
         this.registrationController = registrationController;
     }
 
     public void open(){
         super.open();
         RightPanel rightPanel = mainWindow.getRightPanel();
+        ListPanel<Profile> listPanel = mainWindow.getListPanel();
 
         //+ New button shows a registration form
         rightPanel.getNewButton().addActionListener(a -> {
-            mainWindow.getListPanel().clearSelection();
+            listPanel.clearSelection();
             RegistrationFormPanel regForm = new RegistrationFormPanel();
             //Upon pressing "Save" try to register a profile with the inputs
             regForm.setOnSave(() -> {
@@ -44,11 +45,10 @@ public class ProfileUIController extends UIController<Profile> {
 
             //Show the form and clear list selection
             rightPanel.setContent(regForm);
-            mainWindow.getListPanel().clearSelection();
+            listPanel.clearSelection();
         });
 
         //Profile details and editing
-        ListPanel<Profile> listPanel = mainWindow.getListPanel();
         listPanel.getList().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 //Get selected profile
@@ -58,10 +58,10 @@ public class ProfileUIController extends UIController<Profile> {
                 //Upon pressing "Edit" open an edit form
                 profileDetailsPanel.setOnEdit(() -> {
                     ProfileEditPanel profileEditPanel = new ProfileEditPanel(selectedProfile);
-                    //Apply the changes
+                    //Apply changes
                     profileEditPanel.setOnSave(() -> {
                         try {
-                            //Edit and update
+                            //Edit and update the list
                             registrationController.editProfile(selectedProfile,
                                     profileEditPanel.getInputData());
                             //FeedBack message
@@ -69,14 +69,14 @@ public class ProfileUIController extends UIController<Profile> {
                             //Update
                             updateList();
                             listPanel.getList().setSelectedValue(selectedProfile, true);
-                            //Update the panel, back to details panel
+                            //Update details panel, set it
                             profileDetailsPanel.update(selectedProfile);
                             rightPanel.setContent(profileDetailsPanel);
                         } catch (IllegalArgumentException ie) {
                             profileEditPanel.setStatusText(ie.getMessage());
                         }
                     });
-                    //Cancel the changes
+                    //Cancel changes
                     profileEditPanel.setOnCancel(() -> {
                         rightPanel.setContent(profileDetailsPanel);
                     });

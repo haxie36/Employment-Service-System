@@ -1,11 +1,11 @@
 package retraining;
 
 public enum RetrainingStatus {
-    NEW(0, "New"),
-    SCHEDULED(1, "Scheduled"),
-    IN_PROGRESS(2, "In Progress"),
-    COMPLETED(3, "Completed"),
-    RETRACTED(4, "Retracted"),;
+    NEW(0, "NEW"),
+    SCHEDULED(1, "SCHEDULED"),
+    IN_PROGRESS(2, "IN_PROGRESS"),
+    COMPLETED(3, "COMPLETED"),
+    RETRACTED(4, "RETRACTED"),;
 
     private final int id;
     private final String name;

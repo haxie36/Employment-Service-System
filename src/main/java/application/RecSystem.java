@@ -1,10 +1,10 @@
 package application;
 
 import retraining.RetrainingStatus;
-import retraining.Retrainings;
-import vacancy.Vacancies;
-import common.Vacancy;
-import common.Profile;
+import retraining.RetrainingCollection;
+import vacancy.VacancyCollection;
+import vacancy.Vacancy;
+import registration.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.stream.Stream;
 
 //Recommendations...
 public class RecSystem {
-    public Vacancy[] getRecommendations(Profile profile, Vacancies vacancies, Retrainings retrainings) {
-        Vacancy[] vacs = vacancies.getAll(); //Real vacancies
+    public Vacancy[] getRecommendations(Profile profile, VacancyCollection vacancyCollection, RetrainingCollection retrainingCollection) {
+        Vacancy[] vacs = vacancyCollection.getAll(); //Real vacancies
 
-        String[] skillSet = getFullSkillSet(profile, retrainings);
+        String[] skillSet = getFullSkillSet(profile, retrainingCollection);
 
         List<Vacancy> recommendations = new ArrayList<>(); //A collection of recommendations
         for (int i=0; i<vacs.length; i++) {
@@ -36,11 +36,11 @@ public class RecSystem {
         return recommendations.toArray(new Vacancy[0]);
     }
 
-    private String[] getFullSkillSet(Profile profile, Retrainings retrainings) {
+    private String[] getFullSkillSet(Profile profile, RetrainingCollection retrainingCollection) {
         List<String> specialties = new ArrayList<>(); //A collection of profile's specialties
         specialties.add(profile.getSpecialty()); //Add the primary specialty
 
-        Stream.of(retrainings.getAll()) //Convert retrainings array into a stream
+        Stream.of(retrainingCollection.getAll()) //Convert retrainings array into a stream
                 .filter(r -> r.getProfileId().equals(profile.getId())) //Filter by the profile id
                 .filter(r -> r.getStatus() == RetrainingStatus.COMPLETED) //Filter by COMPLETED
                 .forEach(r->specialties.add(r.getSpecialty())); //And add all the specialties to the list

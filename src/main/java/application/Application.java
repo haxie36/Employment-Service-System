@@ -1,11 +1,11 @@
-package common;
+package application;
 
-import application.ApplicationStatus;
-import application.RecSystem;
-import interfaces.HasId;
-import retraining.Retrainings;
-import vacancy.Vacancies;
-import registration.Profiles;
+import base.HasId;
+import registration.Profile;
+import vacancy.Vacancy;
+import retraining.RetrainingCollection;
+import vacancy.VacancyCollection;
+import registration.ProfileCollection;
 
 import java.time.LocalDate;
 
@@ -34,8 +34,8 @@ public class Application implements HasId {
     }
 
     //Checks if the profile is registered, if is, set its as own
-    public boolean isRegistered(String passportNumber, Profiles profiles) {
-        Profile profile = profiles.getByPassport(passportNumber);
+    public boolean isRegistered(String passportNumber, ProfileCollection profileCollection) {
+        Profile profile = profileCollection.getByPassport(passportNumber);
         if(profile == null) return false;
         this.profile = profile;
         this.profileId = profile.getId();
@@ -43,8 +43,8 @@ public class Application implements HasId {
     }
 
     //Gets the recommendations for the profile
-    public Vacancy[] getRecommendations(RecSystem recSystem, Profiles profiles, Vacancies vacancies, Retrainings retrainings) {
-        return recSystem.getRecommendations(profile, vacancies, retrainings);
+    public Vacancy[] getRecommendations(RecSystem recSystem, ProfileCollection profileCollection, VacancyCollection vacancyCollection, RetrainingCollection retrainingCollection) {
+        return recSystem.getRecommendations(profile, vacancyCollection, retrainingCollection);
     }
 
     public String getId() {return id;}

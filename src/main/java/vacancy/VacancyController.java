@@ -1,17 +1,16 @@
 package vacancy;
 
-import application.Applications;
-import common.LogicController;
+import application.ApplicationCollection;
+import base.LogicController;
 import common.SpecialtyCatalog;
-import common.Vacancy;
 
 public class VacancyController extends LogicController<Vacancy, VacInput> {
-    private final Applications applications;
+    private final ApplicationCollection applicationCollection;
     private final SpecialtyCatalog specialtyCatalog;
 
-    public VacancyController(Vacancies vacancies, Applications applications, SpecialtyCatalog specialtyCatalog) {
-        super(vacancies);
-        this.applications = applications;
+    public VacancyController(VacancyCollection vacancyCollection, ApplicationCollection applicationCollection, SpecialtyCatalog specialtyCatalog) {
+        super(vacancyCollection);
+        this.applicationCollection = applicationCollection;
         this.specialtyCatalog = specialtyCatalog;
     }
 
@@ -21,6 +20,8 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
         creation = new Vacancy();
     }
 
+    //Set vacancy's title...
+    public boolean setVacancyTitle(String title){return creation.setTitle(title);}
     //Set vacancy's company name...
     public boolean setVacancyCompany(String company){
         return creation.setCompany(company);
@@ -64,17 +65,25 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
     //All in one
     public boolean create(VacInput input){
         newCreation();
-        if (!setVacancyCompany(input.getCompany())) return false;
-        if (!setVacancyContact(input.getContact())) return false;
-        if (!isRealSpecialty(input.getSpecialty())) return false;
-        if (!setVacancyExperience(input.getMinExperience())) return false;
-        if (!setVacancyDescription(input.getDescription())) return false;
+        if (!setVacancyTitle(input.getTitle()))
+            throw new IllegalArgumentException("Invalid Title!");
+        if (!setVacancyCompany(input.getCompany()))
+            throw new IllegalArgumentException("Company Name must be 3 characters long or longer!");
+        if (!isRealSpecialty(input.getSpecialty()))
+            throw new IllegalArgumentException("Invalid Specialty!");
+        if (!setVacancyExperience(input.getMinExperience()))
+            throw new IllegalArgumentException("Invalid Experience!");
+        if (!setVacancyDescription(input.getDescription()))
+            throw new IllegalArgumentException("Invalid Description!");
+        if (!setVacancyContact(input.getContact()))
+            throw new IllegalArgumentException("Invalid Contact!");
 
         return save();
     }
 
     //Edit
-    public boolean changeVacancyStatus(Vacancy vac, int status) {
-        return vac.changeStatus(status, applications);
+    public void changeVacancyStatus(Vacancy vac, int status) {
+        if(!vac.changeStatus(status, applicationCollection))
+            throw new IllegalArgumentException("Invalid Status!");
     }
 }

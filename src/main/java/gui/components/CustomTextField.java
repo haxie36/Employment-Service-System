@@ -11,4 +11,12 @@ public class CustomTextField extends JTextField {
         super(text);
         setPreferredSize(new Dimension(250,30));
     }
+
+    public CustomTextField(float wM, float hM) {
+        setPreferredSize(new Dimension((int)(250*wM),(int)(30*hM)));
+    }
+    public CustomTextField(String text, float wM, float hM) {
+        super(text);
+        setPreferredSize(new Dimension((int)(250*wM),(int)(30*hM)));
+    }
 }

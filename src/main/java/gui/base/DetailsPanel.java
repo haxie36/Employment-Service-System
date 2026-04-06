@@ -1,4 +1,6 @@
-package gui.components;
+package gui.base;
+
+import gui.components.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +12,7 @@ public abstract class DetailsPanel<T> extends JPanel {
     private final CustomButton additionalBtn;
     protected final JPanel details;
 
-    public DetailsPanel(T Object){
+    public DetailsPanel(){
         super(new BorderLayout());
         //Details
         details = new JPanel(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -32,7 +34,7 @@ public abstract class DetailsPanel<T> extends JPanel {
         add(btnPanel, BorderLayout.SOUTH);
     }
     public DetailsPanel(T Object, String additionalBtnText){
-        this(Object);
+        this();
         additionalBtn.setText(additionalBtnText);
         additionalBtn.addActionListener(e -> {onAdditional.run();});
         additionalBtn.setVisible(true);

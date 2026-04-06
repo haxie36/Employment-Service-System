@@ -1,6 +1,6 @@
 package application;
 
-import common.Vacancy;
+import vacancy.Vacancy;
 
 public class AppInput {
     private final String profileId;

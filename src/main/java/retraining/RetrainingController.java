@@ -1,21 +1,20 @@
 package retraining;
 
-import common.LogicController;
-import common.Retraining;
+import base.LogicController;
 import common.SpecialtyCatalog;
-import registration.Profiles;
+import registration.ProfileCollection;
 
 import java.time.LocalDate;
 
 public class RetrainingController extends LogicController<Retraining, RetrInput> {
-    private final Profiles profiles;
+    private final ProfileCollection profileCollection;
     private final SpecialtyCatalog specialtyCatalog;
 
-    public RetrainingController(Profiles profiles, SpecialtyCatalog specialtyCatalog, Retrainings retrainings) {
-        super(retrainings);
-        this.profiles = profiles;
+    public RetrainingController(ProfileCollection profileCollection, SpecialtyCatalog specialtyCatalog, RetrainingCollection retrainingCollection) {
+        super(retrainingCollection);
+        this.profileCollection = profileCollection;
         this.specialtyCatalog = specialtyCatalog;
-        this.collection = retrainings;
+        this.collection = retrainingCollection;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class RetrainingController extends LogicController<Retraining, RetrInput>
 
     //Check for profile being registered, if is, set as retraining's own
     public boolean isRegistered(String profileId){
-        return creation.findProfile(profileId, profiles);
+        return creation.findProfile(profileId, profileCollection);
     }
 
     //All in one

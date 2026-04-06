@@ -1,8 +1,8 @@
 package gui.profile;
 
 import common.DateUtils;
-import common.Profile;
-import gui.components.DetailsPanel;
+import registration.Profile;
+import gui.base.DetailsPanel;
 import gui.components.Row;
 
 import javax.swing.*;
@@ -17,8 +17,6 @@ public class ProfileDetailsPanel extends DetailsPanel<Profile> {
     private final JLabel experienceValueLbl;
 
     public ProfileDetailsPanel(Profile profile) {
-        super(profile);
-        //Info
         idValueLbl = new JLabel(profile.getId());
         nameValueLbl = new JLabel(profile.getName());
         birthDateValueLbl = new JLabel(profile.getBirthDate().format(DateUtils.FORMATTER));

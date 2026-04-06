@@ -1,50 +1,50 @@
 package drivers;
 
-import common.Profile;
-import registration.Profiles;
+import registration.Profile;
+import registration.ProfileCollection;
 
 import java.util.Arrays;
 
 public class DRPsAdd {
     public static void main(String[] args) {
         // Test 1
-        Profiles profiles1 = new Profiles();
+        ProfileCollection profileCollection1 = new ProfileCollection();
         Profile profile1 = new Profile("1");
-        profiles1.add(profile1);
-        print(profiles1);
+        profileCollection1.add(profile1);
+        print(profileCollection1);
 
         // Test 2
-        Profiles profiles2 = new Profiles(new Profile[]{new Profile("1")});
+        ProfileCollection profileCollection2 = new ProfileCollection(new Profile[]{new Profile("1")});
         Profile profile2 = new Profile("1");
-        profiles2.add(profile2);
-        print(profiles2);
+        profileCollection2.add(profile2);
+        print(profileCollection2);
 
         // Test 3
-        Profiles profiles3 = new Profiles();
+        ProfileCollection profileCollection3 = new ProfileCollection();
         for (int i = 0; i<3; i++){
-            profiles3.add(new Profile(Integer.toString(i)));
+            profileCollection3.add(new Profile(Integer.toString(i)));
         }
         Profile profile3 = new Profile("3");
-        profiles3.add(profile3);
-        print(profiles3);
+        profileCollection3.add(profile3);
+        print(profileCollection3);
 
         // Test 4
-        Profiles profiles4 = new Profiles();
+        ProfileCollection profileCollection4 = new ProfileCollection();
         for (int i = 0; i<3; i++){
-            profiles4.add(new Profile(Integer.toString(i)));
+            profileCollection4.add(new Profile(Integer.toString(i)));
         }
         Profile profile4 = new Profile("4");
-        profiles4.add(profile4);
-        print(profiles4);
+        profileCollection4.add(profile4);
+        print(profileCollection4);
 
         // Test 5
-        Profiles profiles5 = new Profiles(new Profile[]{new Profile("1")});
+        ProfileCollection profileCollection5 = new ProfileCollection(new Profile[]{new Profile("1")});
         Profile profile5 = new Profile("2");
-        profiles5.add(profile5);
-        print(profiles5);
+        profileCollection5.add(profile5);
+        print(profileCollection5);
     }
 
-    private static void print(Profiles profiles) {
-        System.out.println(Arrays.toString(profiles.getAll()));
+    private static void print(ProfileCollection profileCollection) {
+        System.out.println(Arrays.toString(profileCollection.getAll()));
     }
 }

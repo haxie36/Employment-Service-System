@@ -1,11 +1,10 @@
 package gui.profile;
 
-import common.DateUtils;
 import common.Passport;
-import common.Profile;
+import registration.Profile;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
-import gui.components.FormPanel;
+import gui.base.FormPanel;
 import gui.components.Row;
 import registration.RegInput;
 

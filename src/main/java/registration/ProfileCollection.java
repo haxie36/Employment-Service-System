@@ -1,15 +1,14 @@
 package registration;
 
-import common.EntityCollection;
+import base.EntityCollection;
 import common.Passport;
-import common.Profile;
 
 //A collection of Profiles
-public class Profiles extends EntityCollection<Profile> {
-    public Profiles() {
+public class ProfileCollection extends EntityCollection<Profile> {
+    public ProfileCollection() {
         super();
     }
-    public Profiles(Profile[] profiles) {
+    public ProfileCollection(Profile[] profiles) {
         super(profiles);
     }
 

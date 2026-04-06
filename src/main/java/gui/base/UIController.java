@@ -1,9 +1,9 @@
-package gui.components;
+package gui.base;
 
-import common.EntityCollection;
+import base.EntityCollection;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import interfaces.HasId;
+import base.HasId;
 
 public abstract class UIController<T extends HasId> {
     protected final MainWindow mainWindow;
@@ -16,7 +16,7 @@ public abstract class UIController<T extends HasId> {
     }
 
     public void open(){
-        updateList();
+        mainWindow.setListPanel(new ListPanel<T>(collection.getAll()));
         RightPanel rightPanel = mainWindow.getRightPanel();
         //Default right panel settings
         rightPanel.getNewButton().setVisible(true);

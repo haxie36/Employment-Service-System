@@ -1,10 +1,10 @@
 package application;
 
 public enum ApplicationStatus {
-    ACTIVE(0, "Active"),
-    ACCEPTED(1,"Accepted"),
-    REJECTED(2, "Rejected"),
-    RETRACTED(3, "Retracted");
+    ACTIVE(0, "ACTIVE"),
+    ACCEPTED(1,"ACCEPTED"),
+    REJECTED(2, "REJECTED"),
+    RETRACTED(3, "RETRACTED");
 
     private final int id;
     private final String name;
