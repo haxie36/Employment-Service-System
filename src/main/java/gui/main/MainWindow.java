@@ -1,7 +1,5 @@
 package gui.main;
 
-import gui.base.ListPanel;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,10 +10,10 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("Vacancy Processing and Recommendation System (Employment Center)");
-        setSize(800,800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setSize(1200,800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setResizable(false);
 
         leftMenu = new LeftMenu();
@@ -32,6 +30,12 @@ public class MainWindow extends JFrame {
     public LeftMenu getLeftMenu() {return leftMenu;}
     public RightPanel getRightPanel() {return rightPanel;}
 
-    public void setListPanel(ListPanel listPanel) {this.listPanel = listPanel;}
+    public void setListPanel(ListPanel listPanel) {
+        remove(this.listPanel);
+        this.listPanel = listPanel;
+        add(this.listPanel, BorderLayout.CENTER);
+
+        revalidate(); repaint();
+    }
     public void setRightPanel(RightPanel rightPanel) {this.rightPanel = rightPanel;}
 }

@@ -2,6 +2,7 @@ package gui.base;
 
 import base.EntityCollection;
 import gui.components.CustomButton;
+import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
 import base.HasId;
@@ -25,11 +26,13 @@ public abstract class UIController<T extends HasId> {
         resetButton(rightPanel.getNewButton());
         rightPanel.getNewButton().setVisible(true);
         rightPanel.setTitle(getTitle());
+        rightPanel.setContent(new EmptyPanel());
     }
 
     protected void updateList(){
-        mainWindow.getListPanel().clearSelection();
-        mainWindow.getListPanel().updateList(collection.getAll());
+        ListPanel<T> listPanel = mainWindow.getListPanel();
+        listPanel.clearSelection();
+        listPanel.updateList(collection.getAll());
         mainWindow.getRightPanel().setContent(new EmptyPanel());
     }
 

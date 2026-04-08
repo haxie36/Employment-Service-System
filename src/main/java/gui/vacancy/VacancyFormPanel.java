@@ -34,16 +34,17 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
     }
 
     @Override
-    public VacInput getInputData() {
-        try { //All the field have to be filled
-            if (titleField.getText().isEmpty()
-                    || companyField.getText().isEmpty()
-                    || contactField.getText().isEmpty()
-                    || specialtyField.getText().isEmpty()
-                    || experienceField.getText().isEmpty()
-                    || descriptionField.getText().isEmpty()) {
-                throw new Exception("Please fill all the fields!");
-            }
+    public VacInput getInputData() throws Exception {
+        //All the field have to be filled
+        if (titleField.getText().isEmpty()
+                || companyField.getText().isEmpty()
+                || contactField.getText().isEmpty()
+                || specialtyField.getText().isEmpty()
+                || experienceField.getText().isEmpty()
+                || descriptionField.getText().isEmpty()) {
+            throw new Exception("Please fill all the fields!");
+        }
+        try {
             //Return an input object
             return new VacInput(titleField.getText(),
                     companyField.getText(),
@@ -51,7 +52,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
                     Integer.parseInt(experienceField.getText()),
                     descriptionField.getText());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Experience must be an integer!");
+            throw new Exception("Experience must be an integer!");
         }
     }
 

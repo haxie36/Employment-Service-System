@@ -2,7 +2,7 @@ package gui.profile;
 
 import registration.Profile;
 import gui.base.EmptyPanel;
-import gui.base.ListPanel;
+import gui.main.ListPanel;
 import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
@@ -33,9 +33,9 @@ public class ProfileUIController extends UIController<Profile> {
                 try{
                     registrationController.create(regForm.getInputData());
                     //FeedBack message
-                    JOptionPane.showMessageDialog(regForm, "Registration Successful");
+                    JOptionPane.showMessageDialog(mainWindow, "Registration Successful");
                     updateList(); //Updates the list with a new profile
-                } catch (IllegalArgumentException ie) {
+                } catch (Exception ie) {
                     regForm.setStatusText(ie.getMessage()); //If it fails, change the status of a form
                 }                                           // to the exception message
             });
@@ -51,27 +51,29 @@ public class ProfileUIController extends UIController<Profile> {
         listPanel.getList().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 //Get selected
-                Profile selectedProfile = listPanel.getSelectedItem();
+                Profile selected = listPanel.getSelectedValue();
+                //Null check
+                if (selected == null) {return;}
                 //Create DETAILS panel
-                ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(selectedProfile);
+                ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(selected);
                 //Upon pressing "EDIT" open an edit form
                 profileDetailsPanel.setOnEdit(() -> {
-                    ProfileEditPanel profileEditPanel = new ProfileEditPanel(selectedProfile);
+                    ProfileEditPanel profileEditPanel = new ProfileEditPanel(selected);
                     //Apply changes (SAVE)
                     profileEditPanel.setOnSave(() -> {
                         try {
                             //Edit and update the list
-                            registrationController.editProfile(selectedProfile,
+                            registrationController.editProfile(selected,
                                     profileEditPanel.getInputData());
                             //FeedBack message
-                            JOptionPane.showMessageDialog(profileEditPanel, "Profile Edit Successful");
+                            JOptionPane.showMessageDialog(mainWindow, "Profile Edit Successful");
                             //Update
                             updateList();
-                            listPanel.getList().setSelectedValue(selectedProfile, true);
+                            listPanel.setSelectedValue(selected, true);
                             //Update details panel, set it
-                            profileDetailsPanel.update(selectedProfile);
+                            profileDetailsPanel.update(selected);
                             rightPanel.setContent(profileDetailsPanel);
-                        } catch (IllegalArgumentException ie) {
+                        } catch (Exception ie) {
                             profileEditPanel.setStatusText(ie.getMessage());
                         }
                     });
@@ -84,9 +86,9 @@ public class ProfileUIController extends UIController<Profile> {
                 });
                 //DELETE selected
                 profileDetailsPanel.setOnDelete(() -> {
-                    registrationController.delete(selectedProfile);
+                    registrationController.delete(selected);
                     //FeedBack message
-                    JOptionPane.showMessageDialog(profileDetailsPanel, "Profile Delete Successful");
+                    JOptionPane.showMessageDialog(mainWindow, "Profile Delete Successful");
                     updateList(); //And update the list
                 });
                 //Set the panel
@@ -95,7 +97,5 @@ public class ProfileUIController extends UIController<Profile> {
         });
     }
 
-    protected String getTitle() {
-        return "Profile";
-    }
+    protected String getTitle() {return "Profile";}
 }

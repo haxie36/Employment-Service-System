@@ -3,7 +3,7 @@ package gui.application;
 import application.ApplicationController;
 import application.ApplicationCollection;
 import application.Application;
-import gui.base.ListPanel;
+import gui.main.ListPanel;
 import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
@@ -28,7 +28,5 @@ public class ApplicationUIController extends UIController<Application> {
         });
     }
 
-    protected String getTitle() {
-        return "Application";
-    }
+    protected String getTitle() {return "Application";}
 }

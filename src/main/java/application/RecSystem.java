@@ -5,6 +5,7 @@ import retraining.RetrainingCollection;
 import vacancy.VacancyCollection;
 import vacancy.Vacancy;
 import registration.Profile;
+import vacancy.VacancyStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ public class RecSystem {
         List<Vacancy> recommendations = new ArrayList<>(); //A collection of recommendations
         for (int i=0; i<vacs.length; i++) {
             Vacancy vacancy = vacs[i];
+            //If vacancy isn't active, skip
+            if (vacancy.getStatus()!= VacancyStatus.OPEN) continue;
             //If profile has less experience than required, skip
             if(vacancy.getMinExperience() > profile.getExperience()) {continue;}
 

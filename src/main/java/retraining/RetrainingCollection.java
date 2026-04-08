@@ -5,9 +5,9 @@ import base.EntityCollection;
 //A collection of Retrainings
 public class RetrainingCollection extends EntityCollection<Retraining> {
     public RetrainingCollection() {
-        super();
+        super(Retraining.class);
     }
     public RetrainingCollection(Retraining[] retrainings) {
-        super(retrainings);
+        super(retrainings, Retraining.class);
     }
 }

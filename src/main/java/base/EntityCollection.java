@@ -1,13 +1,17 @@
 package base;
 
+import java.lang.reflect.Array;
+
 public class EntityCollection<T extends HasId> { //A custom collection class
     protected T[] items;
+    private final Class<T> type;
 
-    public EntityCollection() {
-        items = (T[]) new HasId[0];
+    public EntityCollection(Class<T> type) {
+        this.type = type;
+        items = (T[]) Array.newInstance(type, 0);
     }
-
-    public EntityCollection(T[] items) {
+    public EntityCollection(T[] items,  Class<T> type) {
+        this.type = type;
         this.items = items;
     }
 
@@ -20,7 +24,7 @@ public class EntityCollection<T extends HasId> { //A custom collection class
             }
         }
 
-        T[] newItems = (T[]) new HasId[items.length + 1];
+        T[] newItems = (T[]) Array.newInstance(type, items.length + 1);;
 
         System.arraycopy(items, 0, newItems, 0, items.length);
 
@@ -41,7 +45,7 @@ public class EntityCollection<T extends HasId> { //A custom collection class
     public boolean delete(String id) {
         for (int i = 0; i < items.length; i++) {
             if (id.equals(items[i].getId())) {
-                T[] newItems = (T[]) new HasId[items.length - 1];
+                T[] newItems = (T[]) Array.newInstance(type, items.length - 1);;
 
                 int index = 0;
                 for (int j = 0; j < items.length; j++) {
@@ -58,7 +62,7 @@ public class EntityCollection<T extends HasId> { //A custom collection class
     }
 
     public void clear() {
-        items = (T[]) new HasId[0];
+        items = (T[]) Array.newInstance(type, 0);;
     }
 
     public T[] getAll() {

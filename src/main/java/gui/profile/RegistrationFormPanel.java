@@ -41,16 +41,17 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
     }
 
     @Override
-    public RegInput getInputData() {
-        try { //All the field have to be filled
-            if (addressField.getText().isEmpty()
-                    || nameField.getText().isEmpty()
-                    || passportNumberField.getText().isEmpty()
-                    || RNOKPPField.getText().isEmpty()
-                    || specialtyField.getText().isEmpty()
-                    || experienceField.getText().isEmpty()) {
-                throw new Exception("Please fill all the fields!");
-            }
+    public RegInput getInputData() throws Exception {
+        //All the field have to be filled
+        if (addressField.getText().isEmpty()
+                || nameField.getText().isEmpty()
+                || passportNumberField.getText().isEmpty()
+                || RNOKPPField.getText().isEmpty()
+                || specialtyField.getText().isEmpty()
+                || experienceField.getText().isEmpty()) {
+            throw new Exception("Please fill all the fields!");
+        }
+        try {
             //Return an input object
             return new RegInput(
                     addressField.getText(),
@@ -62,7 +63,7 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
                     parseInt(experienceField.getText())
             );
         } catch (Exception e) {
-            throw new IllegalArgumentException("Experience must be an integer!");
+            throw new Exception("Experience must be an integer!");
         }
     }
 

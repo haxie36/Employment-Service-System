@@ -14,8 +14,14 @@ public abstract class DetailsPanel<T> extends JPanel {
 
     public DetailsPanel(){
         super(new BorderLayout());
+        setPreferredSize(new Dimension(320,0));
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                BorderFactory.createEmptyBorder(5, 0, 5, 0)
+        ));
         //Details
-        details = new JPanel(new BoxLayout(this,BoxLayout.Y_AXIS));
+        details = new JPanel();
+        details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
         details.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         //Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,0));

@@ -1,7 +1,7 @@
 package gui.vacancy;
 
 import gui.base.EmptyPanel;
-import gui.base.ListPanel;
+import gui.main.ListPanel;
 import vacancy.Vacancy;
 import gui.base.UIController;
 import gui.main.MainWindow;
@@ -36,7 +36,7 @@ public class VacancyUIController extends UIController<Vacancy> {
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Vacancy Created Successfully!");
                     updateList(); //Updating the list with a new vacancy
-                } catch (IllegalArgumentException ie) {
+                } catch (Exception ie) {
                     vacForm.setStatusText(ie.getMessage()); //If something goes wrong, change the status
                 }
             });
@@ -52,27 +52,29 @@ public class VacancyUIController extends UIController<Vacancy> {
         listPanel.getList().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 //Get selected
-                Vacancy selectedVacancy = listPanel.getList().getSelectedValue();
+                Vacancy selected = listPanel.getSelectedValue();
+                //Null check
+                if (selected == null) {return;}
                 //Create DETAILS panel
-                VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(selectedVacancy);
+                VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(selected);
                 //Press "EDIT" to edit...
                 vacancyDetailsPanel.setOnEdit(() -> {
-                    VacancyEditPanel vacancyEditPanel = new VacancyEditPanel(selectedVacancy);
+                    VacancyEditPanel vacancyEditPanel = new VacancyEditPanel(selected);
                     //Apply changes (SAVE)
                     vacancyEditPanel.setOnSave(() -> {
                         try {
                             //Edit and update the list
-                            vacancyController.changeVacancyStatus(selectedVacancy,
+                            vacancyController.changeVacancyStatus(selected,
                                     vacancyEditPanel.getStatus());
                             //FeedBack
                             JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
                             //Update
                             updateList();
-                            listPanel.getList().setSelectedValue(selectedVacancy, true);
+                            listPanel.setSelectedValue(selected, true);
                             //Update details panel, set it
-                            vacancyDetailsPanel.update(selectedVacancy);
+                            vacancyDetailsPanel.update(selected);
                             rightPanel.setContent(vacancyDetailsPanel);
-                        } catch (IllegalArgumentException ie) {
+                        } catch (Exception ie) {
                             vacancyEditPanel.setStatusText(ie.getMessage());
                         }
                     });
@@ -85,7 +87,7 @@ public class VacancyUIController extends UIController<Vacancy> {
                 });
                 //DELETE selected
                 vacancyDetailsPanel.setOnDelete(() -> {
-                    vacancyController.delete(selectedVacancy);
+                    vacancyController.delete(selected);
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Vacancy Delete Successful!");
                     updateList(); //And update the list
@@ -96,7 +98,5 @@ public class VacancyUIController extends UIController<Vacancy> {
         });
     }
 
-    protected String getTitle() {
-        return "Vacancy";
-    }
+    protected String getTitle() {return "Vacancy";}
 }

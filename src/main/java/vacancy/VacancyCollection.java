@@ -11,12 +11,13 @@ import java.util.stream.Stream;
 public class VacancyCollection extends EntityCollection<Vacancy> {
     private final ApplicationCollection applicationCollection;
 
-    public VacancyCollection(ApplicationCollection applicationCollection) {
-        this.applicationCollection = applicationCollection;
+    public VacancyCollection(ApplicationCollection applications) {
+        super(Vacancy.class);
+        this.applicationCollection = applications;
     }
-    public VacancyCollection(Vacancy[] vacancies, ApplicationCollection applicationCollection) {
-        super(vacancies);
-        this.applicationCollection = applicationCollection;
+    public VacancyCollection(Vacancy[] vacancies, ApplicationCollection applications) {
+        super(vacancies, Vacancy.class);
+        this.applicationCollection = applications;
     }
 
     @Override

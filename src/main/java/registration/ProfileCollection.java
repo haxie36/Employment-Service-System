@@ -6,20 +6,20 @@ import common.Passport;
 //A collection of Profiles
 public class ProfileCollection extends EntityCollection<Profile> {
     public ProfileCollection() {
-        super();
+        super(Profile.class);
     }
     public ProfileCollection(Profile[] profiles) {
-        super(profiles);
+        super(profiles, Profile.class);
     }
 
     //Check for profile is registered
     public boolean isRegistered(Passport Passport) {
-        String id = Passport.getPassportNumber();
-        return isRegistered(id);
+        String passportNumber = Passport.getPassportNumber();
+        return isRegistered(passportNumber);
     }
-    public boolean isRegistered(String id) {
+    public boolean isRegistered(String passportNumber) {
         for (Profile profile : items) {
-            if (id.equals(profile.getId()))
+            if (passportNumber.equals(profile.getPassportNumber()))
                 return true;
         } return false;
     }

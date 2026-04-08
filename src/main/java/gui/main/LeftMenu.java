@@ -3,6 +3,7 @@ package gui.main;
 import gui.components.CustomButton;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LeftMenu extends JPanel {
     private final CustomButton profilesBtn;
@@ -11,22 +12,40 @@ public class LeftMenu extends JPanel {
     private final CustomButton retrainingsBtn;
 
     public LeftMenu(){
-        profilesBtn = new CustomButton("Profiles");
-        vacanciesBtn = new CustomButton("Vacancies");
-        applicationsBtn = new CustomButton("Applications");
-        retrainingsBtn = new CustomButton("Retrainings");
-
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        setPreferredSize(new Dimension(240, 0));
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+         //temp
+        setBackground(Color.GREEN);
 
+        profilesBtn = createButton("Profiles");
+        vacanciesBtn = createButton("Vacancies");
+        applicationsBtn = createButton("Applications");
+        retrainingsBtn = createButton("Retrainings");
+
+        add(Box.createVerticalGlue());
         add(profilesBtn);
+        add(Box.createVerticalStrut(10));
         add(vacanciesBtn);
+        add(Box.createVerticalStrut(10));
         add(applicationsBtn);
+        add(Box.createVerticalStrut(10));
         add(retrainingsBtn);
+        add(Box.createVerticalGlue());
     }
 
     public JButton getProfilesBtn() {return profilesBtn;}
     public JButton getVacanciesBtn() {return vacanciesBtn;}
     public JButton getApplicationsBtn() {return applicationsBtn;}
     public JButton getRetrainingsBtn() {return retrainingsBtn;}
+
+    private CustomButton createButton(String text) {
+        CustomButton button = new CustomButton(text);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setMaximumSize(new Dimension(180, 40));
+        return button;
+    }
 }
