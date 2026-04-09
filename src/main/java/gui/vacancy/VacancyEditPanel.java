@@ -9,6 +9,7 @@ import vacancy.Vacancy;
 import vacancy.VacancyStatus;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class VacancyEditPanel extends FormPanel<VacInput> {
     private final JLabel titleLabel;
@@ -22,6 +23,8 @@ public class VacancyEditPanel extends FormPanel<VacInput> {
 
     public VacancyEditPanel(Vacancy vacancy) {
         titleLabel = new JLabel(vacancy.getTitle());
+        titleLabel.setFont(new Font("Arial",Font.BOLD,16));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         idLbl = new JLabel(vacancy.getId());
         companyLbl = new JLabel(vacancy.getCompany());
         contactLbl = new JLabel(vacancy.getContact());

@@ -6,6 +6,7 @@ import gui.components.Row;
 import vacancy.Vacancy;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class VacancyDetailsPanel extends DetailsPanel<Vacancy> {
     private final JLabel titleLabel;
@@ -19,6 +20,8 @@ public class VacancyDetailsPanel extends DetailsPanel<Vacancy> {
     
     public VacancyDetailsPanel(Vacancy vacancy) {
         titleLabel = new JLabel(vacancy.getTitle());
+        titleLabel.setFont(new Font("Arial",Font.BOLD,16));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         idLbl = new JLabel(vacancy.getId());
         companyLbl = new JLabel(vacancy.getCompany());
         contactLbl = new JLabel(vacancy.getContact());

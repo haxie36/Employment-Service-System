@@ -1,6 +1,7 @@
 package gui.vacancy;
 
 import gui.base.FormPanel;
+import gui.components.CustomButton;
 import gui.components.CustomTextArea;
 import gui.components.CustomTextField;
 import gui.components.Row;
@@ -17,18 +18,23 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
     private final CustomTextArea descriptionField;
 
     public VacancyFormPanel() {
-        titleField = new CustomTextField(2,1);
+        titleField = new CustomTextField();
         companyField = new CustomTextField();
         contactField = new CustomTextField();
         specialtyField = new CustomTextField();
         experienceField = new CustomTextField();
         descriptionField = new CustomTextArea();
 
+        form.add(new Row(new JLabel("Title:"), titleField));
         form.add(new Row(new JLabel("Company Name:"), companyField));
         form.add(new Row(new JLabel("Contact Number:"), contactField));
         form.add(new Row(new JLabel("Specialty:"), specialtyField));
         form.add(new Row(new JLabel("Experience Requirements:"), experienceField));
         form.add(new Row(new JLabel("Description:"), descriptionField));
+
+        CustomButton templateButton = new CustomButton("Template");
+        templateButton.addActionListener(e -> applyTemplate());
+        form.add(templateButton);
 
         revalidate(); repaint();
     }
@@ -72,5 +78,21 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
         specialtyField.setText("");
         experienceField.setText("");
         descriptionField.setText("");
+    }
+
+    private String getTemplate() {
+        return """
+            Salary:
+            
+            Skill requirements:
+            
+            Responsibilities:
+            
+            Conditions:
+            
+            """;
+    }
+    public void applyTemplate() {
+        descriptionField.setText(getTemplate());
     }
 }

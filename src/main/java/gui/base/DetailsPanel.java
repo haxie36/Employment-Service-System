@@ -27,8 +27,8 @@ public abstract class DetailsPanel<T> extends JPanel {
 
         CustomButton editBtn = new CustomButton("Edit");
         CustomButton deleteBtn = new CustomButton("Delete");
-        editBtn.addActionListener(e -> {onEdit.run();});
-        deleteBtn.addActionListener(e -> {onDelete.run();});
+        editBtn.addActionListener(e -> onEdit.run());
+        deleteBtn.addActionListener(e -> onDelete.run());
         //Add the buttons to the panel
         btnPanel.add(editBtn);
         btnPanel.add(deleteBtn);
@@ -39,7 +39,7 @@ public abstract class DetailsPanel<T> extends JPanel {
     public DetailsPanel(String additionalBtnText){
         this();
         CustomButton additionalBtn = new CustomButton(additionalBtnText);
-        additionalBtn.addActionListener(e -> {onAdditional.run();});
+        additionalBtn.addActionListener(e -> onAdditional.run());
         additionalBtn.setVisible(true);
 
         btnPanel.add(additionalBtn);
