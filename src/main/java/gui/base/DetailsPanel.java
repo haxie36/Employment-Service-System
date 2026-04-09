@@ -9,30 +9,27 @@ public abstract class DetailsPanel<T> extends JPanel {
     private Runnable onEdit;
     private Runnable onDelete;
     private Runnable onAdditional;
-    private final CustomButton additionalBtn;
     protected final JPanel details;
+    private final JPanel btnPanel;
 
     public DetailsPanel(){
         super(new BorderLayout());
         setPreferredSize(new Dimension(320,0));
-        setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 0, 5, 0)
-        ));
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //Details
         details = new JPanel();
         details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
-        details.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        details.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+
         //Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,0));
-        additionalBtn = new CustomButton("");
-        additionalBtn.setVisible(false);
+        btnPanel = new JPanel(new GridLayout(1,0,10,0));
+        btnPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
         CustomButton editBtn = new CustomButton("Edit");
         CustomButton deleteBtn = new CustomButton("Delete");
         editBtn.addActionListener(e -> {onEdit.run();});
         deleteBtn.addActionListener(e -> {onDelete.run();});
-        //Complete the buttons panel
-        btnPanel.add(additionalBtn);
+        //Add the buttons to the panel
         btnPanel.add(editBtn);
         btnPanel.add(deleteBtn);
         //Finish
@@ -41,9 +38,11 @@ public abstract class DetailsPanel<T> extends JPanel {
     }
     public DetailsPanel(String additionalBtnText){
         this();
-        additionalBtn.setText(additionalBtnText);
+        CustomButton additionalBtn = new CustomButton(additionalBtnText);
         additionalBtn.addActionListener(e -> {onAdditional.run();});
         additionalBtn.setVisible(true);
+
+        btnPanel.add(additionalBtn);
         revalidate(); repaint();
     }
 

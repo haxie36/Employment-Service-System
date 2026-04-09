@@ -20,10 +20,7 @@ public abstract class FormPanel<T> extends JPanel {
         //Form itself (text fields and stuff)
         form = new JPanel();
         form.setLayout(new BoxLayout(form,BoxLayout.Y_AXIS));
-        form.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 0, 5, 0)
-        ));
+        form.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //Bottom panel with buttons and status (shows up when and error occurs)
         JPanel btnAndStatusPanel = new JPanel();
         btnAndStatusPanel.setLayout(new BoxLayout(btnAndStatusPanel,BoxLayout.Y_AXIS));

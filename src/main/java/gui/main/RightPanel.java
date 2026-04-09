@@ -24,9 +24,11 @@ public class RightPanel extends JPanel {
         title = new JLabel("");
         title.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         title.setFont(new Font("Arial",Font.BOLD,20));
+        title.setPreferredSize(new Dimension(160, 50));
         newButton = new CustomButton("+ New  ");
         newButton.setVisible(false);
-        content = new JPanel(new  BorderLayout());
+        content = new JPanel(new BorderLayout());
+        content.setBorder(BorderFactory.createBevelBorder(1));
 
         top.add(title,BorderLayout.WEST);
         top.add(newButton,BorderLayout.EAST);
