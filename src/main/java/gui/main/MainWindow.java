@@ -9,7 +9,7 @@ public class MainWindow extends JFrame {
     private RightPanel rightPanel;
 
     public MainWindow() {
-        super("Vacancy Processing and Recommendation System (Employment Center)");
+        super("Vacancy Processing and Recommendation System (Employment Service)");
         setLayout(new BorderLayout());
         setSize(1200,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,5 +1,6 @@
 package gui.base;
 
+import application.Application;
 import base.EntityCollection;
 import gui.components.CustomButton;
 import gui.main.ListPanel;
@@ -7,6 +8,7 @@ import gui.main.MainWindow;
 import gui.main.RightPanel;
 import base.HasId;
 
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 
 public abstract class UIController<T extends HasId> {
@@ -27,6 +29,16 @@ public abstract class UIController<T extends HasId> {
         rightPanel.getNewButton().setVisible(true);
         rightPanel.setTitle(getTitle());
         rightPanel.setContent(new EmptyPanel());
+    }
+
+    protected abstract void setupNewButtonListener();
+
+    protected void setupListListener() {
+        //Remove old ones
+        ListPanel<Application> listPanel = mainWindow.getListPanel();
+        for (ListSelectionListener listener : listPanel.getList().getListSelectionListeners()) {
+            listPanel.getList().removeListSelectionListener(listener);
+        }
     }
 
     protected void updateList(){

@@ -22,26 +22,26 @@ public class VacancyEditPanel extends FormPanel<VacInput> {
     private final EnumComboBox<VacancyStatus> statusComboBox;
 
     public VacancyEditPanel(Vacancy vacancy) {
-        titleLabel = new JLabel(vacancy.getTitle());
+        titleLabel = label(vacancy.getTitle());
         titleLabel.setFont(new Font("Arial",Font.BOLD,16));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        idLbl = new JLabel(vacancy.getId());
-        companyLbl = new JLabel(vacancy.getCompany());
-        contactLbl = new JLabel(vacancy.getContact());
-        specialtyLbl = new JLabel(vacancy.getSpecialty());
-        experienceLbl = new JLabel(String.valueOf(vacancy.getMinExperience()));
+        idLbl = label(vacancy.getId());
+        companyLbl = label(vacancy.getCompany());
+        contactLbl = label(vacancy.getContact());
+        specialtyLbl = label(vacancy.getSpecialty());
+        experienceLbl = label(String.valueOf(vacancy.getMinExperience()));
         descriptionArea = new CustomTextArea(vacancy.getDescription(), false);
         statusComboBox = new EnumComboBox<>(VacancyStatus.class);
         statusComboBox.setSelectedItem(vacancy.getStatus());
 
         form.add(titleLabel);
-        form.add(new Row(new JLabel("Id:"), idLbl));
-        form.add(new Row(new JLabel("Company Name:"), companyLbl));
-        form.add(new Row(new JLabel("Contact Number:"), contactLbl));
-        form.add(new Row(new JLabel("Specialty:"), specialtyLbl));
-        form.add(new Row(new JLabel("Experience Requirements:"), experienceLbl));
-        form.add(new Row(new JLabel("Description:"), descriptionArea));
-        form.add(new Row(new JLabel("Status:"), statusComboBox));
+        form.add(new Row(label("Id:"), idLbl));
+        form.add(new Row(label("Company Name:"), companyLbl));
+        form.add(new Row(label("Contact Number:"), contactLbl));
+        form.add(new Row(label("Specialty:"), specialtyLbl));
+        form.add(new Row(label("Experience Requirements:"), experienceLbl));
+        form.add(new Row(label("Description:"), descriptionArea));
+        form.add(new Row(label("Status:"), statusComboBox));
 
         revalidate(); repaint();
     }

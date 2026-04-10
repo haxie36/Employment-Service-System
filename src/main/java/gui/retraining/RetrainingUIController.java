@@ -19,8 +19,27 @@ public class RetrainingUIController extends UIController<Retraining> {
 
     public void open(){
         super.open();
+        //+New button setup
+        setupNewButtonListener();
+        //List setup
+        setupListListener();
+    }
+
+    @Override
+    protected void setupNewButtonListener() {
         RightPanel rightPanel = mainWindow.getRightPanel();
         ListPanel<Retraining> listPanel = mainWindow.getListPanel();
+        //Listener
+
+    }
+
+    @Override
+    protected void setupListListener() {
+        super.setupListListener();
+        RightPanel rightPanel = mainWindow.getRightPanel();
+        ListPanel<Retraining> listPanel = mainWindow.getListPanel();
+        //Listener
+
     }
 
     protected String getTitle() {return "Retraining";}

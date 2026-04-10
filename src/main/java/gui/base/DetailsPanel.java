@@ -11,6 +11,8 @@ public abstract class DetailsPanel<T> extends JPanel {
     private Runnable onAdditional;
     protected final JPanel details;
     private final JPanel btnPanel;
+    private final CustomButton editBtn;
+    private final CustomButton deleteBtn;
 
     public DetailsPanel(){
         super(new BorderLayout());
@@ -25,8 +27,8 @@ public abstract class DetailsPanel<T> extends JPanel {
         btnPanel = new JPanel(new GridLayout(1,0,10,0));
         btnPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        CustomButton editBtn = new CustomButton("Edit");
-        CustomButton deleteBtn = new CustomButton("Delete");
+        editBtn = new CustomButton("Edit");
+        deleteBtn = new CustomButton("Delete");
         editBtn.addActionListener(e -> onEdit.run());
         deleteBtn.addActionListener(e -> onDelete.run());
         //Add the buttons to the panel
@@ -42,13 +44,18 @@ public abstract class DetailsPanel<T> extends JPanel {
         additionalBtn.addActionListener(e -> onAdditional.run());
         additionalBtn.setVisible(true);
 
-        btnPanel.add(additionalBtn);
+        btnPanel.add(additionalBtn, 0);
         revalidate(); repaint();
     }
 
     public abstract void update(T Object);
 
+    public JPanel getDetails() {return details;}
     public void setOnEdit (Runnable onEdit) {this.onEdit = onEdit;}
     public void setOnDelete (Runnable onDelete) {this.onDelete = onDelete;}
     public void setOnAdditional (Runnable onAdditional) {this.onAdditional = onAdditional;}
+    public void setEditButtonText(String text) {editBtn.setText(text);}
+    public void setDeleteButtonText(String text) {deleteBtn.setText(text);}
+
+    protected JLabel label(String text){return new JLabel(text);}
 }

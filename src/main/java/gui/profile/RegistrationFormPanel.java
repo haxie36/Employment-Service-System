@@ -29,13 +29,13 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
         specialtyField = new CustomTextField();
         experienceField = new CustomTextField();
 
-        form.add(new Row(new JLabel("Address:"), addressField));
-        form.add(new Row(new JLabel("Full Name:"), nameField));
-        form.add(new Row(new JLabel("Birth Date:"), birthDateField));
-        form.add(new Row(new JLabel("Passport Number:"), passportNumberField));
-        form.add(new Row(new JLabel("RNOKPP:"), RNOKPPField));
-        form.add(new Row(new JLabel("Specialty:"), specialtyField));
-        form.add(new Row(new JLabel("Experience:"), experienceField));
+        form.add(new Row(label("Address:"), addressField));
+        form.add(new Row(label("Full Name:"), nameField));
+        form.add(new Row(label("Birth Date:"), birthDateField));
+        form.add(new Row(label("Passport Number:"), passportNumberField));
+        form.add(new Row(label("RNOKPP:"), RNOKPPField));
+        form.add(new Row(label("Specialty:"), specialtyField));
+        form.add(new Row(label("Experience:"), experienceField));
 
         revalidate(); repaint();
     }

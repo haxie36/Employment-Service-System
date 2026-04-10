@@ -28,13 +28,13 @@ public class ProfileEditPanel extends FormPanel<RegInput> {
         specialtyField = new CustomTextField(profile.getSpecialty());
         experienceField = new CustomTextField(String.valueOf(profile.getExperience()));
 
-        form.add(new Row(new JLabel("Id:"), new JLabel(profile.getId())));
-        form.add(new Row(new JLabel("Full Name:"), nameField));
-        form.add(new Row(new JLabel("Birth Date:"), birthDateField));
-        form.add(new Row(new JLabel("Passport Number:"), passportNumberField));
-        form.add(new Row(new JLabel("RNOKPP:"), RNOKPPField));
-        form.add(new Row(new JLabel("Specialty:"), specialtyField));
-        form.add(new Row(new JLabel("Experience:"), experienceField));
+        form.add(new Row(label("Id:"), label(profile.getId())));
+        form.add(new Row(label("Full Name:"), nameField));
+        form.add(new Row(label("Birth Date:"), birthDateField));
+        form.add(new Row(label("Passport Number:"), passportNumberField));
+        form.add(new Row(label("RNOKPP:"), RNOKPPField));
+        form.add(new Row(label("Specialty:"), specialtyField));
+        form.add(new Row(label("Experience:"), experienceField));
 
         revalidate(); repaint();
     }

@@ -13,6 +13,7 @@ public abstract class FormPanel<T> extends JPanel {
     private Runnable onCancel;
     protected JPanel form;
     protected JLabel status;
+    protected CustomButton saveBtn;
 
     public FormPanel() {
         super(new BorderLayout());
@@ -28,12 +29,11 @@ public abstract class FormPanel<T> extends JPanel {
         //Status
         status = new JLabel("");
         status.setForeground(Color.RED);
-        status.setFont(new Font("Arial", Font.BOLD, 12));
         Dimension size = status.getPreferredSize();
         status.setPreferredSize(new Dimension(size.width, 20));
         //Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
-        CustomButton saveBtn = new CustomButton("Save");
+        saveBtn = new CustomButton("Save");
         CustomButton cancelBtn = new CustomButton("Cancel");
         saveBtn.addActionListener(e -> {if (onSave!=null) onSave.run();});
         cancelBtn.addActionListener(e -> {if (onCancel!=null) onCancel.run();});
@@ -55,4 +55,6 @@ public abstract class FormPanel<T> extends JPanel {
     public void setOnSave (Runnable onSave) {this.onSave = onSave;}
     public void setOnCancel (Runnable onCancel) {this.onCancel = onCancel;}
     public void setStatusText(String text) {status.setText(text);}
+
+    protected JLabel label(String text) {return new JLabel(text);}
 }

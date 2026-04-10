@@ -3,14 +3,14 @@ package application;
 import vacancy.Vacancy;
 
 public class AppInput {
-    private final String profileId;
+    private final String passportNumber;
     private final Vacancy vacancy;
 
-    public AppInput(String profileId, Vacancy vacancy) {
-        this.profileId = profileId;
+    public AppInput(String passportNumber, Vacancy vacancy) {
+        this.passportNumber = passportNumber;
         this.vacancy = vacancy;
     }
 
-    public String getProfileId() {return profileId;}
+    public String getPassportNumber() {return passportNumber;}
     public Vacancy getVacancy() {return vacancy;}
 }

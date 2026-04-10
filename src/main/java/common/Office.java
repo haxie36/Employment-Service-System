@@ -18,6 +18,9 @@ import retraining.RetrainingCollection;
 import vacancy.VacancyCollection;
 import vacancy.VacancyController;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Office {
     public Office() {
         //Collections
@@ -32,17 +35,22 @@ public class Office {
         RecSystem recSystem = new RecSystem();
 
         //Controllers
-        RegistrationController registrationController = new RegistrationController(serviceArea, specialtyCatalog, profileCollection, this);
-        ApplicationController applicationController = new ApplicationController(vacancyCollection, applicationCollection, profileCollection, retrainingCollection, recSystem);
-        VacancyController vacancyController = new VacancyController(vacancyCollection, applicationCollection, specialtyCatalog);
-        RetrainingController retrainingController = new RetrainingController(profileCollection, specialtyCatalog, retrainingCollection);
+        RegistrationController registrationController = new RegistrationController(serviceArea,
+                specialtyCatalog, profileCollection, this);
+        ApplicationController applicationController = new ApplicationController(vacancyCollection,
+                applicationCollection, profileCollection, retrainingCollection, recSystem);
+        VacancyController vacancyController = new VacancyController(vacancyCollection, applicationCollection,
+                specialtyCatalog);
+        RetrainingController retrainingController = new RetrainingController(profileCollection,
+                specialtyCatalog, retrainingCollection);
 
         //GUI
+        UIManager.put("Default_font", new Font("Arial", Font.BOLD, 12));
         MainWindow mainWindow = new MainWindow();
 
         //GUI Controllers
         ProfileUIController  profileUIController = new ProfileUIController(mainWindow, registrationController, profileCollection);
-        ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow, applicationController, applicationCollection);
+        ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow, applicationController, applicationCollection, profileCollection);
         VacancyUIController vacancyUIController = new VacancyUIController(mainWindow, vacancyController, vacancyCollection);
         RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow, retrainingController, retrainingCollection);
         MainUIController mainUIController = new MainUIController(mainWindow,

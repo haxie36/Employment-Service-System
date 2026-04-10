@@ -47,6 +47,10 @@ public class Application implements HasId {
         return recSystem.getRecommendations(profile, vacancyCollection, retrainingCollection);
     }
 
+    public boolean hasActiveApplications(String profileId, String vacancyId, ApplicationCollection applicationCollection) {
+        return applicationCollection.hasActiveApplications(profileId, vacancyId);
+    }
+
     public String getId() {return id;}
     public String getProfileId() {return profileId;}
     public Profile getProfile() {return profile;}

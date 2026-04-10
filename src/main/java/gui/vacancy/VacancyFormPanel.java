@@ -25,12 +25,12 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
         experienceField = new CustomTextField();
         descriptionField = new CustomTextArea();
 
-        form.add(new Row(new JLabel("Title:"), titleField));
-        form.add(new Row(new JLabel("Company Name:"), companyField));
-        form.add(new Row(new JLabel("Contact Number:"), contactField));
-        form.add(new Row(new JLabel("Specialty:"), specialtyField));
-        form.add(new Row(new JLabel("Experience Requirements:"), experienceField));
-        form.add(new Row(new JLabel("Description:"), descriptionField));
+        form.add(new Row(label("Title:"), titleField));
+        form.add(new Row(label("Company Name:"), companyField));
+        form.add(new Row(label("Contact Number:"), contactField));
+        form.add(new Row(label("Specialty:"), specialtyField));
+        form.add(new Row(label("Experience Requirements:"), experienceField));
+        form.add(new Row(label("Description:"), descriptionField));
 
         CustomButton templateButton = new CustomButton("Template");
         templateButton.addActionListener(e -> applyTemplate());

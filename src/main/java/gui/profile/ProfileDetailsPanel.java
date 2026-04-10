@@ -6,6 +6,7 @@ import gui.base.DetailsPanel;
 import gui.components.Row;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ProfileDetailsPanel extends DetailsPanel<Profile> {
     private final JLabel idValueLbl;
@@ -16,24 +17,29 @@ public class ProfileDetailsPanel extends DetailsPanel<Profile> {
     private final JLabel specialtyValueLbl;
     private final JLabel experienceValueLbl;
 
-    public ProfileDetailsPanel(Profile profile) {
-        idValueLbl = new JLabel(profile.getId());
-        nameValueLbl = new JLabel(profile.getName());
-        birthDateValueLbl = new JLabel(profile.getBirthDate().format(DateUtils.FORMATTER));
-        passportNumberValueLbl = new JLabel(profile.getPassportNumber());
-        RNOKPPValueLbl = new JLabel(profile.getRNOKPP());
-        specialtyValueLbl = new JLabel(profile.getSpecialty());
-        experienceValueLbl = new JLabel(String.valueOf(profile.getExperience()));
+    public ProfileDetailsPanel() {
+        idValueLbl = label("");
+        nameValueLbl = label("");
+        birthDateValueLbl = label("");
+        passportNumberValueLbl = label("");
+        RNOKPPValueLbl = label("");
+        specialtyValueLbl = label("");
+        experienceValueLbl = label("");
 
-        details.add(new Row(new JLabel("Id:"), idValueLbl));
-        details.add(new Row(new JLabel("Name:"), nameValueLbl));
-        details.add(new Row(new JLabel("Birth Date:"), birthDateValueLbl));
-        details.add(new Row(new JLabel("Passport Number:"), passportNumberValueLbl));
-        details.add(new Row(new JLabel("RNOKPP:"), RNOKPPValueLbl));
-        details.add(new Row(new JLabel("Specialty:"), specialtyValueLbl));
-        details.add(new Row(new JLabel("Experience:"), experienceValueLbl));
+        details.add(new Row(label("Id:"), idValueLbl));
+        details.add(new Row(label("Name:"), nameValueLbl));
+        details.add(new Row(label("Birth Date:"), birthDateValueLbl));
+        details.add(new Row(label("Passport Number:"), passportNumberValueLbl));
+        details.add(new Row(label("RNOKPP:"), RNOKPPValueLbl));
+        details.add(new Row(label("Specialty:"), specialtyValueLbl));
+        details.add(new Row(label("Experience:"), experienceValueLbl));
 
         revalidate(); repaint();
+    }
+
+    public ProfileDetailsPanel(Profile profile) {
+        this();
+        update(profile);
     }
 
     public void update(Profile profile) {

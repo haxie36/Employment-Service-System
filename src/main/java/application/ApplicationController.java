@@ -1,6 +1,7 @@
 package application;
 
 import base.LogicController;
+import registration.Profile;
 import retraining.RetrainingCollection;
 import vacancy.VacancyCollection;
 import vacancy.Vacancy;
@@ -29,29 +30,36 @@ public class ApplicationController extends LogicController<Application, AppInput
     }
 
     //Get the recommendations for the application's profile
-    public Vacancy[] getRecommendations(){ //Returns a list of vacancies
-        return creation.getRecommendations(recSystem, profileCollection,
+    public Vacancy[] getRecommendations(Profile profile){
+        return recSystem.getRecommendations(profile,
                 vacancyCollection, retrainingCollection);
     }
 
     //Set application's vacancy...
-    public boolean setVacancy(Vacancy vacancy){
+    public void setVacancy(Vacancy vacancy){
         creation.setVacancy(vacancy);
         creation.setVacancyId(vacancy.getId());
-        return true;
     }
 
     //All in one
-    public boolean create(AppInput input){
+    public boolean create(AppInput input) throws Exception {
         newCreation();
-        if (!isRegistered(input.getProfileId())) return false;
-        if (!setVacancy(input.getVacancy())) return false;
-
+        if (!isRegistered(input.getPassportNumber())) throw new Exception("Profile not found!");
+        if (hasActiveApplications(
+                creation.getProfileId(),
+                input.getVacancy().getId()
+                )) throw new Exception("Active application exists!");
+        setVacancy(input.getVacancy());
         return save();
     }
 
     //Edit
     public void changeApplicationStatus(Application app, int status){
         app.setStatus(ApplicationStatus.fromId(status));
+    }
+
+    //Cloning check
+    public boolean hasActiveApplications(String profileId, String vacancyId) {
+        return creation.hasActiveApplications(profileId, vacancyId, (ApplicationCollection) collection);
     }
 }
