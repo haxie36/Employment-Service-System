@@ -93,8 +93,8 @@ public class ApplicationUIController extends UIController<Application> {
     //Note: To not repeat the code, I use the same class here.
     //I've added methods to change the text of buttons,
     //but I cannot change the name of a Runnable,
-    //therefore, don't mind me referring to "onEdit" as "onApply"
-    //and to "onDelete" as "onCancel"...
+    //therefore, don't mind me referring to "onEdit" as "Apply"
+    //and to "onDelete" as "Cancel"...
     private VacancyDetailsPanel getVacancyDetailsPanel(Vacancy selectedVacancy, FindProfileFormPanel findProfileForm, RightPanel rightPanel) {
         VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(selectedVacancy);
         vacancyDetailsPanel.setEditButtonText("Apply");
@@ -168,11 +168,6 @@ public class ApplicationUIController extends UIController<Application> {
             //Add the panel
             rightPanel.setContent(applicationDetailsPanel);
         });
-    }
-
-    private void forcedListUpdate() {
-        mainWindow.setListPanel(new ListPanel<>(collection.getAll()));
-        setupListListener();
     }
 
     protected String getTitle() {return "Application";}

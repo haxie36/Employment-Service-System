@@ -2,12 +2,12 @@ package gui.base;
 
 import application.Application;
 import base.EntityCollection;
-import gui.components.CustomButton;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
 import base.HasId;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 
@@ -48,10 +48,15 @@ public abstract class UIController<T extends HasId> {
         mainWindow.getRightPanel().setContent(new EmptyPanel());
     }
 
-    protected void resetButton(CustomButton btn) {
+    protected void resetButton(JButton btn) {
         for (ActionListener l : btn.getActionListeners()) {
             btn.removeActionListener(l);
         }
+    }
+
+    protected void forcedListUpdate() {
+        mainWindow.setListPanel(new ListPanel<>(collection.getAll()));
+        setupListListener();
     }
 
     protected abstract String getTitle();
