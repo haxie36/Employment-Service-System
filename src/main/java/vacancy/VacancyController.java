@@ -20,33 +20,6 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
         creation = new Vacancy();
     }
 
-    //Set vacancy's title...
-    public boolean setVacancyTitle(String title){return creation.setTitle(title);}
-    //Set vacancy's company name...
-    public boolean setVacancyCompany(String company){
-        return creation.setCompany(company);
-    }
-    //Set vacancy's company contact number...
-    public boolean setVacancyContact(String contact){
-        creation.setContact(contact);
-        return true;
-    }
-
-    //End the creation of the Vacancy by saving it in the collection
-    public boolean save(){
-        if (creation !=null){
-            setCreationId(); //temp
-            collection.add(creation);
-            clear();
-            return true;
-        }
-        return false;
-    }
-    //temp
-    private void setCreationId(){
-        creation.setId(String.valueOf(collection.getAll().length+1));
-    }
-
     //All-in-one
     public void create(VacInput input) {
         if (input.getTitle().length() < 3)

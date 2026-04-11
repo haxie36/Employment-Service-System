@@ -43,6 +43,7 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
     public void create(RegInput input) {
         if (!serviceArea.isServiceArea(input.getAddress()))
             throw new IllegalArgumentException("Address is not valid!");
+        validatePassportInfo(input);
         if (((ProfileCollection)collection).isRegistered(input.getPassport()))
             throw new IllegalArgumentException("Profile is already registered!");
         validateSkills(input);
@@ -56,6 +57,7 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
 
     //Edit
     public void editProfile(Profile prof, RegInput input) {
+        validatePassportInfo(input);
         if (((ProfileCollection)collection).existsByPassportExcept(prof.getId(),
                 input.getPassport().getPassportNumber()))
             throw new IllegalArgumentException("Profile with this passport already exists!");
@@ -66,6 +68,16 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
 
         prof.setPassportInfo(input.getPassport());
         prof.setExperience(input.getExperience());
+    }
+
+    private static void validatePassportInfo(RegInput input) {
+        if (input.getPassport().getPassportNumber().length() < 8
+                && input.getPassport().getPassportNumber().length() > 9)
+            throw new IllegalArgumentException("Invalid passport number!");
+        if (input.getPassport().getRNOKPP().length() != 10)
+            throw new IllegalArgumentException("Invalid RNOKPP!");
+        if (input.getPassport().getName().length() < 3)
+            throw new IllegalArgumentException("Invalid name!");
     }
 
     private void validateSkills(RegInput input) {
