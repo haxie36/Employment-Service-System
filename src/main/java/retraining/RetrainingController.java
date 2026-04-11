@@ -1,7 +1,9 @@
 package retraining;
 
 import base.LogicController;
+import common.DateUtils;
 import common.SpecialtyCatalog;
+import registration.Profile;
 import registration.ProfileCollection;
 
 import java.time.LocalDate;
@@ -21,33 +23,37 @@ public class RetrainingController extends LogicController<Retraining, RetrInput>
     //Create a new empty Retraining
     public void newCreation(){creation = new Retraining();}
 
-    //Check for the specialty being real, if is, set as retraining's own
-    public boolean isRealSpecialty(String specialty){
-        return creation.isRealSpecialty(specialty, specialtyCatalog);
-    }
+    //All-in-one
+    public void create(RetrInput input){
+        if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
+            throw new IllegalArgumentException("Invalid specialty!");
+        Profile profile = profileCollection.getByPassport(input.getPassportNumber());
+        if (profile == null)
+            throw new IllegalArgumentException("Profile doesn't exist!");
 
-    //Check for profile being registered, if is, set as retraining's own
-    public boolean isRegistered(String profileId){
-        return creation.findProfile(profileId, profileCollection);
-    }
-
-    //All in one
-    public boolean create(RetrInput input){
         newCreation();
-        if (!isRealSpecialty(input.getSpecialty())) return false;
-        if (!isRegistered(input.getProfileId())) return false;
-
-        return save();
+        creation.setSpecialty(input.getSpecialty());
+        creation.setProfile(profile);
+        if (!save()) throw new RuntimeException("Save failed!");
     }
 
-    //Check for dates being valid and set as retraining's own
-    public boolean isValidPeriod(Retraining retr,
-                                 LocalDate startDate, LocalDate endDate){
-        return retr.isValidPeriod(startDate, endDate);
+    //Planning
+    public void planRetraining(Retraining retraining,
+                               LocalDate startDate, LocalDate endDate) {
+        if (!DateUtils.isValidPeriod(startDate, endDate)) {
+            throw new IllegalArgumentException("Invalid dates");
+        }
+        retraining.plan(startDate, endDate);
     }
 
-    //Change the retraining's status (cancel or retract it)
-    public void changeRetainingStatus(Retraining retr, int status){
-        retr.setStatus(status);
+    //All-in-one for edition
+    public void edit(Retraining retraining, PlanningInput editInput) {
+        if (!specialtyCatalog.isRealSpecialty(editInput.getSpecialty())) {
+            throw new IllegalArgumentException("Invalid specialty");
+        }
+        if (!DateUtils.isValidPeriod(editInput.getStartDate(), editInput.getEndDate())) {
+            throw new IllegalArgumentException("Invalid dates");
+        }
+        retraining.update(editInput);
     }
 }

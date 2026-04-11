@@ -35,18 +35,18 @@ public class VacancyUIController extends UIController<Vacancy> {
         rightPanel.getNewButton().addActionListener(e -> {
             listPanel.clearSelection();
             VacancyFormPanel vacForm = new VacancyFormPanel();
-            //Press "Save" to save...
+            //Save
             vacForm.setOnSave(() -> {
                 try{
                     vacancyController.create(vacForm.getInputData());
                     //FeedBack
-                    JOptionPane.showMessageDialog(mainWindow, "Vacancy Created Successfully!");
+                    JOptionPane.showMessageDialog(mainWindow, "Vacancy Creation Successful!");
                     updateList(); //Updating the list with a new vacancy
                 } catch (Exception ex) {
                     vacForm.setStatusText(ex.getMessage()); //If something goes wrong, change the status
                 }
             });
-            //Press "CANCEL" to cancel...
+            //Cancel
             vacForm.setOnCancel(() -> {rightPanel.setContent(new EmptyPanel());});
             //Show the form and clear selection
             rightPanel.setContent(vacForm);
@@ -66,16 +66,17 @@ public class VacancyUIController extends UIController<Vacancy> {
             Vacancy selected = listPanel.getSelectedValue();
             //Null check
             if (selected == null) return;
-            //Create DETAILS panel
+            //Create details panel
             VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(selected);
-            //Press "EDIT" to edit...
+            //Edit
             vacancyDetailsPanel.setOnEdit(() -> {
                 VacancyEditPanel vacancyEditPanel = new VacancyEditPanel(selected);
-                //Apply changes (SAVE)
+                //Apply changes (Save)
                 vacancyEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
-                        vacancyController.changeVacancyStatus(selected,
+                        vacancyController.editVacancy(selected,
+                                vacancyEditPanel.getInputData(),
                                 vacancyEditPanel.getStatus());
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
@@ -100,7 +101,7 @@ public class VacancyUIController extends UIController<Vacancy> {
             vacancyDetailsPanel.setOnDelete(() -> {
                 vacancyController.delete(selected);
                 //FeedBack
-                JOptionPane.showMessageDialog(mainWindow, "Vacancy Delete Successful!");
+                JOptionPane.showMessageDialog(mainWindow, "Vacancy Deletion Successful!");
                 updateList(); //And update the list
             });
             //Show the panel

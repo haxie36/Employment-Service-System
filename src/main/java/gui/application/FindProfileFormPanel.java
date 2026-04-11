@@ -53,6 +53,7 @@ public class FindProfileFormPanel extends FormPanel<AppInput> {
     @Override
     public void clearForm() {
         passportNumberField.setText("");
+        profileDetailsPanel.update((Profile) null);
     }
 
     public void setOnFind(Runnable onFind) {this.onFind = onFind;}

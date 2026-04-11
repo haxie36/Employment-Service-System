@@ -33,24 +33,6 @@ public class Application implements HasId {
         this.status = status;
     }
 
-    //Checks if the profile is registered, if is, set its as own
-    public boolean isRegistered(String passportNumber, ProfileCollection profileCollection) {
-        Profile profile = profileCollection.getByPassport(passportNumber);
-        if(profile == null) return false;
-        this.profile = profile;
-        this.profileId = profile.getId();
-        return true;
-    }
-
-    //Gets the recommendations for the profile
-    public Vacancy[] getRecommendations(RecSystem recSystem, ProfileCollection profileCollection, VacancyCollection vacancyCollection, RetrainingCollection retrainingCollection) {
-        return recSystem.getRecommendations(profile, vacancyCollection, retrainingCollection);
-    }
-
-    public boolean hasActiveApplications(String profileId, String vacancyId, ApplicationCollection applicationCollection) {
-        return applicationCollection.hasActiveApplications(profileId, vacancyId);
-    }
-
     public String getId() {return id;}
     public String getProfileId() {return profileId;}
     public Profile getProfile() {return profile;}
@@ -59,17 +41,19 @@ public class Application implements HasId {
     public LocalDate getApplicationDate() {return applicationDate;}
     public ApplicationStatus getStatus() {return status;}
     public void setId(String id) {this.id = id;}
-    public void setProfileId(String profileId) {this.profileId = profileId;}
-    public void setProfile(Profile profile) {this.profile = profile;}
-    public void setVacancyId(String vacancyId) {this.vacancyId = vacancyId;}
-    public void setVacancy(Vacancy vacancy) {this.vacancy = vacancy;}
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+        this.profileId = profile.getId();
+    }
+    public void setVacancy(Vacancy vacancy) {
+        this.vacancy = vacancy;
+        this.vacancyId = vacancy.getId();
+    }
     public void setApplicationDate(LocalDate applicationDate) {this.applicationDate = applicationDate;}
     public void setStatus(ApplicationStatus status) {this.status = status;}
 
-    public static String getClassName() {return "Application";}
-
     public String toString(){
-        return "("+id+") "+profile.getName()+"--"+vacancy.getTitle()
+        return "("+id+") "+profile.getName()+" -- "+vacancy.getTitle()
                 +" ["+status.getName()+"]";
     }
 }

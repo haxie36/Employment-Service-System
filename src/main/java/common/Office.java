@@ -22,7 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Office {
-    public Office() {
+    public void start() {
         //Collections
         ProfileCollection profileCollection = new ProfileCollection();
         ApplicationCollection applicationCollection = new ApplicationCollection();
@@ -52,7 +52,7 @@ public class Office {
         ProfileUIController  profileUIController = new ProfileUIController(mainWindow, registrationController, profileCollection);
         ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow, applicationController, applicationCollection, profileCollection);
         VacancyUIController vacancyUIController = new VacancyUIController(mainWindow, vacancyController, vacancyCollection);
-        RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow, retrainingController, retrainingCollection);
+        RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow, retrainingController, retrainingCollection, profileCollection);
         MainUIController mainUIController = new MainUIController(mainWindow,
                 profileUIController, applicationUIController,
                 vacancyUIController, retrainingUIController);
@@ -66,7 +66,6 @@ public class Office {
     }
 
     public static void main(String[] args) {
-        Office office = new Office();
-        System.out.println("yes");
+        new Office().start();
     }
 }

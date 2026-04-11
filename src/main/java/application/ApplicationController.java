@@ -24,42 +24,38 @@ public class ApplicationController extends LogicController<Application, AppInput
     //Create a new empty Application
     public void newCreation() {creation = new Application();}
 
-    //Check if profile is registered, if is, set as application's own
-    public boolean isRegistered(String passportNumber){ //Find out if the profile exists, if it does set it as application's profile
-        return creation.isRegistered(passportNumber, profileCollection);
-    }
-
     //Get the recommendations for the application's profile
     public Vacancy[] getRecommendations(Profile profile){
         return recSystem.getRecommendations(profile,
                 vacancyCollection, retrainingCollection);
     }
 
-    //Set application's vacancy...
-    public void setVacancy(Vacancy vacancy){
-        creation.setVacancy(vacancy);
-        creation.setVacancyId(vacancy.getId());
-    }
 
     //All in one
-    public boolean create(AppInput input) throws Exception {
+    public void create(AppInput input) {
+        Profile profile = profileCollection.getByPassport(input.getPassportNumber());
+        if (profile == null) {
+            throw new IllegalArgumentException("Profile not found!");
+        }
+
         newCreation();
-        if (!isRegistered(input.getPassportNumber())) throw new Exception("Profile not found!");
         if (hasActiveApplications(
-                creation.getProfileId(),
-                input.getVacancy().getId()
-                )) throw new Exception("Active application exists!");
-        setVacancy(input.getVacancy());
-        return save();
+                profile.getId(),
+                input.getVacancy().getId())) {
+            throw new IllegalArgumentException("Active application exists!");
+        }
+        creation.setProfile(profile);
+        creation.setVacancy(input.getVacancy());
+        if (!save()) throw new IllegalArgumentException("Save failed!");
     }
 
     //Edit
-    public void changeApplicationStatus(Application app, int status){
+    public void changeApplicationStatus(Application app, int status) {
         app.setStatus(ApplicationStatus.fromId(status));
     }
 
     //Cloning check
     public boolean hasActiveApplications(String profileId, String vacancyId) {
-        return creation.hasActiveApplications(profileId, vacancyId, (ApplicationCollection) collection);
+        return ((ApplicationCollection)collection).hasActiveApplications(profileId, vacancyId);
     }
 }

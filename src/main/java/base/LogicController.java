@@ -24,7 +24,7 @@ public abstract class LogicController<T extends HasId, I> {
         creation.setId(String.valueOf(collection.getAll().length+1));
     }
 
-    public abstract boolean create(I input) throws Exception;
+    public abstract void create(I input);
 
     public void clear(){creation=null;}
 

@@ -25,6 +25,6 @@ public enum VacancyStatus {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Invalid id");
+        throw new IllegalArgumentException("Invalid Status");
     }
 }

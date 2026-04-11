@@ -19,18 +19,19 @@ public class RecSystem {
         String[] skillSet = getFullSkillSet(profile, retrainingCollection);
 
         List<Vacancy> recommendations = new ArrayList<>(); //A collection of recommendations
-        for (int i=0; i<vacs.length; i++) {
-            Vacancy vacancy = vacs[i];
+        for (Vacancy vacancy : vacs) {
             //If vacancy isn't active, skip
-            if (vacancy.getStatus()!= VacancyStatus.OPEN) continue;
+            if (vacancy.getStatus() != VacancyStatus.OPEN) continue;
             //If profile has less experience than required, skip
-            if(vacancy.getMinExperience() > profile.getExperience()) {continue;}
+            if (vacancy.getMinExperience() > profile.getExperience()) {
+                continue;
+            }
 
             String vacancySpecialty = vacancy.getSpecialty();
             //Check for a vacancy's specialty being in the skill set of the profile
-            for (int j=0;j<skillSet.length;j++) {
+            for (String skill : skillSet) {
                 //If the profile meets requirements
-                if (vacancySpecialty.equals(skillSet[i])) {
+                if (vacancySpecialty.equals(skill)) {
                     recommendations.add(vacancy); //Add a vacancy to recommended
                     break; //And continue
                 }

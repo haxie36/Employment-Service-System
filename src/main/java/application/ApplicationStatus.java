@@ -26,6 +26,6 @@ public enum ApplicationStatus {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Invalid id");
+        throw new IllegalArgumentException("Invalid Status");
     }
 }

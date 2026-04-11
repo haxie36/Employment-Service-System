@@ -1,6 +1,7 @@
 package retraining;
 
 import base.HasId;
+import common.DateUtils;
 import common.SpecialtyCatalog;
 import registration.Profile;
 import registration.ProfileCollection;
@@ -30,32 +31,11 @@ public class Retraining implements HasId {
         this.status = RetrainingStatus.fromId(status);
     }
 
-    //Check for the specialty being real or not, if is, set as own
-    public boolean isRealSpecialty(String specialty, SpecialtyCatalog specialtyCatalog) {
-        boolean is = specialtyCatalog.isRealSpecialty(specialty);
-        if (is){setSpecialty(specialty);}
-        return is;
-    }
-
-    //Check is profile is registered, if is, set as own
-    public boolean findProfile(String profileId, ProfileCollection profileCollection) {
-        Profile profile = profileCollection.getById(id);
-        if(profile == null) return false;
-        this.profile = profile;
-        this.profileId = profileId;
-        return true;
-    }
-
-    //Check for dates being valid
-    public boolean isValidPeriod(LocalDate startDate, LocalDate endDate){
-        boolean result = startDate != null && endDate != null &&
-                !startDate.isBefore(LocalDate.now()) &&
-                !endDate.isBefore(startDate);
-        if(result){
-            setStartDate(startDate);
-            setEndDate(endDate);
-            assignStatus();
-        }return result;
+    //Set dates and assign status
+    public void plan(LocalDate startDate, LocalDate endDate){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        assignStatus();
     }
 
     //Auto-assign statuses based on start and end dates
@@ -65,21 +45,29 @@ public class Retraining implements HasId {
         else if (endDate.isBefore(LocalDate.now())) {status=RetrainingStatus.COMPLETED;}
     }
 
+    public void update(PlanningInput input) {
+        plan(input.getStartDate(), input.getEndDate());
+        this.specialty = input.getSpecialty();
+        this.status = RetrainingStatus.fromId(input.getStatus());
+    }
+
     public String getId() {return id;}
     public LocalDate getStartDate() {return startDate;}
     public LocalDate getEndDate() {return endDate;}
     public String getSpecialty() {return specialty;}
     public String getProfileId() {return profileId;}
+    public  Profile getProfile() {return profile;}
     public RetrainingStatus getStatus() {return status;}
     public void setId(String id) {this.id = id;}
     public void setStartDate(LocalDate startDate) {this.startDate = startDate;}
     public void setEndDate(LocalDate endDate) {this.endDate = endDate;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}
-    public void setProfileId(String profileId) {this.profileId = profileId;}
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+        this.profileId = profile.getId();
+    }
     public void setStatus(int status) {this.status = RetrainingStatus.fromId(status);}
     public void setStatus(RetrainingStatus status) {this.status = status;}
-
-    public static String getClassName() {return "Retraining";}
 
     public String toString(){
         return "("+id+") "+specialty+" -- "+profile.getName()

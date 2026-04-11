@@ -23,62 +23,6 @@ class RegistrationControllerTest {
     }
 
     @Test
-    void testServiceArea_valid() {
-        boolean result = reg.isServiceArea("1");
-        assertTrue(result);
-    }
-
-    @Test
-    void testServiceArea_invalid() {
-        boolean result = reg.isServiceArea("2");
-        assertFalse(result);
-    }
-
-    @Test
-    void testRegistered_success() {
-        boolean result = reg.isRegistered(new Passport(
-                "1",
-                LocalDate.now(),
-                "1",
-                "1"));
-        assertFalse(result);
-    }
-
-    @Test
-    void testRegistered_invalid() {
-        boolean result = reg.isRegistered(new Passport(
-                "2",
-                LocalDate.now(),
-                "2",
-                "2"));
-        assertTrue(result);
-    }
-
-    @Test
-    void testRealSpecialty_success() {
-        boolean result = reg.isRealSpecialty("1");
-        assertTrue(result);
-    }
-
-    @Test
-    void testRealSpecialty_invalid() {
-        boolean result = reg.isRealSpecialty("2");
-        assertFalse(result);
-    }
-
-    @Test
-    void testRecord_success() {
-        boolean result = reg.record(1);
-        assertTrue(result);
-    }
-
-    @Test
-    void testRecord_invalid() {
-        boolean result = reg.record(-1);
-        assertFalse(result);
-    }
-
-    @Test
     void testCreate() {
         RegInput[] inputs = new RegInput[]{
                 new RegInput("2", new Passport("1", LocalDate.now(), "1","1"), "1", 1),
@@ -87,11 +31,15 @@ class RegistrationControllerTest {
                 new RegInput("1", new Passport("1", LocalDate.now(), "1","1"), "1", -1),
                 new RegInput("1", new Passport("1", LocalDate.now(), "1","1"), "1", 1)
         };
-        boolean[] outputs = new boolean[]{false,false,false,false,true};
+        boolean[] shouldPass = new boolean[]{false,false,false,false,true};
 
-        for (int i = 0; i < outputs.length; i++) {
-            boolean result = reg.create(inputs[i]);
-            assertEquals(outputs[i], result);
+        for (int i = 0; i < shouldPass.length; i++) {
+            int finalI = i;
+            if (shouldPass[i]) {
+                assertDoesNotThrow(() -> reg.create(inputs[finalI]));
+            } else {
+                assertThrows(Exception.class, () -> reg.create(inputs[finalI]));
+            }
         }
     }
 }

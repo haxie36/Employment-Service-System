@@ -7,20 +7,22 @@ public class CustomTextArea extends JScrollPane {
     private final JTextArea textArea;
 
     public CustomTextArea() {
-        super(textArea = new JTextArea(6, 30));
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        setPreferredSize(new Dimension(250,200));
+        this(new JTextArea(6, 30));
     }
+
     public CustomTextArea(String text, boolean editable) {
-        super(textArea = new JTextArea(text, 6, 30));
+        this(new JTextArea(text, 6, 30));
+        textArea.setEditable(editable);
+    }
+
+    private CustomTextArea(JTextArea area) {
+        super(area);
+        this.textArea = area;
+
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        textArea.setEditable(editable);
         setPreferredSize(new Dimension(250,200));
     }
 

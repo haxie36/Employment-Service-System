@@ -27,6 +27,6 @@ public enum RetrainingStatus {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Invalid id");
+        throw new IllegalArgumentException("Invalid Status");
     }
 }

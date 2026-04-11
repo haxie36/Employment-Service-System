@@ -27,12 +27,15 @@ public abstract class FormPanel<T> extends JPanel {
         btnAndStatusPanel.setLayout(new BoxLayout(btnAndStatusPanel,BoxLayout.Y_AXIS));
         btnAndStatusPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         //Status
-        status = new JLabel("");
+        status = new JLabel(" ");
+        status.setFont(new Font("Arial", Font.BOLD, 14));
         status.setForeground(Color.RED);
-        Dimension size = status.getPreferredSize();
-        status.setPreferredSize(new Dimension(size.width, 20));
+        status.setAlignmentX(Component.LEFT_ALIGNMENT);
+        status.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+        status.setHorizontalAlignment(SwingConstants.RIGHT);
         //Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
+        JPanel btnPanel = new JPanel(new GridLayout(1,0,10,10));
+        btnPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         saveBtn = new CustomButton("Save");
         CustomButton cancelBtn = new CustomButton("Cancel");
         saveBtn.addActionListener(e -> {if (onSave!=null) onSave.run();});

@@ -32,21 +32,6 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
         return true;
     }
 
-    //Check for specialty being real, if is, set as vacancy's own
-    public boolean isRealSpecialty(String specialty){
-        return creation.isRealSpecialty(specialty, specialtyCatalog);
-    }
-
-    //Check for experience being a valid number, if is, set as vacancy's own
-    public boolean setVacancyExperience(int experience){
-        return creation.setMinExperience(experience);
-    }
-
-    //Check if description is 3 or more signs long, if is, set as vacancy's own
-    public boolean setVacancyDescription(String description){
-        return creation.setDescription(description);
-    }
-
     //End the creation of the Vacancy by saving it in the collection
     public boolean save(){
         if (creation !=null){
@@ -62,28 +47,41 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
         creation.setId(String.valueOf(collection.getAll().length+1));
     }
 
-    //All in one
-    public boolean create(VacInput input){
-        newCreation();
-        if (!setVacancyTitle(input.getTitle()))
+    //All-in-one
+    public void create(VacInput input) {
+        if (input.getTitle().length() < 3)
             throw new IllegalArgumentException("Invalid Title!");
-        if (!setVacancyCompany(input.getCompany()))
+        if (input.getCompany().length() < 3)
             throw new IllegalArgumentException("Company Name must be 3 characters long or longer!");
-        if (!isRealSpecialty(input.getSpecialty()))
+        if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid Specialty!");
-        if (!setVacancyExperience(input.getMinExperience()))
+        if (input.getMinExperience() < 0)
             throw new IllegalArgumentException("Invalid Experience!");
-        if (!setVacancyDescription(input.getDescription()))
-            throw new IllegalArgumentException("Invalid Description!");
-        if (!setVacancyContact(input.getContact()))
-            throw new IllegalArgumentException("Invalid Contact!");
+        validateInfo(input);
 
-        return save();
+        newCreation();
+        creation.setTitle(input.getTitle());
+        creation.setCompany(input.getCompany());
+        creation.setContact(input.getContact());
+        creation.setSpecialty(input.getSpecialty());
+        creation.setMinExperience(input.getMinExperience());
+        creation.setDescription(input.getDescription());
+        if (!save()) throw new RuntimeException("Save failed!");
     }
 
     //Edit
-    public void changeVacancyStatus(Vacancy vac, int status) {
-        if(!vac.changeStatus(status, applicationCollection))
-            throw new IllegalArgumentException("Invalid Status!");
+    public void editVacancy(Vacancy vacancy, VacInput input, int status) {
+        validateInfo(input);
+
+        vacancy.changeStatus(status, applicationCollection);
+        vacancy.setContact(input.getContact());
+        vacancy.setDescription(input.getDescription());
+    }
+
+    private static void validateInfo(VacInput input) {
+        if (input.getContact().length() < 3)
+            throw new IllegalArgumentException("Invalid Contact!");
+        if (input.getDescription().length() < 3)
+            throw new IllegalArgumentException("Invalid Description!");
     }
 }

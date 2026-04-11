@@ -5,6 +5,7 @@ import gui.base.DetailsPanel;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
+import vacancy.VacancyStatus;
 
 import javax.swing.*;
 
@@ -14,22 +15,27 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
     private final JLabel vacancyIdValueLabel;
     private final JLabel applicationDateValueLabel;
     private final JLabel statusValueLabel;
-    private final JPanel profileDetails;
-    private final JPanel vacancyDetails;
+    private final ProfileDetailsPanel profileDetailsPanel;
+    private final VacancyDetailsPanel vacancyDetailsPanel;
 
     public  ApplicationDetailsPanel(Application application) {
+        //If vacancy isn't open, you can't change the status
+        //I believe it makes sense, doesn't it?
+        if (application.getVacancy().getStatus() != VacancyStatus.OPEN)
+            editBtn.setEnabled(false);
+
         idValueLabel = label(application.getId());
         profileIdValueLabel = label(application.getProfileId());
         vacancyIdValueLabel = label(application.getVacancyId());
         applicationDateValueLabel = label(application.getApplicationDate().toString());
         statusValueLabel = label(application.getStatus().toString());
-        //Details panels
-        ProfileDetailsPanel temp1 = new ProfileDetailsPanel(application.getProfile());
-        profileDetails = temp1.getDetails();
+        //Profile details panel
+        profileDetailsPanel = new ProfileDetailsPanel(application.getProfile());
+        JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
-
-        VacancyDetailsPanel temp2 = new VacancyDetailsPanel(application.getVacancy());
-        vacancyDetails = temp2.getDetails();
+        //Vacancy details panel
+        vacancyDetailsPanel = new VacancyDetailsPanel(application.getVacancy());
+        JPanel vacancyDetails = vacancyDetailsPanel.getDetails();
         vacancyDetails.setBorder(BorderFactory.createTitledBorder("Vacancy"));
 
         //Adding components
@@ -46,6 +52,12 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
 
     @Override
     public void update(Application application) {
-
+        idValueLabel.setText(application.getId());
+        profileIdValueLabel.setText(application.getProfileId());
+        vacancyIdValueLabel.setText(application.getVacancyId());
+        applicationDateValueLabel.setText(application.getApplicationDate().toString());
+        statusValueLabel.setText(application.getStatus().toString());
+        profileDetailsPanel.update(application.getProfile());
+        vacancyDetailsPanel.update(application.getVacancy());
     }
 }

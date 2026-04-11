@@ -43,12 +43,22 @@ public class ProfileDetailsPanel extends DetailsPanel<Profile> {
     }
 
     public void update(Profile profile) {
-        idValueLbl.setText(profile.getId());
-        nameValueLbl.setText(profile.getName());
-        birthDateValueLbl.setText((profile.getBirthDate().format(DateUtils.FORMATTER)));
-        passportNumberValueLbl.setText((profile.getPassportNumber()));
-        RNOKPPValueLbl.setText((profile.getRNOKPP()));
-        specialtyValueLbl.setText((profile.getSpecialty()));
-        experienceValueLbl.setText((String.valueOf(profile.getExperience())));
+        if (profile == null) {
+            idValueLbl.setText("");
+            nameValueLbl.setText("");
+            birthDateValueLbl.setText("");
+            passportNumberValueLbl.setText("");
+            RNOKPPValueLbl.setText("");
+            specialtyValueLbl.setText("");
+            experienceValueLbl.setText("");
+        } else {
+            idValueLbl.setText(profile.getId());
+            nameValueLbl.setText(profile.getName());
+            birthDateValueLbl.setText((profile.getBirthDate().format(DateUtils.FORMATTER)));
+            passportNumberValueLbl.setText((profile.getPassportNumber()));
+            RNOKPPValueLbl.setText((profile.getRNOKPP()));
+            specialtyValueLbl.setText((profile.getSpecialty()));
+            experienceValueLbl.setText((String.valueOf(profile.getExperience())));
+        }
     }
 }

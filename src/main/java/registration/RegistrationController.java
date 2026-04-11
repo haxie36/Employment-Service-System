@@ -22,60 +22,45 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
     //New Profile
     public void newCreation() {creation = new Profile();}
 
-    //Check if the address being serviced
-    public boolean isServiceArea(String area){
-        return creation.isServiceArea(area, serviceArea);
-    }
-
-    //Check for profile being dy registered, if isn't, set the Passport info (ID) as profiles
-    public boolean isRegistered(Passport Passport){
-        return creation.isRegistered(Passport, (ProfileCollection) collection);
-    }
-
-    //Check if the specialty is real, if is, set
-    public boolean isRealSpecialty(String specialty){
-        return creation.isRealSpecialty(specialty, specialtyCatalog);
-    }
-
-    public boolean record(int exp){
-        return creation.setExperience(exp);
-    }
-
     //Prints certification (formates profile's info)
-    public String printCertification(){
-        if (creation !=null){
-            return creation.printCertification(office);
-        }
-        return null;
+    public void printCertification(){
+        office.printCertification(creation);
     }
 
-    //All in one
-    public boolean create(RegInput input){
-        newCreation();
-        if (!isServiceArea(input.getAddress()))
+    //All-in-one
+    public void create(RegInput input) {
+        if (!serviceArea.isServiceArea(input.getAddress()))
             throw new IllegalArgumentException("Address is not valid!");
-        if (isRegistered(input.getPassport()))
+        if (((ProfileCollection)collection).isRegistered(input.getPassport()))
             throw new IllegalArgumentException("Profile is already registered!");
-        if (!isRealSpecialty(input.getSpecialty()))
-            throw new IllegalArgumentException("Invalid Specialty!");;
-        if (!record(input.getExperience()))
-            throw new IllegalArgumentException("Invalid Experience!");;
+        validateSkills(input);
 
-        return save();
+        newCreation();
+        creation.setPassportInfo(input.getPassport());
+        creation.setSpecialty(input.getSpecialty());
+        creation.setExperience(input.getExperience());
+        printCertification();
+        if (!save()) throw new RuntimeException("Save failed!");
     }
 
     //Edit
-    public void editProfile(Profile prof, RegInput input){
-        if (prof.existsByPassportExcept(input.getPassport().getPassportNumber(), (ProfileCollection) collection))
+    public void editProfile(Profile prof, RegInput input) {
+        if (((ProfileCollection)collection).existsByPassportExcept(prof.getId(),
+                input.getPassport().getPassportNumber()))
             throw new IllegalArgumentException("Profile with this passport already exists!");
-        if (prof.existsByRNOKPPExcept(input.getPassport().getRNOKPP(), (ProfileCollection) collection))
+        if (((ProfileCollection)collection).existsByRNOKPPExcept(prof.getId(),
+                input.getPassport().getRNOKPP()))
             throw new IllegalArgumentException("Profile with this RNOKPP already exists!");
-        if (input.getExperience()<0)
-            throw new IllegalArgumentException("Experience must be positive!");
-        if (prof.isRealSpecialty(input.getSpecialty(), specialtyCatalog))
-            throw new IllegalArgumentException("Invalid Specialty!");
+        validateSkills(input);
 
         prof.setPassportInfo(input.getPassport());
         prof.setExperience(input.getExperience());
+    }
+
+    private void validateSkills(RegInput input) {
+        if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
+            throw new IllegalArgumentException("Invalid Specialty!");
+        if (input.getExperience() < 0)
+            throw new IllegalArgumentException("Experience must be positive!");
     }
 }

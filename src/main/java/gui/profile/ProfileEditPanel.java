@@ -49,20 +49,22 @@ public class ProfileEditPanel extends FormPanel<RegInput> {
                 || experienceField.getText().isEmpty()) {
             throw new Exception("Please fill all the fields!");
         }
+        int experience;
         try {
-            //Return an input object
-            return new RegInput(
-                    "-",
-                    new Passport(nameField.getText(),
-                            birthDateField.getDate(),
-                            passportNumberField.getText(),
-                            RNOKPPField.getText()),
-                    specialtyField.getText(),
-                    parseInt(experienceField.getText())
-            );
+            experience = parseInt(experienceField.getText());
         } catch (Exception e) {
             throw new Exception("Experience must be an integer!");
         }
+        //Return an input object
+        return new RegInput(
+                "-", //Fictional
+                new Passport(nameField.getText(),
+                        birthDateField.getDate(),
+                        passportNumberField.getText(),
+                        RNOKPPField.getText()),
+                specialtyField.getText(),
+                experience
+        );
     }
 
     @Override

@@ -65,11 +65,17 @@ public class ApplicationUIController extends UIController<Application> {
                         JOptionPane.showMessageDialog(mainWindow, "No recommendations found!");
                         return;
                     }
+                    listPanel.clearSelection();
                     rightPanel.setContent(new EmptyPanel());
                     mainWindow.setListPanel(new ListPanel<>(recommendations));
                     ListPanel<Vacancy> recListPanel = mainWindow.getListPanel();
+                    //Clear possible listener's duplicates
+                    JList<Vacancy> recList = recListPanel.getList();
+                    for (var listener : recList.getListSelectionListeners()) {
+                        recList.removeListSelectionListener(listener);
+                    }
                     //Choosing vacancy
-                    recListPanel.getList().addListSelectionListener(e1 -> {
+                    recList.addListSelectionListener(e1 -> {
                         if (e1.getValueIsAdjusting()) return;
                         //Get selected
                         Vacancy selectedVacancy = recListPanel.getList().getSelectedValue();
@@ -77,16 +83,14 @@ public class ApplicationUIController extends UIController<Application> {
                         if (selectedVacancy == null) return;
                         //Create details panel
                         VacancyDetailsPanel vacancyDetailsPanel = getVacancyDetailsPanel(selectedVacancy, findProfileForm, rightPanel);
-                        //Add the panel
                         rightPanel.setContent(vacancyDetailsPanel);
                     });
-                } catch (Exception ex) {findProfileForm.setStatusText(ex.getMessage());}
+                } catch (Exception ex) {throw new RuntimeException(ex.getMessage());}
             });
             //Cancel
             findProfileForm.setOnCancel(() -> {rightPanel.setContent(new EmptyPanel());});
-            //Show the form and clear selection
+            //Show the form
             rightPanel.setContent(findProfileForm);
-            listPanel.clearSelection();
         });
     }
 
@@ -103,10 +107,12 @@ public class ApplicationUIController extends UIController<Application> {
         vacancyDetailsPanel.setOnEdit(() -> {
             try {
                 AppInput finalInput = new AppInput(
-                        findProfileForm.getFoundProfile().getId(),
+                        findProfileForm.getFoundProfile().getPassportNumber(),
                         selectedVacancy
                 );
                 applicationController.create(finalInput);
+                //FeedBack
+                JOptionPane.showMessageDialog(mainWindow, "Application Creation Successful");
                 forcedListUpdate();
                 rightPanel.setContent(new EmptyPanel());
             } catch (Exception ex) {JOptionPane.showMessageDialog(mainWindow, ex.getMessage());}
@@ -137,21 +143,25 @@ public class ApplicationUIController extends UIController<Application> {
             //Edit
             applicationDetailsPanel.setOnEdit(() -> {
                 ApplicationEditPanel applicationEditPanel = new ApplicationEditPanel(selected);
-                //Apply the changes
+                //Apply changes
                 applicationEditPanel.setOnSave(() -> {
                     //Edit and update the list
-                    applicationController.changeApplicationStatus(selected,
-                            applicationEditPanel.getStatus());
-                    //FeedBack
-                    JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
-                    //Update
-                    updateList();
-                    listPanel.setSelectedValue(selected, true);
-                    //Update the details panel and set it
-                    applicationDetailsPanel.update(selected);
-                    rightPanel.setContent(applicationDetailsPanel);
+                    try {
+                        applicationController.changeApplicationStatus(selected,
+                                applicationEditPanel.getStatus());
+                        //FeedBack
+                        JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
+                        //Update
+                        updateList();
+                        listPanel.setSelectedValue(selected, true);
+                        //Update the details panel and set it
+                        applicationDetailsPanel.update(selected);
+                        rightPanel.setContent(applicationDetailsPanel);
+                    } catch (Exception ex) {
+                        applicationEditPanel.setStatusText(ex.getMessage());
+                    }
                 });
-                //Cancel the changes
+                //Cancel changes
                 applicationEditPanel.setOnCancel(() -> {
                     rightPanel.setContent(applicationDetailsPanel);
                 });
@@ -162,7 +172,7 @@ public class ApplicationUIController extends UIController<Application> {
             applicationDetailsPanel.setOnDelete(() -> {
                 applicationController.delete(selected);
                 //FeedBack
-                JOptionPane.showMessageDialog(mainWindow, "Application Delete Successful!");
+                JOptionPane.showMessageDialog(mainWindow, "Application Deletion Successful!");
                 updateList();
             });
             //Add the panel

@@ -2,13 +2,13 @@ package retraining;
 
 public class RetrInput {
     private final String specialty;
-    private final String profileId;
+    private final String passportNumber;
 
-    public RetrInput(String specialty, String profileId) {
+    public RetrInput(String specialty, String passportNumber) {
         this.specialty = specialty;
-        this.profileId = profileId;
+        this.passportNumber = passportNumber;
     }
 
     public String getSpecialty() {return specialty;}
-    public String getProfileId() {return profileId;}
+    public String getPassportNumber() {return passportNumber;}
 }

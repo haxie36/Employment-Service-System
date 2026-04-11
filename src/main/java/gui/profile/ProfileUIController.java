@@ -45,7 +45,7 @@ public class ProfileUIController extends UIController<Profile> {
                     regForm.setStatusText(ex.getMessage()); //If it fails, change the status of a form
                 }                                           // to the exception message
             });
-            //Upon pressing "Cancel" return to the default state
+            //Cancel
             regForm.setOnCancel(() -> {rightPanel.setContent(new EmptyPanel());});
             //Show the form and clear list selection
             rightPanel.setContent(regForm);
@@ -65,12 +65,12 @@ public class ProfileUIController extends UIController<Profile> {
             Profile selected = listPanel.getSelectedValue();
             //Null check
             if (selected == null) return;
-            //Create DETAILS panel
+            //Create details panel
             ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(selected);
-            //Upon pressing "EDIT" open an edit form
+            //Edit
             profileDetailsPanel.setOnEdit(() -> {
                 ProfileEditPanel profileEditPanel = new ProfileEditPanel(selected);
-                //Apply changes (SAVE)
+                //Apply changes (Save)
                 profileEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
@@ -88,18 +88,18 @@ public class ProfileUIController extends UIController<Profile> {
                         profileEditPanel.setStatusText(ex.getMessage());
                     }
                 });
-                //CANCEL changes
+                //Cancel changes
                 profileEditPanel.setOnCancel(() -> {
                     rightPanel.setContent(profileDetailsPanel);
                 });
                 //Set the edit panel
                 rightPanel.setContent(profileEditPanel);
             });
-            //DELETE selected
+            //Delete selected
             profileDetailsPanel.setOnDelete(() -> {
                 registrationController.delete(selected);
                 //FeedBack message
-                JOptionPane.showMessageDialog(mainWindow, "Profile Delete Successful");
+                JOptionPane.showMessageDialog(mainWindow, "Profile Deletion Successful");
                 updateList(); //And update the list
             });
             //Set the panel
