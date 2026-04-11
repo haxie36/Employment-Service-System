@@ -22,13 +22,13 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
 
     //All-in-one
     public void create(VacInput input) {
-        if (input.getTitle().length() < 3)
+        if (input.getTitle().length() < 3 || input.getTitle().length() > 100)
             throw new IllegalArgumentException("Invalid Title!");
-        if (input.getCompany().length() < 3)
+        if (input.getCompany().length() < 3 || input.getCompany().length() > 100)
             throw new IllegalArgumentException("Company Name must be 3 characters long or longer!");
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid Specialty!");
-        if (input.getMinExperience() < 0)
+        if (input.getMinExperience() < 0 || input.getMinExperience() > 100)
             throw new IllegalArgumentException("Invalid Experience!");
         validateInfo(input);
 
@@ -52,9 +52,9 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
     }
 
     private static void validateInfo(VacInput input) {
-        if (input.getContact().length() < 3)
+        if (input.getContact().length() < 3 || input.getContact().length() > 100)
             throw new IllegalArgumentException("Invalid Contact!");
-        if (input.getDescription().length() < 3)
+        if (input.getDescription().length() < 3 || input.getDescription().length() > 2000)
             throw new IllegalArgumentException("Invalid Description!");
     }
 }

@@ -1,6 +1,9 @@
 package gui.components;
 
+import common.LimitDocumentFilter;
+
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
 public class CustomTextArea extends JScrollPane {
@@ -12,9 +15,10 @@ public class CustomTextArea extends JScrollPane {
 
     public CustomTextArea(String text, boolean editable) {
         this(new JTextArea(text, 6, 30));
-        textArea.setEditable(editable);
+        setEditable(editable);
     }
 
+    //General setup
     private CustomTextArea(JTextArea area) {
         super(area);
         this.textArea = area;
@@ -24,6 +28,9 @@ public class CustomTextArea extends JScrollPane {
         setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         setPreferredSize(new Dimension(250,200));
+        //Limit of 2000 characters
+        ((AbstractDocument) textArea.getDocument())
+                .setDocumentFilter(new LimitDocumentFilter(2000));
     }
 
     public String getText() {return textArea.getText();}

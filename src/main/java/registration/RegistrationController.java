@@ -3,6 +3,9 @@ package registration;
 import base.LogicController;
 import common.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class RegistrationController extends LogicController<Profile, RegInput> {
     private final ServiceArea serviceArea;
     private final SpecialtyCatalog specialtyCatalog;
@@ -72,18 +75,20 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
 
     private static void validatePassportInfo(RegInput input) {
         if (input.getPassport().getPassportNumber().length() < 8
-                && input.getPassport().getPassportNumber().length() > 9)
+                || input.getPassport().getPassportNumber().length() > 9)
             throw new IllegalArgumentException("Invalid passport number!");
         if (input.getPassport().getRNOKPP().length() != 10)
             throw new IllegalArgumentException("Invalid RNOKPP!");
         if (input.getPassport().getName().length() < 3)
             throw new IllegalArgumentException("Invalid name!");
+        if (ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) > 120)
+            throw new IllegalArgumentException("Invalid birthday!");
     }
 
     private void validateSkills(RegInput input) {
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid Specialty!");
-        if (input.getExperience() < 0)
+        if (input.getExperience() < 0 || input.getExperience() > 100)
             throw new IllegalArgumentException("Experience must be positive!");
     }
 }
