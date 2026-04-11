@@ -66,7 +66,7 @@ public class ApplicationUIController extends UIController<Application> {
                         return;
                     }
                     listPanel.clearSelection();
-                    rightPanel.setContent(new EmptyPanel());
+                    rightPanel.setContent(new EmptyPanel("Choose a vacancy to Apply"));
                     mainWindow.setListPanel(new ListPanel<>(recommendations));
                     ListPanel<Vacancy> recListPanel = mainWindow.getListPanel();
                     //Clear possible listener's duplicates

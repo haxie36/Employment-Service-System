@@ -24,7 +24,19 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
 
     //Prints certification (formates profile's info)
     public void printCertification(){
-        office.printCertification(creation);
+        office.printCertificate(creation);
+    }
+
+    @Override
+    public boolean save(){
+        if (creation!=null){
+            setCreationId(); //temp
+            collection.add(creation);
+            printCertification();
+            clear();
+            return true;
+        }
+        return false;
     }
 
     //All-in-one
@@ -39,7 +51,6 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
         creation.setPassportInfo(input.getPassport());
         creation.setSpecialty(input.getSpecialty());
         creation.setExperience(input.getExperience());
-        printCertification();
         if (!save()) throw new RuntimeException("Save failed!");
     }
 

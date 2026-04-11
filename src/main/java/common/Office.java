@@ -9,10 +9,7 @@ import gui.main.MainWindow;
 import gui.profile.ProfileUIController;
 import gui.retraining.RetrainingUIController;
 import gui.vacancy.VacancyUIController;
-import registration.Profile;
-import registration.ProfileCollection;
-import registration.RegistrationController;
-import registration.ServiceArea;
+import registration.*;
 import retraining.RetrainingController;
 import retraining.RetrainingCollection;
 import vacancy.VacancyCollection;
@@ -20,6 +17,7 @@ import vacancy.VacancyController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.print.PrinterException;
 
 public class Office {
     public void start() {
@@ -59,10 +57,41 @@ public class Office {
     }
 
     //Prints certification (formates profile's info)
-    public String printCertification(Profile profile) {
-        System.out.println("Printing Certification...");
-        System.out.println("Imagine it's printed!");
-        return "";
+    public void printCertificate(Profile profile) {
+        String certificate = """
+                CERTIFICATE OF REGISTRATION
+
+                Full Name: %s
+                Date of Birth: %s
+                Passport Number: %s
+                RNOKPP: %s
+
+                Specialty: %s
+                Experience: %d years
+
+                Registration ID: %s
+
+                Issued: %s
+
+                Signature: _______________________
+                """.formatted(
+                profile.getName(),
+                profile.getBirthDate(),
+                profile.getPassportNumber(),
+                profile.getRNOKPP(),
+                profile.getSpecialty(),
+                profile.getExperience(),
+                profile.getId(),
+                java.time.LocalDate.now()
+        );
+        //Open the window
+        CertificateWindow window = new CertificateWindow(certificate);
+        //Printing dialog
+//        try {
+//            window.getTextArea().print();
+//        } catch (PrinterException e) {
+//            throw new RuntimeException("Printing failed", e);
+//        }
     }
 
     public static void main(String[] args) {

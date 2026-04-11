@@ -20,7 +20,7 @@ public abstract class LogicController<T extends HasId, I> {
         return false;
     }
     //temp
-    private void setCreationId(){
+    protected void setCreationId(){
         creation.setId(String.valueOf(collection.getAll().length+1));
     }
 
