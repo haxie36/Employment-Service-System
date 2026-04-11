@@ -81,7 +81,8 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
             throw new IllegalArgumentException("Invalid RNOKPP!");
         if (input.getPassport().getName().length() < 3)
             throw new IllegalArgumentException("Invalid name!");
-        if (ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) > 120)
+        if (ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) > 120
+        || ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) < 18)
             throw new IllegalArgumentException("Invalid birthday!");
     }
 
