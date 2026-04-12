@@ -2,15 +2,15 @@ package base;
 
 import java.lang.reflect.Array;
 
-public class EntityCollection<T extends HasId> { //A custom collection class
+public abstract class EntityDAO<T extends HasId> { //A custom collection class
     protected T[] items;
     private final Class<T> type;
 
-    public EntityCollection(Class<T> type) {
+    public EntityDAO(Class<T> type) {
         this.type = type;
         items = (T[]) Array.newInstance(type, 0);
     }
-    public EntityCollection(T[] items,  Class<T> type) {
+    public EntityDAO(T[] items, Class<T> type) {
         this.type = type;
         this.items = items;
     }

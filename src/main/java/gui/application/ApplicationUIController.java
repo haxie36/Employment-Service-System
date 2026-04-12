@@ -2,7 +2,7 @@ package gui.application;
 
 import application.AppInput;
 import application.ApplicationController;
-import application.ApplicationCollection;
+import application.ApplicationDAO;
 import application.Application;
 import gui.base.EmptyPanel;
 import gui.main.ListPanel;
@@ -11,22 +11,15 @@ import gui.main.MainWindow;
 import gui.main.RightPanel;
 import gui.vacancy.VacancyDetailsPanel;
 import registration.Profile;
-import registration.ProfileCollection;
 import vacancy.Vacancy;
 
 import javax.swing.*;
 
-public class ApplicationUIController extends UIController<Application> {
-    private final ApplicationController applicationController;
-    private final ProfileCollection profileCollection;
+public class ApplicationUIController extends UIController<Application, AppInput, ApplicationDAO, ApplicationController> {
 
     public ApplicationUIController(MainWindow mainWindow,
-                                   ApplicationController applicationController,
-                                   ApplicationCollection applicationCollection,
-                                   ProfileCollection profileCollection) {
-        super(mainWindow, applicationCollection);
-        this.applicationController = applicationController;
-        this.profileCollection = profileCollection;
+                                   ApplicationController applicationController) {
+        super(mainWindow, applicationController);
     }
 
     public void open(){
@@ -48,7 +41,7 @@ public class ApplicationUIController extends UIController<Application> {
             findProfileForm.setOnFind(() -> {
                 try {
                     AppInput passportNumberInput = findProfileForm.getInputData();
-                    Profile foundProfile = profileCollection.getByPassport(passportNumberInput.getPassportNumber());
+                    Profile foundProfile = controller.getByPassport(passportNumberInput.getPassportNumber());
                     if (foundProfile == null) {throw new Exception("Profile not found!");}
                     findProfileForm.updateProfileDetails(foundProfile);
                 } catch (Exception ex) {findProfileForm.setStatusText(ex.getMessage());}
@@ -58,7 +51,7 @@ public class ApplicationUIController extends UIController<Application> {
                 try {
                     if (findProfileForm.getFoundProfile() == null)
                         throw new Exception("Profile not found!");
-                    Vacancy[] recommendations = applicationController.getRecommendations(
+                    Vacancy[] recommendations = controller.getRecommendations(
                             findProfileForm.getFoundProfile()
                     );
                     if (recommendations == null || recommendations.length == 0) {
@@ -110,7 +103,7 @@ public class ApplicationUIController extends UIController<Application> {
                         findProfileForm.getFoundProfile().getPassportNumber(),
                         selectedVacancy
                 );
-                applicationController.create(finalInput);
+                controller.create(finalInput);
                 //FeedBack
                 JOptionPane.showMessageDialog(mainWindow, "Application Creation Successful");
                 forcedListUpdate();
@@ -147,7 +140,7 @@ public class ApplicationUIController extends UIController<Application> {
                 applicationEditPanel.setOnSave(() -> {
                     //Edit and update the list
                     try {
-                        applicationController.changeApplicationStatus(selected,
+                        controller.changeApplicationStatus(selected,
                                 applicationEditPanel.getStatus());
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
@@ -170,7 +163,7 @@ public class ApplicationUIController extends UIController<Application> {
             });
             //Delete
             applicationDetailsPanel.setOnDelete(() -> {
-                applicationController.delete(selected);
+                controller.delete(selected);
                 //FeedBack
                 JOptionPane.showMessageDialog(mainWindow, "Application Deletion Successful!");
                 updateList();

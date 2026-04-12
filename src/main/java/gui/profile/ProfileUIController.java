@@ -6,17 +6,16 @@ import gui.main.ListPanel;
 import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import registration.ProfileCollection;
+import registration.ProfileDAO;
+import registration.RegInput;
 import registration.RegistrationController;
 
 import javax.swing.*;
 
-public class ProfileUIController extends UIController<Profile> {
-    private final RegistrationController registrationController;
+public class ProfileUIController extends UIController<Profile, RegInput, ProfileDAO, RegistrationController> {
 
-    public ProfileUIController(MainWindow mainWindow, RegistrationController registrationController, ProfileCollection profileCollection) {
-        super(mainWindow, profileCollection);
-        this.registrationController = registrationController;
+    public ProfileUIController(MainWindow mainWindow, RegistrationController registrationController) {
+        super(mainWindow, registrationController);
     }
 
     public void open(){
@@ -37,7 +36,7 @@ public class ProfileUIController extends UIController<Profile> {
             //Upon pressing "Save" try to register a profile with the inputs
             regForm.setOnSave(() -> {
                 try{
-                    registrationController.create(regForm.getInputData());
+                    controller.create(regForm.getInputData());
                     //FeedBack message
                     JOptionPane.showMessageDialog(mainWindow, "Registration Successful");
                     updateList(); //Updates the list with a new profile
@@ -74,7 +73,7 @@ public class ProfileUIController extends UIController<Profile> {
                 profileEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
-                        registrationController.editProfile(selected,
+                        controller.editProfile(selected,
                                 profileEditPanel.getInputData());
                         //FeedBack message
                         JOptionPane.showMessageDialog(mainWindow, "Profile Edit Successful");
@@ -97,7 +96,7 @@ public class ProfileUIController extends UIController<Profile> {
             });
             //Delete selected
             profileDetailsPanel.setOnDelete(() -> {
-                registrationController.delete(selected);
+                controller.delete(selected);
                 //FeedBack message
                 JOptionPane.showMessageDialog(mainWindow, "Profile Deletion Successful");
                 updateList(); //And update the list

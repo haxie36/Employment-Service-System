@@ -3,7 +3,6 @@ package gui.retraining;
 import gui.base.EmptyPanel;
 import gui.main.ListPanel;
 import registration.Profile;
-import registration.ProfileCollection;
 import retraining.*;
 import gui.base.UIController;
 import gui.main.MainWindow;
@@ -11,17 +10,11 @@ import gui.main.RightPanel;
 
 import javax.swing.*;
 
-public class RetrainingUIController extends UIController<Retraining> {
-    private final RetrainingController retrainingController;
-    private final ProfileCollection profileCollection;
+public class RetrainingUIController extends UIController<Retraining, RetrInput, RetrainingDAO, RetrainingController> {
 
     public RetrainingUIController(MainWindow mainWindow,
-                                  RetrainingController retrainingController,
-                                  RetrainingCollection retrainingCollection,
-                                  ProfileCollection profileCollection) {
-        super(mainWindow, retrainingCollection);
-        this.retrainingController = retrainingController;
-        this.profileCollection = profileCollection;
+                                  RetrainingController retrainingController) {
+        super(mainWindow, retrainingController);
     }
 
     public void open(){
@@ -42,7 +35,7 @@ public class RetrainingUIController extends UIController<Retraining> {
             //Find button
             retrForm.setOnFind(() -> {
                 try {
-                    Profile foundProfile = profileCollection.getByPassport(retrForm.getPassportNumber());
+                    Profile foundProfile = controller.getByPassport(retrForm.getPassportNumber());
                     if (foundProfile == null) {throw new Exception("Profile not found!");}
                     retrForm.updateProfileDetails(foundProfile);
                 } catch (Exception ex) {
@@ -52,7 +45,7 @@ public class RetrainingUIController extends UIController<Retraining> {
             //Save
             retrForm.setOnSave(() -> {
                 try {
-                    retrainingController.create(retrForm.getInputData());
+                    controller.create(retrForm.getInputData());
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Retraining Creation Successful");
                     updateList();
@@ -89,7 +82,7 @@ public class RetrainingUIController extends UIController<Retraining> {
                 retrainingPlanningPanel.setOnSave(() -> {
                     try {
                         PlanningInput planningInput = retrainingPlanningPanel.getInputData();
-                        retrainingController.planRetraining(selected,
+                        controller.planRetraining(selected,
                                 planningInput.getStartDate(),
                                 planningInput.getEndDate());
                         //FeedBack
@@ -114,7 +107,7 @@ public class RetrainingUIController extends UIController<Retraining> {
                     try {
                         //Edit and update the list
                         PlanningInput editInput = retrainingEditPanel.getInputData();
-                        retrainingController.edit(selected, editInput);
+                        controller.edit(selected, editInput);
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Retraining Edit Successful");
                         //Update
@@ -131,7 +124,7 @@ public class RetrainingUIController extends UIController<Retraining> {
             });
             //Delete
             retrainingDetailsPanel.setOnDelete(() -> {
-                retrainingController.delete(selected);
+                controller.delete(selected);
                 //FeedBack
                 JOptionPane.showMessageDialog(mainWindow, "Retraining Deletion Successful");
                 updateList();

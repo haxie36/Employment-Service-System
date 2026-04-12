@@ -1,11 +1,11 @@
 package base;
 
-public abstract class LogicController<T extends HasId, I> {
+public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>> {
     protected T creation = null;
-    protected EntityCollection<T> collection;
+    protected D DAO;
 
-    public LogicController(EntityCollection<T> collection) {
-        this.collection = collection;
+    public LogicController(D DAO) {
+        this.DAO = DAO;
     }
 
     public abstract void newCreation();
@@ -13,7 +13,7 @@ public abstract class LogicController<T extends HasId, I> {
     public boolean save(){
         if (creation!=null){
             setCreationId(); //temp
-            collection.add(creation);
+            DAO.add(creation);
             clear();
             return true;
         }
@@ -21,12 +21,14 @@ public abstract class LogicController<T extends HasId, I> {
     }
     //temp
     protected void setCreationId(){
-        creation.setId(String.valueOf(collection.getAll().length+1));
+        creation.setId(String.valueOf(DAO.getAll().length+1));
     }
 
     public abstract void create(I input);
 
     public void clear(){creation=null;}
 
-    public boolean delete(T toBeDeleted){return collection.delete(toBeDeleted.getId());}
+    public boolean delete(T toBeDeleted){return DAO.delete(toBeDeleted.getId());}
+
+    public T[] getAll(){return DAO.getAll();}
 }

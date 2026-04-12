@@ -16,7 +16,7 @@ class RegistrationControllerTest {
         reg = new RegistrationController(
                 new ServiceArea(new String[]{"1"}),
                 new SpecialtyCatalog(new String[]{"1"}),
-                new ProfileCollection(new Profile[]{new Profile("2")}),
+                new ProfileDAO(new Profile[]{new Profile("2")}),
                 new Office()
         );
         reg.newCreation();

@@ -1,7 +1,7 @@
 package drivers;
 
 import registration.Profile;
-import registration.ProfileCollection;
+import registration.ProfileDAO;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -9,25 +9,25 @@ import java.util.Scanner;
 public class DRPs {
     public static void main(String[] args) {
         String id;
-        ProfileCollection profileCollection;
+        ProfileDAO profileDAO;
         Scanner sc = new Scanner(System.in);
 
         // #1
         System.out.println("#1");
         String choice = sc.nextLine();
         if (choice.equals("Порожній") || choice.equals("порожній") || choice.equals("0")) {
-            profileCollection = new ProfileCollection();
+            profileDAO = new ProfileDAO();
         } else {
-            profileCollection = new ProfileCollection();
+            profileDAO = new ProfileDAO();
             for (int i = 0; i<3; i++){
-                profileCollection.add(new Profile(Integer.toString(i)));
+                profileDAO.add(new Profile(Integer.toString(i)));
             }
         }
 
-        print(profileCollection);
-        if (profileCollection.getAll().length != 0) {
-            profileCollection.clear();
-            print(profileCollection);
+        print(profileDAO);
+        if (profileDAO.getAll().length != 0) {
+            profileDAO.clear();
+            print(profileDAO);
         }
         System.out.println();
 
@@ -36,21 +36,21 @@ public class DRPs {
         for (int i = 0; i < 3; i++) {
             System.out.print("id: ");
             id = sc.nextLine();
-            profileCollection.add(new Profile(id));
-            System.out.println(profileCollection.isRegistered(id));
+            profileDAO.add(new Profile(id));
+            System.out.println(profileDAO.isRegistered(id));
         }
-        print(profileCollection);
+        print(profileDAO);
         System.out.println();
 
         // #3
         System.out.println("#3");
-        String id0 = profileCollection.getAll()[0].getId();
-        profileCollection.delete(id0);
-        System.out.println(profileCollection.isRegistered(id0));
-        print(profileCollection);
+        String id0 = profileDAO.getAll()[0].getId();
+        profileDAO.delete(id0);
+        System.out.println(profileDAO.isRegistered(id0));
+        print(profileDAO);
     }
 
-    private static void print(ProfileCollection profileCollection) {
-        System.out.println("profiles: " + Arrays.toString(profileCollection.getAll()));
+    private static void print(ProfileDAO profileDAO) {
+        System.out.println("profiles: " + Arrays.toString(profileDAO.getAll()));
     }
 }

@@ -1,7 +1,8 @@
 package gui.base;
 
 import application.Application;
-import base.EntityCollection;
+import base.EntityDAO;
+import base.LogicController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
@@ -11,18 +12,19 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 
-public abstract class UIController<T extends HasId> {
+public abstract class UIController<T extends HasId, I, EC extends EntityDAO<T>,
+        C extends LogicController<T, I, EC>> {
     protected final MainWindow mainWindow;
-    protected final EntityCollection<T> collection;
+    protected final C controller;
 
     public UIController(MainWindow mainWindow,
-                        EntityCollection<T> entityCollection) {
+                        C logicController) {
         this.mainWindow = mainWindow;
-        this.collection = entityCollection;
+        this.controller = logicController;
     }
 
     public void open(){
-        mainWindow.setListPanel(new ListPanel<T>(collection.getAll()));
+        mainWindow.setListPanel(new ListPanel<T>(controller.getAll()));
         RightPanel rightPanel = mainWindow.getRightPanel();
         //Default right panel settings
         resetButton(rightPanel.getNewButton());
@@ -44,7 +46,7 @@ public abstract class UIController<T extends HasId> {
     protected void updateList(){
         ListPanel<T> listPanel = mainWindow.getListPanel();
         listPanel.clearSelection();
-        listPanel.updateList(collection.getAll());
+        listPanel.updateList(controller.getAll());
         mainWindow.getRightPanel().setContent(new EmptyPanel());
     }
 
@@ -55,7 +57,7 @@ public abstract class UIController<T extends HasId> {
     }
 
     protected void forcedListUpdate() {
-        mainWindow.setListPanel(new ListPanel<>(collection.getAll()));
+        mainWindow.setListPanel(new ListPanel<>(controller.getAll()));
         setupListListener();
     }
 

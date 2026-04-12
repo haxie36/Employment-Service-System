@@ -3,9 +3,6 @@ package application;
 import base.HasId;
 import registration.Profile;
 import vacancy.Vacancy;
-import retraining.RetrainingCollection;
-import vacancy.VacancyCollection;
-import registration.ProfileCollection;
 
 import java.time.LocalDate;
 

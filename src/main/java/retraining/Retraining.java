@@ -1,10 +1,7 @@
 package retraining;
 
 import base.HasId;
-import common.DateUtils;
-import common.SpecialtyCatalog;
 import registration.Profile;
-import registration.ProfileCollection;
 
 import java.time.LocalDate;
 

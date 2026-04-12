@@ -1,13 +1,13 @@
 package application;
 
-import base.EntityCollection;
+import base.EntityDAO;
 
 //A collection of Applications
-public class ApplicationCollection extends EntityCollection<Application> {
-    public ApplicationCollection() {
+public class ApplicationDAO extends EntityDAO<Application> {
+    public ApplicationDAO() {
         super(Application.class);
     }
-    public ApplicationCollection(Application[] applications) {
+    public ApplicationDAO(Application[] applications) {
         super(applications, Application.class);
     }
 

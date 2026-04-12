@@ -6,16 +6,16 @@ import common.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class RegistrationController extends LogicController<Profile, RegInput> {
+public class RegistrationController extends LogicController<Profile, RegInput, ProfileDAO> {
     private final ServiceArea serviceArea;
     private final SpecialtyCatalog specialtyCatalog;
     private final Office office;
 
     public RegistrationController(ServiceArea serviceArea,
                                   SpecialtyCatalog specialtyCatalog,
-                                  ProfileCollection profileCollection,
+                                  ProfileDAO profileDAO,
                                   Office office) {
-        super(profileCollection);
+        super(profileDAO);
         this.serviceArea = serviceArea;
         this.specialtyCatalog = specialtyCatalog;
         this.office = office;
@@ -34,7 +34,7 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
     public boolean save(){
         if (creation!=null){
             setCreationId(); //temp
-            collection.add(creation);
+            DAO.add(creation);
             printCertification();
             clear();
             return true;
@@ -47,7 +47,7 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
         if (!serviceArea.isServiceArea(input.getAddress()))
             throw new IllegalArgumentException("Address is not valid!");
         validatePassportInfo(input);
-        if (((ProfileCollection)collection).isRegistered(input.getPassport()))
+        if (DAO.isRegistered(input.getPassport()))
             throw new IllegalArgumentException("Profile is already registered!");
         validateSkills(input);
 
@@ -61,10 +61,10 @@ public class RegistrationController extends LogicController<Profile, RegInput> {
     //Edit
     public void editProfile(Profile prof, RegInput input) {
         validatePassportInfo(input);
-        if (((ProfileCollection)collection).existsByPassportExcept(prof.getId(),
+        if (DAO.existsByPassportExcept(prof.getId(),
                 input.getPassport().getPassportNumber()))
             throw new IllegalArgumentException("Profile with this passport already exists!");
-        if (((ProfileCollection)collection).existsByRNOKPPExcept(prof.getId(),
+        if (DAO.existsByRNOKPPExcept(prof.getId(),
                 input.getPassport().getRNOKPP()))
             throw new IllegalArgumentException("Profile with this RNOKPP already exists!");
         validateSkills(input);

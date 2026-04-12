@@ -1,16 +1,16 @@
 package vacancy;
 
-import application.ApplicationCollection;
+import application.ApplicationDAO;
 import base.LogicController;
 import common.SpecialtyCatalog;
 
-public class VacancyController extends LogicController<Vacancy, VacInput> {
-    private final ApplicationCollection applicationCollection;
+public class VacancyController extends LogicController<Vacancy, VacInput, VacancyDAO> {
+    private final ApplicationDAO applicationDAO;
     private final SpecialtyCatalog specialtyCatalog;
 
-    public VacancyController(VacancyCollection vacancyCollection, ApplicationCollection applicationCollection, SpecialtyCatalog specialtyCatalog) {
-        super(vacancyCollection);
-        this.applicationCollection = applicationCollection;
+    public VacancyController(VacancyDAO vacancyDAO, ApplicationDAO applicationDAO, SpecialtyCatalog specialtyCatalog) {
+        super(vacancyDAO);
+        this.applicationDAO = applicationDAO;
         this.specialtyCatalog = specialtyCatalog;
     }
 
@@ -26,11 +26,12 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
             throw new IllegalArgumentException("Invalid Title!");
         if (input.getCompany().length() < 3 || input.getCompany().length() > 100)
             throw new IllegalArgumentException("Company Name must be 3 characters long or longer!");
+        if (input.getContact().length() < 3 || input.getContact().length() > 100)
+            throw new IllegalArgumentException("Invalid Contact!");
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid Specialty!");
         if (input.getMinExperience() < 0 || input.getMinExperience() > 100)
             throw new IllegalArgumentException("Invalid Experience!");
-        validateInfo(input);
 
         newCreation();
         creation.setTitle(input.getTitle());
@@ -44,17 +45,11 @@ public class VacancyController extends LogicController<Vacancy, VacInput> {
 
     //Edit
     public void editVacancy(Vacancy vacancy, VacInput input, int status) {
-        validateInfo(input);
-
-        vacancy.changeStatus(status, applicationCollection);
-        vacancy.setContact(input.getContact());
-        vacancy.setDescription(input.getDescription());
-    }
-
-    private static void validateInfo(VacInput input) {
         if (input.getContact().length() < 3 || input.getContact().length() > 100)
             throw new IllegalArgumentException("Invalid Contact!");
-        if (input.getDescription().length() < 3 || input.getDescription().length() > 2000)
-            throw new IllegalArgumentException("Invalid Description!");
+        //Changing status throws exception on its own (if status is out of range)
+        vacancy.changeStatus(status, applicationDAO);
+        vacancy.setContact(input.getContact());
+        vacancy.setDescription(input.getDescription());
     }
 }

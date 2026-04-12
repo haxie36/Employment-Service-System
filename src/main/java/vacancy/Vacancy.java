@@ -2,9 +2,8 @@ package vacancy;
 
 import application.Application;
 import application.ApplicationStatus;
-import application.ApplicationCollection;
+import application.ApplicationDAO;
 import base.HasId;
-import common.SpecialtyCatalog;
 
 public class Vacancy implements HasId {
     private String id;
@@ -32,9 +31,9 @@ public class Vacancy implements HasId {
 
 
     //Change own status and change own applications' statuses
-    public void changeStatus(int status, ApplicationCollection applicationCollection){
+    public void changeStatus(int status, ApplicationDAO applicationDAO){
         setStatus(VacancyStatus.fromId(status));
-        Application[] apps = applicationCollection.getAll();
+        Application[] apps = applicationDAO.getAll();
         if (status!=VacancyStatus.OPEN.getId()){
             for (Application app : apps) {
                 if (app.getStatus() == ApplicationStatus.ACTIVE) {

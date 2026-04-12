@@ -4,19 +4,19 @@ import base.LogicController;
 import common.DateUtils;
 import common.SpecialtyCatalog;
 import registration.Profile;
-import registration.ProfileCollection;
+import registration.ProfileDAO;
 
 import java.time.LocalDate;
 
-public class RetrainingController extends LogicController<Retraining, RetrInput> {
-    private final ProfileCollection profileCollection;
+public class RetrainingController extends LogicController<Retraining, RetrInput, RetrainingDAO> {
+    private final ProfileDAO profileDAO;
     private final SpecialtyCatalog specialtyCatalog;
 
-    public RetrainingController(ProfileCollection profileCollection, SpecialtyCatalog specialtyCatalog, RetrainingCollection retrainingCollection) {
-        super(retrainingCollection);
-        this.profileCollection = profileCollection;
+    public RetrainingController(ProfileDAO profileDAO, SpecialtyCatalog specialtyCatalog, RetrainingDAO retrainingDAO) {
+        super(retrainingDAO);
+        this.profileDAO = profileDAO;
         this.specialtyCatalog = specialtyCatalog;
-        this.collection = retrainingCollection;
+        this.DAO = retrainingDAO;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RetrainingController extends LogicController<Retraining, RetrInput>
     public void create(RetrInput input){
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid specialty!");
-        Profile profile = profileCollection.getByPassport(input.getPassportNumber());
+        Profile profile = profileDAO.getByPassport(input.getPassportNumber());
         if (profile == null)
             throw new IllegalArgumentException("Profile doesn't exist!");
 
@@ -54,6 +54,11 @@ public class RetrainingController extends LogicController<Retraining, RetrInput>
         if (!DateUtils.isValidPeriod(editInput.getStartDate(), editInput.getEndDate())) {
             throw new IllegalArgumentException("Invalid dates");
         }
+        //Changing status throws exception on its own (if status is out of range)
         retraining.update(editInput);
+    }
+
+    public Profile getByPassport(String passportNumber) {
+        return profileDAO.getByPassport(passportNumber);
     }
 }

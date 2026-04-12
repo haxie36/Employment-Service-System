@@ -1,14 +1,14 @@
 package registration;
 
-import base.EntityCollection;
+import base.EntityDAO;
 import common.Passport;
 
 //A collection of Profiles
-public class ProfileCollection extends EntityCollection<Profile> {
-    public ProfileCollection() {
+public class ProfileDAO extends EntityDAO<Profile> {
+    public ProfileDAO() {
         super(Profile.class);
     }
-    public ProfileCollection(Profile[] profiles) {
+    public ProfileDAO(Profile[] profiles) {
         super(profiles, Profile.class);
     }
 

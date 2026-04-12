@@ -1,7 +1,7 @@
 package common;
 
 import application.ApplicationController;
-import application.ApplicationCollection;
+import application.ApplicationDAO;
 import application.RecSystem;
 import gui.application.ApplicationUIController;
 import gui.main.MainUIController;
@@ -11,21 +11,20 @@ import gui.retraining.RetrainingUIController;
 import gui.vacancy.VacancyUIController;
 import registration.*;
 import retraining.RetrainingController;
-import retraining.RetrainingCollection;
-import vacancy.VacancyCollection;
+import retraining.RetrainingDAO;
+import vacancy.VacancyDAO;
 import vacancy.VacancyController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.print.PrinterException;
 
 public class Office {
     public void start() {
-        //Collections
-        ProfileCollection profileCollection = new ProfileCollection();
-        ApplicationCollection applicationCollection = new ApplicationCollection();
-        VacancyCollection vacancyCollection = new VacancyCollection(applicationCollection);
-        RetrainingCollection retrainingCollection = new RetrainingCollection();
+        //DAO
+        ProfileDAO profileDAO = new ProfileDAO();
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        VacancyDAO vacancyDAO = new VacancyDAO(applicationDAO);
+        RetrainingDAO retrainingDAO = new RetrainingDAO();
 
         //Validators and stuff
         ServiceArea serviceArea = new ServiceArea();
@@ -34,23 +33,27 @@ public class Office {
 
         //Controllers
         RegistrationController registrationController = new RegistrationController(serviceArea,
-                specialtyCatalog, profileCollection, this);
-        ApplicationController applicationController = new ApplicationController(vacancyCollection,
-                applicationCollection, profileCollection, retrainingCollection, recSystem);
-        VacancyController vacancyController = new VacancyController(vacancyCollection, applicationCollection,
-                specialtyCatalog);
-        RetrainingController retrainingController = new RetrainingController(profileCollection,
-                specialtyCatalog, retrainingCollection);
+                specialtyCatalog, profileDAO, this);
+        ApplicationController applicationController = new ApplicationController(vacancyDAO,
+                applicationDAO, profileDAO, retrainingDAO, recSystem);
+        VacancyController vacancyController = new VacancyController(vacancyDAO,
+                applicationDAO, specialtyCatalog);
+        RetrainingController retrainingController = new RetrainingController(profileDAO,
+                specialtyCatalog, retrainingDAO);
 
         //GUI
         UIManager.put("Default_font", new Font("Arial", Font.BOLD, 12));
         MainWindow mainWindow = new MainWindow();
 
         //GUI Controllers
-        ProfileUIController  profileUIController = new ProfileUIController(mainWindow, registrationController, profileCollection);
-        ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow, applicationController, applicationCollection, profileCollection);
-        VacancyUIController vacancyUIController = new VacancyUIController(mainWindow, vacancyController, vacancyCollection);
-        RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow, retrainingController, retrainingCollection, profileCollection);
+        ProfileUIController  profileUIController = new ProfileUIController(mainWindow,
+                registrationController);
+        ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow,
+                applicationController);
+        VacancyUIController vacancyUIController = new VacancyUIController(mainWindow,
+                vacancyController);
+        RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow,
+                retrainingController);
         MainUIController mainUIController = new MainUIController(mainWindow,
                 profileUIController, applicationUIController,
                 vacancyUIController, retrainingUIController);

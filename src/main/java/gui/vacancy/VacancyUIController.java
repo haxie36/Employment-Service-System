@@ -2,22 +2,20 @@ package gui.vacancy;
 
 import gui.base.EmptyPanel;
 import gui.main.ListPanel;
+import vacancy.VacInput;
 import vacancy.Vacancy;
 import gui.base.UIController;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import vacancy.VacancyCollection;
+import vacancy.VacancyDAO;
 import vacancy.VacancyController;
 
 import javax.swing.*;
 
-public class VacancyUIController extends UIController<Vacancy> {
-    private final VacancyController vacancyController;
-
+public class VacancyUIController extends UIController<Vacancy, VacInput, VacancyDAO, VacancyController> {
     public VacancyUIController(MainWindow mainWindow,
-                               VacancyController vacancyController, VacancyCollection vacancyCollection) {
-        super(mainWindow, vacancyCollection);
-        this.vacancyController = vacancyController;
+                               VacancyController vacancyController) {
+        super(mainWindow, vacancyController);
     }
 
     public void open(){
@@ -38,7 +36,7 @@ public class VacancyUIController extends UIController<Vacancy> {
             //Save
             vacForm.setOnSave(() -> {
                 try{
-                    vacancyController.create(vacForm.getInputData());
+                    controller.create(vacForm.getInputData());
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Vacancy Creation Successful!");
                     updateList(); //Updating the list with a new vacancy
@@ -75,7 +73,7 @@ public class VacancyUIController extends UIController<Vacancy> {
                 vacancyEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
-                        vacancyController.editVacancy(selected,
+                        controller.editVacancy(selected,
                                 vacancyEditPanel.getInputData(),
                                 vacancyEditPanel.getStatus());
                         //FeedBack
@@ -99,7 +97,7 @@ public class VacancyUIController extends UIController<Vacancy> {
             });
             //DELETE selected
             vacancyDetailsPanel.setOnDelete(() -> {
-                vacancyController.delete(selected);
+                controller.delete(selected);
                 //FeedBack
                 JOptionPane.showMessageDialog(mainWindow, "Vacancy Deletion Successful!");
                 updateList(); //And update the list
