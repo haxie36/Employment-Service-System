@@ -15,8 +15,6 @@ import javax.swing.*;
 
 public class ApplicationEditPanel extends FormPanel<AppInput> {
     private final JLabel idValueLabel;
-    private final JLabel profileIdValueLabel;
-    private final JLabel vacancyIdValueLabel;
     private final JLabel applicationDateValueLabel;
     private final EnumComboBox<ApplicationStatus> statusComboBox;
     private final JPanel profileDetails;
@@ -24,8 +22,6 @@ public class ApplicationEditPanel extends FormPanel<AppInput> {
 
     public ApplicationEditPanel(Application application, Profile profile, Vacancy vacancy) {
         idValueLabel = label(application.getId());
-        profileIdValueLabel = label(application.getProfileId());
-        vacancyIdValueLabel = label(application.getVacancyId());
         applicationDateValueLabel = label(application.getApplicationDate().toString());
         statusComboBox = new EnumComboBox<>(ApplicationStatus.class);
         statusComboBox.setSelectedItem(application.getStatus());
@@ -41,9 +37,7 @@ public class ApplicationEditPanel extends FormPanel<AppInput> {
 
         //Adding components
         form.add(new Row(label("Id:"), idValueLabel));
-        form.add(new Row(label("Profile Id:"), profileIdValueLabel));
         form.add(profileDetails);
-        form.add(new Row(label("Vacancy Id:"), vacancyIdValueLabel));
         form.add(vacancyDetails);
         form.add(new Row(label("Application Date:"), applicationDateValueLabel));
         form.add(new Row(label("Status:"), statusComboBox));

@@ -21,11 +21,13 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
         //You either Plan the retraining or Edit it, can't do both
         if (retraining.getStartDate() != null) {
             additionalBtn.setEnabled(false);
+            startDateValueLabel = label(retraining.getStartDate().toString());
+            endDateValueLabel = label(retraining.getEndDate().toString());
         } else {
             editBtn.setEnabled(false);
+            startDateValueLabel = label("null");
+            endDateValueLabel = label("null");
         }
-        startDateValueLabel = label(retraining.getStartDate().toString());
-        endDateValueLabel = label(retraining.getEndDate().toString());
         specialtyValueLabel = label(retraining.getSpecialty());
         profileIdValueLabel = label(retraining.getProfileId());
         //Profile details panel

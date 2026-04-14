@@ -13,8 +13,6 @@ import javax.swing.*;
 
 public class ApplicationDetailsPanel extends DetailsPanel<Application> {
     private final JLabel idValueLabel;
-    private final JLabel profileIdValueLabel;
-    private final JLabel vacancyIdValueLabel;
     private final JLabel applicationDateValueLabel;
     private final JLabel statusValueLabel;
     private final ProfileDetailsPanel profileDetailsPanel;
@@ -27,8 +25,6 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
             editBtn.setEnabled(false);
 
         idValueLabel = label(application.getId());
-        profileIdValueLabel = label(application.getProfileId());
-        vacancyIdValueLabel = label(application.getVacancyId());
         applicationDateValueLabel = label(application.getApplicationDate().toString());
         statusValueLabel = label(application.getStatus().toString());
         //Profile details panel
@@ -42,9 +38,7 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
 
         //Adding components
         details.add(new Row(label("Id:"), idValueLabel));
-        details.add(new Row(label("Profile Id:"), profileIdValueLabel));
         details.add(profileDetails);
-        details.add(new Row(label("Vacancy Id:"), vacancyIdValueLabel));
         details.add(vacancyDetails);
         details.add(new Row(label("Application Date:"), applicationDateValueLabel));
         details.add(new Row(label("Status:"), statusValueLabel));

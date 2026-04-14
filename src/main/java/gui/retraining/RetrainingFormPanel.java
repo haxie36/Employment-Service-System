@@ -10,14 +10,13 @@ public class RetrainingFormPanel extends FormPanel<RetrInput> {
     private final CustomTextField specialtyField;
     private final CustomTextField passportNumberField;
     private Profile foundProfile = null;
-    private final CustomButton findBtn;
     private Runnable onFind = null;
     private final ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel();
 
     public  RetrainingFormPanel() {
         specialtyField = new CustomTextField();
         passportNumberField = new CustomTextField();
-        findBtn = new CustomButton("Find");
+        CustomButton findBtn = new CustomButton("Find");
         findBtn.addActionListener(e -> onFind.run());
 
         form.add(new Row(label("Specialty:"), specialtyField));
@@ -62,5 +61,4 @@ public class RetrainingFormPanel extends FormPanel<RetrInput> {
     }
 
     public Profile getFoundProfile() {return foundProfile;}
-    public void setFoundProfile(Profile foundProfile) {this.foundProfile = foundProfile;}
 }

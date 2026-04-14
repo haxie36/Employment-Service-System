@@ -13,10 +13,9 @@ import java.awt.*;
 
 public class FindProfileFormPanel extends FormPanel<AppInput> {
     private final CustomTextField passportNumberField;
-    private Runnable onFind;
-    private JPanel details;
-    private Profile foundProfile = null;
     private final ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel();
+    private Runnable onFind;
+    private Profile foundProfile = null;
 
     public FindProfileFormPanel() {
         passportNumberField = new CustomTextField();
@@ -25,7 +24,7 @@ public class FindProfileFormPanel extends FormPanel<AppInput> {
         saveBtn.setText("Continue");
 
         //Profile info
-        details = profileDetailsPanel.getDetails();
+        JPanel details = profileDetailsPanel.getDetails();
 
         form.add(new Row(label("Passport Number:"), passportNumberField));
         form.add(findButton);
