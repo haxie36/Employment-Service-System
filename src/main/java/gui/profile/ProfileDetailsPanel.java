@@ -52,7 +52,7 @@ public class ProfileDetailsPanel extends DetailsPanel<Profile> {
             specialtyValueLbl.setText("");
             experienceValueLbl.setText("");
         } else {
-            idValueLbl.setText(profile.getId());
+            idValueLbl.setText(String.valueOf(profile.getId()));
             nameValueLbl.setText(profile.getName());
             birthDateValueLbl.setText((profile.getBirthDate().format(DateUtils.FORMATTER)));
             passportNumberValueLbl.setText((profile.getPassportNumber()));

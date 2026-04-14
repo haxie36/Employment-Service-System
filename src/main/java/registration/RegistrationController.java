@@ -33,7 +33,6 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
     @Override
     public boolean save(){
         if (creation!=null){
-            setCreationId(); //temp
             DAO.add(creation);
             printCertification();
             clear();
@@ -47,7 +46,7 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
         if (!serviceArea.isServiceArea(input.getAddress()))
             throw new IllegalArgumentException("Address is not valid!");
         validatePassportInfo(input);
-        if (DAO.isRegistered(input.getPassport()))
+        if (DAO.isRegistered(input.getPassport().getPassportNumber()))
             throw new IllegalArgumentException("Profile is already registered!");
         validateSkills(input);
 
@@ -59,37 +58,42 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
     }
 
     //Edit
-    public void editProfile(Profile prof, RegInput input) {
+    public void editProfile(Profile profile, RegInput input) {
         validatePassportInfo(input);
-        if (DAO.existsByPassportExcept(prof.getId(),
+        if (DAO.existsByPassportExcept(profile.getId(),
                 input.getPassport().getPassportNumber()))
-            throw new IllegalArgumentException("Profile with this passport already exists!");
-        if (DAO.existsByRNOKPPExcept(prof.getId(),
+            throw new IllegalArgumentException("Profile already exists!");
+        if (DAO.existsByRNOKPPExcept(profile.getId(),
                 input.getPassport().getRNOKPP()))
-            throw new IllegalArgumentException("Profile with this RNOKPP already exists!");
+            throw new IllegalArgumentException("Profile already exists!");
         validateSkills(input);
 
-        prof.setPassportInfo(input.getPassport());
-        prof.setExperience(input.getExperience());
+        profile.setPassportInfo(input.getPassport());
+        profile.setExperience(input.getExperience());
+        DAO.update(profile);
     }
 
     private static void validatePassportInfo(RegInput input) {
         if (input.getPassport().getPassportNumber().length() < 8
                 || input.getPassport().getPassportNumber().length() > 9)
-            throw new IllegalArgumentException("Invalid passport number!");
+            throw new IllegalArgumentException("Invalid Passport Number!");
         if (input.getPassport().getRNOKPP().length() != 10)
             throw new IllegalArgumentException("Invalid RNOKPP!");
         if (input.getPassport().getName().length() < 3)
-            throw new IllegalArgumentException("Invalid name!");
+            throw new IllegalArgumentException("Invalid Name!");
         if (ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) > 120
         || ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) < 18)
-            throw new IllegalArgumentException("Invalid birthday!");
+            throw new IllegalArgumentException("Invalid Birthday!");
     }
 
     private void validateSkills(RegInput input) {
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
             throw new IllegalArgumentException("Invalid Specialty!");
-        if (input.getExperience() < 0 || input.getExperience() > 100)
-            throw new IllegalArgumentException("Experience must be positive!");
+        if (input.getExperience() < 0 || input.getExperience() > 100
+        || ChronoUnit.YEARS.between(
+                input.getPassport().getBirthday(),
+                LocalDate.now()
+        ) - 16 < input.getExperience())
+            throw new IllegalArgumentException("Invalid Experience!");
     }
 }

@@ -3,6 +3,7 @@ package gui.retraining;
 import gui.base.DetailsPanel;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
+import registration.Profile;
 import retraining.Retraining;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
     private final ProfileDetailsPanel profileDetailsPanel;
     private final JLabel statusValueLabel;
 
-    public RetrainingDetailsPanel(Retraining retraining) {
+    public RetrainingDetailsPanel(Retraining retraining, Profile profile) {
         super("Plan");
         //You either Plan the retraining or Edit it, can't do both
         if (retraining.getStartDate() != null) {
@@ -28,7 +29,7 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
         specialtyValueLabel = label(retraining.getSpecialty());
         profileIdValueLabel = label(retraining.getProfileId());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(retraining.getProfile());
+        profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
@@ -46,9 +47,6 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
     public void update(Retraining retraining) {
         startDateValueLabel.setText(retraining.getStartDate().toString());
         endDateValueLabel.setText(retraining.getEndDate().toString());
-        specialtyValueLabel.setText(retraining.getSpecialty());
-        profileIdValueLabel.setText(retraining.getProfileId());
-        profileDetailsPanel.update(retraining.getProfile());
         statusValueLabel.setText(retraining.getStatus().toString());
     }
 }

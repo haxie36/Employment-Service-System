@@ -20,10 +20,10 @@ import java.awt.*;
 
 public class Office {
     public void start() {
-        //DAO
+        //DAOs
         ProfileDAO profileDAO = new ProfileDAO();
         ApplicationDAO applicationDAO = new ApplicationDAO();
-        VacancyDAO vacancyDAO = new VacancyDAO(applicationDAO);
+        VacancyDAO vacancyDAO = new VacancyDAO();
         RetrainingDAO retrainingDAO = new RetrainingDAO();
 
         //Validators and stuff
@@ -34,8 +34,8 @@ public class Office {
         //Controllers
         RegistrationController registrationController = new RegistrationController(serviceArea,
                 specialtyCatalog, profileDAO, this);
-        ApplicationController applicationController = new ApplicationController(vacancyDAO,
-                applicationDAO, profileDAO, retrainingDAO, recSystem);
+        ApplicationController applicationController = new ApplicationController(applicationDAO,
+                profileDAO, vacancyDAO, retrainingDAO, recSystem);
         VacancyController vacancyController = new VacancyController(vacancyDAO,
                 applicationDAO, specialtyCatalog);
         RetrainingController retrainingController = new RetrainingController(profileDAO,
@@ -49,11 +49,11 @@ public class Office {
         ProfileUIController  profileUIController = new ProfileUIController(mainWindow,
                 registrationController);
         ApplicationUIController applicationUIController = new ApplicationUIController(mainWindow,
-                applicationController);
+                applicationController, registrationController, vacancyController);
         VacancyUIController vacancyUIController = new VacancyUIController(mainWindow,
                 vacancyController);
         RetrainingUIController retrainingUIController = new RetrainingUIController(mainWindow,
-                retrainingController);
+                retrainingController, registrationController);
         MainUIController mainUIController = new MainUIController(mainWindow,
                 profileUIController, applicationUIController,
                 vacancyUIController, retrainingUIController);

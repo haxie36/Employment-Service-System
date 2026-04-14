@@ -5,6 +5,8 @@ import gui.base.DetailsPanel;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
+import registration.Profile;
+import vacancy.Vacancy;
 import vacancy.VacancyStatus;
 
 import javax.swing.*;
@@ -18,10 +20,10 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
     private final ProfileDetailsPanel profileDetailsPanel;
     private final VacancyDetailsPanel vacancyDetailsPanel;
 
-    public  ApplicationDetailsPanel(Application application) {
+    public  ApplicationDetailsPanel(Application application, Profile profile, Vacancy vacancy) {
         //If vacancy isn't open, you can't change the status
         //I believe it makes sense, doesn't it?
-        if (application.getVacancy().getStatus() != VacancyStatus.OPEN)
+        if (vacancy.getStatus() != VacancyStatus.OPEN)
             editBtn.setEnabled(false);
 
         idValueLabel = label(application.getId());
@@ -30,11 +32,11 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
         applicationDateValueLabel = label(application.getApplicationDate().toString());
         statusValueLabel = label(application.getStatus().toString());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(application.getProfile());
+        profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Vacancy details panel
-        vacancyDetailsPanel = new VacancyDetailsPanel(application.getVacancy());
+        vacancyDetailsPanel = new VacancyDetailsPanel(vacancy);
         JPanel vacancyDetails = vacancyDetailsPanel.getDetails();
         vacancyDetails.setBorder(BorderFactory.createTitledBorder("Vacancy"));
 
@@ -52,12 +54,6 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
 
     @Override
     public void update(Application application) {
-        idValueLabel.setText(application.getId());
-        profileIdValueLabel.setText(application.getProfileId());
-        vacancyIdValueLabel.setText(application.getVacancyId());
-        applicationDateValueLabel.setText(application.getApplicationDate().toString());
         statusValueLabel.setText(application.getStatus().toString());
-        profileDetailsPanel.update(application.getProfile());
-        vacancyDetailsPanel.update(application.getVacancy());
     }
 }

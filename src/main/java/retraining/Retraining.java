@@ -6,26 +6,25 @@ import registration.Profile;
 import java.time.LocalDate;
 
 public class Retraining implements HasId {
-    String id;
-    LocalDate startDate;
-    LocalDate endDate;
-    String specialty;
-    String profileId;
-    Profile profile;
-    RetrainingStatus status;
+    private int id;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String specialty;
+    private int profileId;
+    private RetrainingStatus status;
 
     public Retraining(){
         startDate = null;
         endDate = null;
         status = RetrainingStatus.NEW;
     }
-    public Retraining(LocalDate startDate, LocalDate endDate, String specialty, Profile profile, int status) {
+    public Retraining(int id, LocalDate startDate, LocalDate endDate, String specialty, int profileId, RetrainingStatus status) {
+        this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.specialty = specialty;
-        this.profile = profile;
-        this.profileId = profile.getId();
-        this.status = RetrainingStatus.fromId(status);
+        this.profileId = profileId;
+        this.status = status;
     }
 
     //Set dates and assign status
@@ -48,26 +47,28 @@ public class Retraining implements HasId {
         this.status = RetrainingStatus.fromId(input.getStatus());
     }
 
-    public String getId() {return id;}
+    public int getId() {return id;}
     public LocalDate getStartDate() {return startDate;}
     public LocalDate getEndDate() {return endDate;}
     public String getSpecialty() {return specialty;}
-    public String getProfileId() {return profileId;}
-    public  Profile getProfile() {return profile;}
+    public int getProfileId() {return profileId;}
     public RetrainingStatus getStatus() {return status;}
-    public void setId(String id) {this.id = id;}
+    public void setId(int id) {this.id = id;}
     public void setStartDate(LocalDate startDate) {this.startDate = startDate;}
     public void setEndDate(LocalDate endDate) {this.endDate = endDate;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-        this.profileId = profile.getId();
-    }
+    public void setProfileId(int profileId) {this.profileId = profileId;}
     public void setStatus(int status) {this.status = RetrainingStatus.fromId(status);}
     public void setStatus(RetrainingStatus status) {this.status = status;}
 
-    public String toString(){
-        return "("+id+") "+specialty+" -- "+profile.getName()
-                +" ["+status.getName()+"]";
+    @Override
+    public String toString() {
+        return String.format(
+                "(%s) Profile: %s | %s [%s]",
+                id,
+                profileId,
+                specialty,
+                status.getName()
+        );
     }
 }

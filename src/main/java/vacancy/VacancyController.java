@@ -51,5 +51,6 @@ public class VacancyController extends LogicController<Vacancy, VacInput, Vacanc
         vacancy.changeStatus(status, applicationDAO);
         vacancy.setContact(input.getContact());
         vacancy.setDescription(input.getDescription());
+        DAO.update(vacancy);
     }
 }

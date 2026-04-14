@@ -1,8 +1,7 @@
 package application;
 
+import retraining.Retraining;
 import retraining.RetrainingStatus;
-import retraining.RetrainingDAO;
-import vacancy.VacancyDAO;
 import vacancy.Vacancy;
 import registration.Profile;
 import vacancy.VacancyStatus;
@@ -13,10 +12,8 @@ import java.util.stream.Stream;
 
 //Recommendations...
 public class RecSystem {
-    public Vacancy[] getRecommendations(Profile profile, VacancyDAO vacancyDAO, RetrainingDAO retrainingDAO) {
-        Vacancy[] vacs = vacancyDAO.getAll(); //Real vacancies
-
-        String[] skillSet = getFullSkillSet(profile, retrainingDAO);
+    public Vacancy[] getRecommendations(Profile profile, Vacancy[] vacs, Retraining[] retrs) {
+        String[] skillSet = getFullSkillSet(profile, retrs);
 
         List<Vacancy> recommendations = new ArrayList<>(); //A collection of recommendations
         for (Vacancy vacancy : vacs) {
@@ -40,12 +37,12 @@ public class RecSystem {
         return recommendations.toArray(new Vacancy[0]);
     }
 
-    private String[] getFullSkillSet(Profile profile, RetrainingDAO retrainingDAO) {
+    private String[] getFullSkillSet(Profile profile, Retraining[] retrs) {
         List<String> specialties = new ArrayList<>(); //A collection of profile's specialties
         specialties.add(profile.getSpecialty()); //Add the primary specialty
 
-        Stream.of(retrainingDAO.getAll()) //Convert retrainings array into a stream
-                .filter(r -> r.getProfileId().equals(profile.getId())) //Filter by the profile id
+        Stream.of(retrs) //Convert retrainings array into a stream
+                .filter(r -> r.getProfileId() == (profile.getId())) //Filter by the profile id
                 .filter(r -> r.getStatus() == RetrainingStatus.COMPLETED) //Filter by COMPLETED
                 .forEach(r->specialties.add(r.getSpecialty())); //And add all the specialties to the list
 

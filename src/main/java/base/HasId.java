@@ -1,6 +1,6 @@
 package base;
 
 public interface HasId {
-    String getId();
-    void setId(String id);
+    int getId();
+    void setId(int id);
 }

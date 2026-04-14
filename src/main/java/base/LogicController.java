@@ -1,5 +1,7 @@
 package base;
 
+import registration.Profile;
+
 public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>> {
     protected T creation = null;
     protected D DAO;
@@ -12,16 +14,11 @@ public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>
 
     public boolean save(){
         if (creation!=null){
-            setCreationId(); //temp
             DAO.add(creation);
             clear();
             return true;
         }
         return false;
-    }
-    //temp
-    protected void setCreationId(){
-        creation.setId(String.valueOf(DAO.getAll().length+1));
     }
 
     public abstract void create(I input);
@@ -31,4 +28,8 @@ public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>
     public boolean delete(T toBeDeleted){return DAO.delete(toBeDeleted.getId());}
 
     public T[] getAll(){return DAO.getAll();}
+
+    public T getById(int id) {
+        return DAO.getById(id);
+    }
 }

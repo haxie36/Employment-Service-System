@@ -8,6 +8,8 @@ import gui.components.EnumComboBox;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
+import registration.Profile;
+import vacancy.Vacancy;
 
 import javax.swing.*;
 
@@ -20,7 +22,7 @@ public class ApplicationEditPanel extends FormPanel<AppInput> {
     private final JPanel profileDetails;
     private final JPanel vacancyDetails;
 
-    public ApplicationEditPanel(Application application) {
+    public ApplicationEditPanel(Application application, Profile profile, Vacancy vacancy) {
         idValueLabel = label(application.getId());
         profileIdValueLabel = label(application.getProfileId());
         vacancyIdValueLabel = label(application.getVacancyId());
@@ -29,11 +31,11 @@ public class ApplicationEditPanel extends FormPanel<AppInput> {
         statusComboBox.setSelectedItem(application.getStatus());
 
         //Details panels
-        ProfileDetailsPanel temp1 = new ProfileDetailsPanel(application.getProfile());
+        ProfileDetailsPanel temp1 = new ProfileDetailsPanel(profile);
         profileDetails = temp1.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
 
-        VacancyDetailsPanel temp2 = new VacancyDetailsPanel(application.getVacancy());
+        VacancyDetailsPanel temp2 = new VacancyDetailsPanel(vacancy);
         vacancyDetails = temp2.getDetails();
         vacancyDetails.setBorder(BorderFactory.createTitledBorder("Vacancy"));
 

@@ -3,6 +3,7 @@ package gui.retraining;
 import gui.base.EmptyPanel;
 import gui.main.ListPanel;
 import registration.Profile;
+import registration.RegistrationController;
 import retraining.*;
 import gui.base.UIController;
 import gui.main.MainWindow;
@@ -11,10 +12,13 @@ import gui.main.RightPanel;
 import javax.swing.*;
 
 public class RetrainingUIController extends UIController<Retraining, RetrInput, RetrainingDAO, RetrainingController> {
+    private final RegistrationController registrationController;
 
     public RetrainingUIController(MainWindow mainWindow,
-                                  RetrainingController retrainingController) {
+                                  RetrainingController retrainingController,
+                                  RegistrationController registrationController) {
         super(mainWindow, retrainingController);
+        this.registrationController = registrationController;
     }
 
     public void open(){
@@ -36,7 +40,9 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
             retrForm.setOnFind(() -> {
                 try {
                     Profile foundProfile = controller.getByPassport(retrForm.getPassportNumber());
-                    if (foundProfile == null) {throw new Exception("Profile not found!");}
+                    if (foundProfile == null) {
+                        throw new IllegalArgumentException("Profile not found!");
+                    }
                     retrForm.updateProfileDetails(foundProfile);
                 } catch (Exception ex) {
                     retrForm.setStatusText(ex.getMessage());
@@ -74,10 +80,11 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
             //Null check
             if (selected == null) return;
             //Create details panel
-            RetrainingDetailsPanel retrainingDetailsPanel = new RetrainingDetailsPanel(selected);
+            Profile profileOfSelected = registrationController.getById(selected.getProfileId());
+            RetrainingDetailsPanel retrainingDetailsPanel = new RetrainingDetailsPanel(selected, profileOfSelected);
             //Plan
             retrainingDetailsPanel.setOnAdditional(() -> {
-                RetrainingPlanningPanel retrainingPlanningPanel = new RetrainingPlanningPanel(selected);
+                RetrainingPlanningPanel retrainingPlanningPanel = new RetrainingPlanningPanel(selected, profileOfSelected);
                 //Save
                 retrainingPlanningPanel.setOnSave(() -> {
                     try {
@@ -101,7 +108,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
             });
             //Edit
             retrainingDetailsPanel.setOnEdit(() -> {
-                RetrainingEditPanel retrainingEditPanel = new RetrainingEditPanel(selected);
+                RetrainingEditPanel retrainingEditPanel = new RetrainingEditPanel(selected, profileOfSelected);
                 //Save
                 retrainingEditPanel.setOnSave(() -> {
                     try {

@@ -6,7 +6,7 @@ import application.ApplicationDAO;
 import base.HasId;
 
 public class Vacancy implements HasId {
-    private String id;
+    private int id;
     private String title;
     private String company;
     private String contact;
@@ -15,10 +15,8 @@ public class Vacancy implements HasId {
     private String description;
     private VacancyStatus status;
 
-    public Vacancy(){
-        status = VacancyStatus.OPEN;
-    }
-    public Vacancy(String id, String title, String company, String contact, String specialty, int minExperience, String description, VacancyStatus status) {
+    public Vacancy(){status = VacancyStatus.OPEN;}
+    public Vacancy(int id, String title, String company, String contact, String specialty, int minExperience, String description, VacancyStatus status) {
         this.id = id;
         this.title = title;
         this.company = company;
@@ -49,7 +47,7 @@ public class Vacancy implements HasId {
         }
     }
 
-    public String getId() {return id;}
+    public int getId() {return id;}
     public String getTitle() {return title;}
     public String getCompany() {return company;}
     public String getContact() {return contact;}
@@ -57,7 +55,7 @@ public class Vacancy implements HasId {
     public int getMinExperience() {return minExperience;}
     public String getDescription() {return description;}
     public VacancyStatus getStatus() {return status;}
-    public void setId(String id) {this.id = id;}
+    public void setId(int id) {this.id = id;}
     public boolean setTitle(String title) {
         if (title == null) return false;
         this.title = title;
@@ -84,7 +82,14 @@ public class Vacancy implements HasId {
     }
     public void setStatus(VacancyStatus status) {this.status = status;}
 
+    @Override
     public String toString() {
-        return "("+id+") "+title+" ["+status.getName()+"]";
+        return String.format(
+                "(%s) %s @ %s [%s]",
+                id,
+                title,
+                company,
+                status.getName()
+        );
     }
 }

@@ -8,15 +8,17 @@ import vacancy.Vacancy;
 import registration.ProfileDAO;
 
 public class ApplicationController extends LogicController<Application, AppInput, ApplicationDAO> {
-    private final VacancyDAO vacancyDAO;
     private final ProfileDAO profileDAO;
+    private final VacancyDAO vacancyDAO;
     private final RetrainingDAO retrainingDAO;
     private final RecSystem recSystem;
 
-    public ApplicationController(VacancyDAO vacancyDAO, ApplicationDAO applicationDAO, ProfileDAO profileDAO, RetrainingDAO retrainingDAO, RecSystem recSystem) {
+    public ApplicationController(ApplicationDAO applicationDAO, ProfileDAO profileDAO,
+                                 VacancyDAO vacancyDAO, RetrainingDAO retrainingDAO,
+                                 RecSystem recSystem) {
         super(applicationDAO);
-        this.vacancyDAO = vacancyDAO;
         this.profileDAO = profileDAO;
+        this.vacancyDAO = vacancyDAO;
         this.retrainingDAO = retrainingDAO;
         this.recSystem = recSystem;
     }
@@ -26,8 +28,7 @@ public class ApplicationController extends LogicController<Application, AppInput
 
     //Get the recommendations for the application's profile
     public Vacancy[] getRecommendations(Profile profile){
-        return recSystem.getRecommendations(profile,
-                vacancyDAO, retrainingDAO);
+        return recSystem.getRecommendations(profile, vacancyDAO.getAll(), retrainingDAO.getAll());
     }
 
 
@@ -42,21 +43,22 @@ public class ApplicationController extends LogicController<Application, AppInput
         if (hasActiveApplications(
                 profile.getId(),
                 input.getVacancy().getId())) {
-            throw new IllegalArgumentException("Active application exists!");
+            throw new IllegalArgumentException("Active Application exists!");
         }
-        creation.setProfile(profile);
-        creation.setVacancy(input.getVacancy());
+        creation.setProfileId(profile.getId());
+        creation.setVacancyId(input.getVacancy().getId());
         if (!save()) throw new IllegalArgumentException("Save failed!");
     }
 
     //Edit
-    public void changeApplicationStatus(Application app, int status) {
+    public void changeApplicationStatus(Application application, int status) {
         //Changing status throws exception on its own (if status is out of range)
-        app.setStatus(ApplicationStatus.fromId(status));
+        application.setStatus(ApplicationStatus.fromId(status));
+        DAO.update(application);
     }
 
     //Cloning check
-    public boolean hasActiveApplications(String profileId, String vacancyId) {
+    public boolean hasActiveApplications(int profileId, int vacancyId) {
         return (DAO.hasActiveApplications(profileId, vacancyId));
     }
 

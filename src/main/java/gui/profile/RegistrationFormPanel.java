@@ -79,7 +79,7 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
         birthDateField.setText(passport.getBirthday().toString());
         passportNumberField.setText(passport.getPassportNumber());
         RNOKPPField.setText(passport.getRNOKPP());
-
+        //Others
         specialtyField.setText(input.getSpecialty());
         experienceField.setText(Integer.toString(input.getExperience()));
     }

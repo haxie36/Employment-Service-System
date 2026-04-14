@@ -28,7 +28,7 @@ public abstract class FormPanel<T> extends JPanel {
         btnAndStatusPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         //Status
         status = new JLabel(" ");
-        status.setFont(new Font("Arial", Font.BOLD, 14));
+        status.setFont(new Font("Arial", Font.BOLD, 12));
         status.setForeground(Color.RED);
         status.setAlignmentX(Component.LEFT_ALIGNMENT);
         status.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
@@ -60,4 +60,5 @@ public abstract class FormPanel<T> extends JPanel {
     public void setStatusText(String text) {status.setText(text);}
 
     protected JLabel label(String text) {return new JLabel(text);}
+    protected JLabel label(int text){return new JLabel(String.valueOf(text));}
 }

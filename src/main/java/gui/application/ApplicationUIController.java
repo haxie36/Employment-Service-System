@@ -11,15 +11,23 @@ import gui.main.MainWindow;
 import gui.main.RightPanel;
 import gui.vacancy.VacancyDetailsPanel;
 import registration.Profile;
+import registration.RegistrationController;
 import vacancy.Vacancy;
+import vacancy.VacancyController;
 
 import javax.swing.*;
 
 public class ApplicationUIController extends UIController<Application, AppInput, ApplicationDAO, ApplicationController> {
+    private final RegistrationController registrationController;
+    private final VacancyController vacancyController;
 
     public ApplicationUIController(MainWindow mainWindow,
-                                   ApplicationController applicationController) {
+                                   ApplicationController applicationController,
+                                   RegistrationController registrationController,
+                                   VacancyController  vacancyController) {
         super(mainWindow, applicationController);
+        this.registrationController = registrationController;
+        this.vacancyController = vacancyController;
     }
 
     public void open(){
@@ -42,15 +50,20 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                 try {
                     AppInput passportNumberInput = findProfileForm.getInputData();
                     Profile foundProfile = controller.getByPassport(passportNumberInput.getPassportNumber());
-                    if (foundProfile == null) {throw new Exception("Profile not found!");}
+                    if (foundProfile == null) {
+                        throw new IllegalArgumentException("Profile not found!");
+                    }
                     findProfileForm.updateProfileDetails(foundProfile);
-                } catch (Exception ex) {findProfileForm.setStatusText(ex.getMessage());}
+                } catch (Exception ex) {
+                    findProfileForm.setStatusText(ex.getMessage());
+                }
             });
             //Continue button
             findProfileForm.setOnSave(() -> {
                 try {
-                    if (findProfileForm.getFoundProfile() == null)
-                        throw new Exception("Profile not found!");
+                    if (findProfileForm.getFoundProfile() == null) {
+                        throw new IllegalArgumentException("Profile not found!");
+                    }
                     Vacancy[] recommendations = controller.getRecommendations(
                             findProfileForm.getFoundProfile()
                     );
@@ -78,7 +91,9 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                         VacancyDetailsPanel vacancyDetailsPanel = getVacancyDetailsPanel(selectedVacancy, findProfileForm, rightPanel);
                         rightPanel.setContent(vacancyDetailsPanel);
                     });
-                } catch (Exception ex) {throw new RuntimeException(ex.getMessage());}
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex.getMessage());
+                }
             });
             //Cancel
             findProfileForm.setOnCancel(() -> {rightPanel.setContent(new EmptyPanel());});
@@ -108,7 +123,9 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                 JOptionPane.showMessageDialog(mainWindow, "Application Creation Successful");
                 forcedListUpdate();
                 rightPanel.setContent(new EmptyPanel());
-            } catch (Exception ex) {JOptionPane.showMessageDialog(mainWindow, ex.getMessage());}
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(mainWindow, ex.getMessage());
+            }
         });
         //Cancel
         vacancyDetailsPanel.setOnDelete(() -> {
@@ -132,10 +149,12 @@ public class ApplicationUIController extends UIController<Application, AppInput,
             //Null check
             if (selected == null) return;
             //Create DetailsPanel
-            ApplicationDetailsPanel applicationDetailsPanel = new ApplicationDetailsPanel(selected);
+            Profile profileOfSelected = registrationController.getById(selected.getProfileId());
+            Vacancy vacancyOfSelected = vacancyController.getById(selected.getVacancyId());
+            ApplicationDetailsPanel applicationDetailsPanel = new ApplicationDetailsPanel(selected, profileOfSelected, vacancyOfSelected);
             //Edit
             applicationDetailsPanel.setOnEdit(() -> {
-                ApplicationEditPanel applicationEditPanel = new ApplicationEditPanel(selected);
+                ApplicationEditPanel applicationEditPanel = new ApplicationEditPanel(selected, profileOfSelected, vacancyOfSelected);
                 //Apply changes
                 applicationEditPanel.setOnSave(() -> {
                     //Edit and update the list

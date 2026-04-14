@@ -6,6 +6,7 @@ import gui.components.CustomTextField;
 import gui.components.EnumComboBox;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
+import registration.Profile;
 import retraining.PlanningInput;
 import retraining.Retraining;
 import retraining.RetrainingStatus;
@@ -20,7 +21,7 @@ public class RetrainingEditPanel extends FormPanel<PlanningInput> {
     private final ProfileDetailsPanel profileDetailsPanel;
     private final EnumComboBox<RetrainingStatus> statusComboBox;
 
-    public RetrainingEditPanel(Retraining retraining) {
+    public RetrainingEditPanel(Retraining retraining, Profile profile) {
         startDateField = new CustomDateField();
         startDateField.setDate(retraining.getStartDate());
         endDateField = new CustomDateField();
@@ -28,7 +29,7 @@ public class RetrainingEditPanel extends FormPanel<PlanningInput> {
         specialtyField = new CustomTextField(retraining.getSpecialty());
         profileIdValueLabel = label(retraining.getProfileId());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(retraining.getProfile());
+        profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
@@ -62,7 +63,6 @@ public class RetrainingEditPanel extends FormPanel<PlanningInput> {
     public void setData(PlanningInput input) {
         startDateField.setDate(input.getStartDate());
         endDateField.setDate(input.getEndDate());
-        specialtyField.setText(input.getSpecialty());
         statusComboBox.setSelectedIndex(input.getStatus());
     }
 

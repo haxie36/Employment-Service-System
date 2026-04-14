@@ -4,6 +4,7 @@ import gui.base.FormPanel;
 import gui.components.CustomDateField;
 import gui.components.Row;
 import gui.profile.ProfileDetailsPanel;
+import registration.Profile;
 import retraining.PlanningInput;
 import retraining.Retraining;
 
@@ -17,7 +18,7 @@ public class RetrainingPlanningPanel extends FormPanel<PlanningInput> {
     private final ProfileDetailsPanel profileDetailsPanel;
     private final JLabel statusValueLabel;
 
-    public RetrainingPlanningPanel(Retraining retraining) {
+    public RetrainingPlanningPanel(Retraining retraining, Profile profile) {
         startDateField = new CustomDateField();
         startDateField.setDate(retraining.getStartDate());
         endDateField = new CustomDateField();
@@ -25,7 +26,7 @@ public class RetrainingPlanningPanel extends FormPanel<PlanningInput> {
         specialtyValueLabel = label(retraining.getSpecialty());
         profileIdValueLabel = label(retraining.getProfileId());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(retraining.getProfile());
+        profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status

@@ -26,14 +26,14 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     //All-in-one
     public void create(RetrInput input){
         if (!specialtyCatalog.isRealSpecialty(input.getSpecialty()))
-            throw new IllegalArgumentException("Invalid specialty!");
+            throw new IllegalArgumentException("Invalid Specialty!");
         Profile profile = profileDAO.getByPassport(input.getPassportNumber());
         if (profile == null)
             throw new IllegalArgumentException("Profile doesn't exist!");
 
         newCreation();
         creation.setSpecialty(input.getSpecialty());
-        creation.setProfile(profile);
+        creation.setProfileId(profile.getId());
         if (!save()) throw new RuntimeException("Save failed!");
     }
 
@@ -41,21 +41,23 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     public void planRetraining(Retraining retraining,
                                LocalDate startDate, LocalDate endDate) {
         if (!DateUtils.isValidPeriod(startDate, endDate)) {
-            throw new IllegalArgumentException("Invalid dates");
+            throw new IllegalArgumentException("Invalid Dates");
         }
         retraining.plan(startDate, endDate);
+        DAO.update(retraining);
     }
 
     //All-in-one for edition
     public void edit(Retraining retraining, PlanningInput editInput) {
         if (!specialtyCatalog.isRealSpecialty(editInput.getSpecialty())) {
-            throw new IllegalArgumentException("Invalid specialty");
+            throw new IllegalArgumentException("Invalid Specialty");
         }
         if (!DateUtils.isValidPeriod(editInput.getStartDate(), editInput.getEndDate())) {
-            throw new IllegalArgumentException("Invalid dates");
+            throw new IllegalArgumentException("Invalid Dates");
         }
         //Changing status throws exception on its own (if status is out of range)
         retraining.update(editInput);
+        DAO.update(retraining);
     }
 
     public Profile getByPassport(String passportNumber) {
