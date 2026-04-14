@@ -27,7 +27,7 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
 
     //Prints certification (formates profile's info)
     public void printCertification(){
-        office.printCertificate(creation);
+        office.printCertificate(creation.getPassportNumber(), DAO);
     }
 
     @Override

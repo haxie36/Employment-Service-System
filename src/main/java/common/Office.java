@@ -60,7 +60,8 @@ public class Office {
     }
 
     //Prints certification (formates profile's info)
-    public void printCertificate(Profile profile) {
+    public void printCertificate(String profilePassportNumber, ProfileDAO profileDAO) {
+        Profile profile = profileDAO.getByPassport(profilePassportNumber);
         String certificate = """
                 CERTIFICATE OF REGISTRATION
 
