@@ -2,7 +2,7 @@ package gui.vacancy;
 
 import gui.base.FormPanel;
 import gui.components.*;
-import vacancy.VacInput;
+import logic.vacancy.VacInput;
 
 import java.awt.*;
 

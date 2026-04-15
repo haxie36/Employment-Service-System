@@ -5,9 +5,9 @@ import gui.components.CustomDateField;
 import gui.components.FormRow;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
-import registration.Profile;
-import retraining.PlanningInput;
-import retraining.Retraining;
+import logic.profile.Profile;
+import logic.retraining.PlanningInput;
+import logic.retraining.Retraining;
 
 import javax.swing.*;
 

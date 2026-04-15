@@ -1,11 +1,11 @@
 package gui.profile;
 
-import common.Passport;
 import gui.base.FormPanel;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
 import gui.components.FormRow;
-import registration.RegInput;
+import logic.common.Passport;
+import logic.profile.RegInput;
 
 import static java.lang.Integer.parseInt;
 

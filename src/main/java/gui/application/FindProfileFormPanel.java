@@ -1,12 +1,12 @@
 package gui.application;
 
-import application.AppInput;
 import gui.base.FormPanel;
 import gui.components.CustomButton;
 import gui.components.CustomTextField;
 import gui.components.FormRow;
 import gui.profile.ProfileDetailsPanel;
-import registration.Profile;
+import logic.application.AppInput;
+import logic.profile.Profile;
 
 import javax.swing.*;
 

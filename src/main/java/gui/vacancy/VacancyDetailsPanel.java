@@ -4,7 +4,7 @@ import gui.base.DetailsPanel;
 import gui.components.CustomTextArea;
 import gui.components.TextAreaRow;
 import gui.components.TextRow;
-import vacancy.Vacancy;
+import logic.vacancy.Vacancy;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,9 @@
 package gui.profile;
 
-import common.DateUtils;
 import gui.base.DetailsPanel;
 import gui.components.TextRow;
-import registration.Profile;
+import logic.common.DateUtils;
+import logic.profile.Profile;
 
 import javax.swing.*;
 

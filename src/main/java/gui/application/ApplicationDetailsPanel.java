@@ -1,13 +1,13 @@
 package gui.application;
 
-import application.Application;
 import gui.base.DetailsPanel;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
-import registration.Profile;
-import vacancy.Vacancy;
-import vacancy.VacancyStatus;
+import logic.application.Application;
+import logic.profile.Profile;
+import logic.vacancy.Vacancy;
+import logic.vacancy.VacancyStatus;
 
 import javax.swing.*;
 

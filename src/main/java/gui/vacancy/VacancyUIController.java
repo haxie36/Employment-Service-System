@@ -5,10 +5,10 @@ import gui.base.UIController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import vacancy.VacInput;
-import vacancy.Vacancy;
-import vacancy.VacancyController;
-import vacancy.VacancyDAO;
+import logic.vacancy.VacInput;
+import logic.vacancy.Vacancy;
+import logic.vacancy.VacancyController;
+import logic.vacancy.VacancyDAO;
 
 import javax.swing.*;
 

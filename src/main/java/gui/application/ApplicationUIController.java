@@ -1,19 +1,19 @@
 package gui.application;
 
-import application.AppInput;
-import application.Application;
-import application.ApplicationController;
-import application.ApplicationDAO;
 import gui.base.EmptyPanel;
 import gui.base.UIController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
 import gui.vacancy.VacancyDetailsPanel;
-import registration.Profile;
-import registration.RegistrationController;
-import vacancy.Vacancy;
-import vacancy.VacancyController;
+import logic.application.AppInput;
+import logic.application.Application;
+import logic.application.ApplicationController;
+import logic.application.ApplicationDAO;
+import logic.profile.Profile;
+import logic.profile.RegistrationController;
+import logic.vacancy.Vacancy;
+import logic.vacancy.VacancyController;
 
 import javax.swing.*;
 

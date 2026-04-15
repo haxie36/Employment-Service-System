@@ -5,10 +5,10 @@ import gui.base.UIController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import registration.Profile;
-import registration.ProfileDAO;
-import registration.RegInput;
-import registration.RegistrationController;
+import logic.profile.Profile;
+import logic.profile.ProfileDAO;
+import logic.profile.RegInput;
+import logic.profile.RegistrationController;
 
 import javax.swing.*;
 

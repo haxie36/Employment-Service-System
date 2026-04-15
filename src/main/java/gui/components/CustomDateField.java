@@ -1,6 +1,6 @@
 package gui.components;
 
-import common.DateUtils;
+import logic.common.DateUtils;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;

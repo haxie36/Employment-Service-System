@@ -1,6 +1,6 @@
 package gui.components;
 
-import common.LimitDocumentFilter;
+import logic.common.LimitDocumentFilter;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;

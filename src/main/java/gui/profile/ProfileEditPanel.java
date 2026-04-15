@@ -1,13 +1,13 @@
 package gui.profile;
 
-import common.Passport;
 import gui.base.FormPanel;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
 import gui.components.FormRow;
 import gui.components.TextRow;
-import registration.Profile;
-import registration.RegInput;
+import logic.common.Passport;
+import logic.profile.Profile;
+import logic.profile.RegInput;
 
 import javax.swing.*;
 

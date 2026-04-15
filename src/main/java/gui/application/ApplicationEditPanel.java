@@ -1,15 +1,15 @@
 package gui.application;
 
-import application.AppInput;
-import application.Application;
-import application.ApplicationStatus;
 import gui.base.FormPanel;
 import gui.components.EnumComboBox;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
-import registration.Profile;
-import vacancy.Vacancy;
+import logic.application.AppInput;
+import logic.application.Application;
+import logic.application.ApplicationStatus;
+import logic.profile.Profile;
+import logic.vacancy.Vacancy;
 
 import javax.swing.*;
 

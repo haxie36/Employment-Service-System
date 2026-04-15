@@ -6,10 +6,10 @@ import gui.components.EnumComboBox;
 import gui.components.FormRow;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
-import registration.Profile;
-import retraining.PlanningInput;
-import retraining.Retraining;
-import retraining.RetrainingStatus;
+import logic.profile.Profile;
+import logic.retraining.PlanningInput;
+import logic.retraining.Retraining;
+import logic.retraining.RetrainingStatus;
 
 import javax.swing.*;
 

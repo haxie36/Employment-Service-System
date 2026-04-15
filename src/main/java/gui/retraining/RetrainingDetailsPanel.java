@@ -3,8 +3,8 @@ package gui.retraining;
 import gui.base.DetailsPanel;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
-import registration.Profile;
-import retraining.Retraining;
+import logic.profile.Profile;
+import logic.retraining.Retraining;
 
 import javax.swing.*;
 

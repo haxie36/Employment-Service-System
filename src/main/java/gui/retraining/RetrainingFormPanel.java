@@ -5,8 +5,8 @@ import gui.components.CustomButton;
 import gui.components.CustomTextField;
 import gui.components.FormRow;
 import gui.profile.ProfileDetailsPanel;
-import registration.Profile;
-import retraining.RetrInput;
+import logic.profile.Profile;
+import logic.retraining.RetrInput;
 
 import javax.swing.*;
 

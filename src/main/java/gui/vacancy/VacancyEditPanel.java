@@ -2,9 +2,9 @@ package gui.vacancy;
 
 import gui.base.FormPanel;
 import gui.components.*;
-import vacancy.VacInput;
-import vacancy.Vacancy;
-import vacancy.VacancyStatus;
+import logic.vacancy.VacInput;
+import logic.vacancy.Vacancy;
+import logic.vacancy.VacancyStatus;
 
 import javax.swing.*;
 import java.awt.*;

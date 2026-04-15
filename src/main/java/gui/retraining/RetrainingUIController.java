@@ -5,9 +5,9 @@ import gui.base.UIController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import registration.Profile;
-import registration.RegistrationController;
-import retraining.*;
+import logic.profile.Profile;
+import logic.profile.RegistrationController;
+import logic.retraining.*;
 
 import javax.swing.*;
 
