@@ -48,9 +48,11 @@ public class VacancyController extends LogicController<Vacancy, VacInput, Vacanc
         if (input.getContact().length() < 3 || input.getContact().length() > 100)
             throw new IllegalArgumentException("Invalid Contact!");
         //Changing status throws exception on its own (if status is out of range)
-        vacancy.changeStatus(status, applicationDAO);
+        vacancy.changeStatus(status);
         vacancy.setContact(input.getContact());
         vacancy.setDescription(input.getDescription());
         DAO.update(vacancy);
+        if (vacancy.getStatus() != VacancyStatus.OPEN)
+            applicationDAO.retractApplicationsOfVacancy(vacancy.getId());
     }
 }

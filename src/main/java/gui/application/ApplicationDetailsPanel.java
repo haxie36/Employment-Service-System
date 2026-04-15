@@ -2,7 +2,7 @@ package gui.application;
 
 import application.Application;
 import gui.base.DetailsPanel;
-import gui.components.Row;
+import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import gui.vacancy.VacancyDetailsPanel;
 import registration.Profile;
@@ -12,11 +12,7 @@ import vacancy.VacancyStatus;
 import javax.swing.*;
 
 public class ApplicationDetailsPanel extends DetailsPanel<Application> {
-    private final JLabel idValueLabel;
-    private final JLabel applicationDateValueLabel;
     private final JLabel statusValueLabel;
-    private final ProfileDetailsPanel profileDetailsPanel;
-    private final VacancyDetailsPanel vacancyDetailsPanel;
 
     public  ApplicationDetailsPanel(Application application, Profile profile, Vacancy vacancy) {
         //If vacancy isn't open, you can't change the status
@@ -24,24 +20,24 @@ public class ApplicationDetailsPanel extends DetailsPanel<Application> {
         if (vacancy.getStatus() != VacancyStatus.OPEN)
             editBtn.setEnabled(false);
 
-        idValueLabel = label(application.getId());
-        applicationDateValueLabel = label(application.getApplicationDate().toString());
+        JLabel idValueLabel = label(application.getId());
+        JLabel applicationDateValueLabel = label(application.getApplicationDate().toString());
         statusValueLabel = label(application.getStatus().toString());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(profile);
+        ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Vacancy details panel
-        vacancyDetailsPanel = new VacancyDetailsPanel(vacancy);
+        VacancyDetailsPanel vacancyDetailsPanel = new VacancyDetailsPanel(vacancy);
         JPanel vacancyDetails = vacancyDetailsPanel.getDetails();
         vacancyDetails.setBorder(BorderFactory.createTitledBorder("Vacancy"));
 
         //Adding components
-        details.add(new Row(label("Id:"), idValueLabel));
+        details.add(new TextRow(label("Application Id:"), idValueLabel));
         details.add(profileDetails);
         details.add(vacancyDetails);
-        details.add(new Row(label("Application Date:"), applicationDateValueLabel));
-        details.add(new Row(label("Status:"), statusValueLabel));
+        details.add(new TextRow(label("Application Date:"), applicationDateValueLabel));
+        details.add(new TextRow(label("Status:"), statusValueLabel));
 
         revalidate(); repaint();
     }

@@ -2,7 +2,8 @@ package gui.retraining;
 
 import gui.base.FormPanel;
 import gui.components.CustomDateField;
-import gui.components.Row;
+import gui.components.FormRow;
+import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import registration.Profile;
 import retraining.PlanningInput;
@@ -13,30 +14,30 @@ import javax.swing.*;
 public class RetrainingPlanningPanel extends FormPanel<PlanningInput> {
     private final CustomDateField startDateField;
     private final CustomDateField endDateField;
-    private final JLabel specialtyValueLabel;
-    private final ProfileDetailsPanel profileDetailsPanel;
-    private final JLabel statusValueLabel;
 
     public RetrainingPlanningPanel(Retraining retraining, Profile profile) {
+        JLabel idValueLabel = label(retraining.getId());
+
         startDateField = new CustomDateField();
         endDateField = new CustomDateField();
         //If Date is null method setDate sets "" as text
         startDateField.setDate(retraining.getStartDate());
         endDateField.setDate(retraining.getEndDate());
 
-        specialtyValueLabel = label(retraining.getSpecialty());
+        JLabel specialtyValueLabel = label(retraining.getSpecialty());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(profile);
+        ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
-        statusValueLabel = label(retraining.getStatus().toString());
+        JLabel statusValueLabel = label(retraining.getStatus().toString());
 
-        form.add(new Row(label("Start Date:"), startDateField));
-        form.add(new Row(label("End Date:"), endDateField));
-        form.add(new Row(label("Specialty:"), specialtyValueLabel));
+        form.add(new TextRow(label("Retraining Id"), idValueLabel));
+        form.add(new FormRow(label("Start Date:"), startDateField));
+        form.add(new FormRow(label("End Date:"), endDateField));
+        form.add(new TextRow(label("Specialty:"), specialtyValueLabel));
         form.add(profileDetails);
-        form.add(new Row(label("Status:"), statusValueLabel));
+        form.add(new TextRow(label("Status:"), statusValueLabel));
 
         revalidate(); repaint();
     }
@@ -50,7 +51,6 @@ public class RetrainingPlanningPanel extends FormPanel<PlanningInput> {
         return new PlanningInput(
                 startDateField.getDate(),
                 endDateField.getDate(),
-                "-", //Fictional
                 99 //Fictional
         );
     }

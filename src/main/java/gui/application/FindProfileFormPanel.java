@@ -4,12 +4,11 @@ import application.AppInput;
 import gui.base.FormPanel;
 import gui.components.CustomButton;
 import gui.components.CustomTextField;
-import gui.components.Row;
+import gui.components.FormRow;
 import gui.profile.ProfileDetailsPanel;
 import registration.Profile;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class FindProfileFormPanel extends FormPanel<AppInput> {
     private final CustomTextField passportNumberField;
@@ -21,12 +20,13 @@ public class FindProfileFormPanel extends FormPanel<AppInput> {
         passportNumberField = new CustomTextField();
         CustomButton findButton = new CustomButton("Find");
         findButton.addActionListener(e -> onFind.run());
+        findButton.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         saveBtn.setText("Continue");
 
         //Profile info
         JPanel details = profileDetailsPanel.getDetails();
 
-        form.add(new Row(label("Passport Number:"), passportNumberField));
+        form.add(new FormRow(label("Passport Number:"), passportNumberField));
         form.add(findButton);
         form.add(details);
 

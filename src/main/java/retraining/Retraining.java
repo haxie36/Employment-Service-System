@@ -1,7 +1,6 @@
 package retraining;
 
 import base.HasId;
-import registration.Profile;
 
 import java.time.LocalDate;
 
@@ -43,7 +42,6 @@ public class Retraining implements HasId {
 
     public void update(PlanningInput input) {
         plan(input.getStartDate(), input.getEndDate());
-        this.specialty = input.getSpecialty();
         this.status = RetrainingStatus.fromId(input.getStatus());
     }
 

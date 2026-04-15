@@ -1,7 +1,5 @@
 package base;
 
-import registration.Profile;
-
 public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>> {
     protected T creation = null;
     protected D DAO;

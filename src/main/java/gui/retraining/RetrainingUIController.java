@@ -1,13 +1,13 @@
 package gui.retraining;
 
 import gui.base.EmptyPanel;
+import gui.base.UIController;
 import gui.main.ListPanel;
+import gui.main.MainWindow;
+import gui.main.RightPanel;
 import registration.Profile;
 import registration.RegistrationController;
 import retraining.*;
-import gui.base.UIController;
-import gui.main.MainWindow;
-import gui.main.RightPanel;
 
 import javax.swing.*;
 
@@ -89,9 +89,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                 retrainingPlanningPanel.setOnSave(() -> {
                     try {
                         PlanningInput planningInput = retrainingPlanningPanel.getInputData();
-                        controller.planRetraining(selected,
-                                planningInput.getStartDate(),
-                                planningInput.getEndDate());
+                        controller.planRetraining(selected, planningInput);
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Retraining Planning Successful");
                         updateList(); //Required, as planning a retraining changes its status

@@ -2,11 +2,11 @@ package gui.base;
 
 import application.Application;
 import base.EntityDAO;
+import base.HasId;
 import base.LogicController;
 import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import base.HasId;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;

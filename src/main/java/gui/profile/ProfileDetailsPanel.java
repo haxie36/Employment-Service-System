@@ -1,12 +1,11 @@
 package gui.profile;
 
 import common.DateUtils;
-import registration.Profile;
 import gui.base.DetailsPanel;
-import gui.components.Row;
+import gui.components.TextRow;
+import registration.Profile;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ProfileDetailsPanel extends DetailsPanel<Profile> {
     private final JLabel idValueLbl;
@@ -26,13 +25,13 @@ public class ProfileDetailsPanel extends DetailsPanel<Profile> {
         specialtyValueLbl = label("");
         experienceValueLbl = label("");
 
-        details.add(new Row(label("Id:"), idValueLbl));
-        details.add(new Row(label("Name:"), nameValueLbl));
-        details.add(new Row(label("Birth Date:"), birthDateValueLbl));
-        details.add(new Row(label("Passport Number:"), passportNumberValueLbl));
-        details.add(new Row(label("RNOKPP:"), RNOKPPValueLbl));
-        details.add(new Row(label("Specialty:"), specialtyValueLbl));
-        details.add(new Row(label("Experience:"), experienceValueLbl));
+        details.add(new TextRow(label("Profile Id:"), idValueLbl));
+        details.add(new TextRow(label("Name:"), nameValueLbl));
+        details.add(new TextRow(label("Birth Date:"), birthDateValueLbl));
+        details.add(new TextRow(label("Passport Number:"), passportNumberValueLbl));
+        details.add(new TextRow(label("RNOKPP:"), RNOKPPValueLbl));
+        details.add(new TextRow(label("Specialty:"), specialtyValueLbl));
+        details.add(new TextRow(label("Experience:"), experienceValueLbl));
 
         revalidate(); repaint();
     }

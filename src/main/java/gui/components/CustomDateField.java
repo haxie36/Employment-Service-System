@@ -7,13 +7,13 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class CustomDateField extends JFormattedTextField {
     public CustomDateField() {
         super(createFormatter());
-        setPreferredSize(new Dimension(250, 30));
+        setPreferredSize(new Dimension(290, 30));
+        setMaximumSize(new Dimension(290, 30));
         setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
     }
     public CustomDateField(LocalDate date) {

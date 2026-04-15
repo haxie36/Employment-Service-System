@@ -1,11 +1,11 @@
 package gui.profile;
 
-import registration.Profile;
 import gui.base.EmptyPanel;
-import gui.main.ListPanel;
 import gui.base.UIController;
+import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
+import registration.Profile;
 import registration.ProfileDAO;
 import registration.RegInput;
 import registration.RegistrationController;

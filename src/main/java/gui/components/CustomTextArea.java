@@ -27,7 +27,7 @@ public class CustomTextArea extends JScrollPane {
         textArea.setWrapStyleWord(true);
         setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        setPreferredSize(new Dimension(250,200));
+        setPreferredSize(new Dimension(290,200));
         //Limit of 2000 characters
         ((AbstractDocument) textArea.getDocument())
                 .setDocumentFilter(new LimitDocumentFilter(2000));

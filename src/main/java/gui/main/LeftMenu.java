@@ -18,8 +18,8 @@ public class LeftMenu extends JPanel {
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-         //temp
-        setBackground(Color.GREEN);
+        //temp
+        //setBackground(Color.GREEN);
 
         profilesBtn = createButton("Profiles");
         vacanciesBtn = createButton("Vacancies");
@@ -28,11 +28,11 @@ public class LeftMenu extends JPanel {
 
         add(Box.createVerticalGlue());
         add(profilesBtn);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(20));
         add(vacanciesBtn);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(20));
         add(applicationsBtn);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(20));
         add(retrainingsBtn);
         add(Box.createVerticalGlue());
     }
@@ -45,7 +45,8 @@ public class LeftMenu extends JPanel {
     private CustomButton createButton(String text) {
         CustomButton button = new CustomButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        setMaximumSize(new Dimension(180, 40));
+        button.setPreferredSize(new Dimension(180, 60));
+        button.setMaximumSize(new Dimension(180, 60));
         return button;
     }
 }

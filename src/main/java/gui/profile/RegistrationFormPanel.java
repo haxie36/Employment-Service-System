@@ -1,13 +1,11 @@
 package gui.profile;
 
 import common.Passport;
+import gui.base.FormPanel;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
-import gui.base.FormPanel;
-import gui.components.Row;
+import gui.components.FormRow;
 import registration.RegInput;
-
-import javax.swing.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -29,13 +27,13 @@ public class RegistrationFormPanel extends FormPanel<RegInput> {
         specialtyField = new CustomTextField();
         experienceField = new CustomTextField();
 
-        form.add(new Row(label("Address:"), addressField));
-        form.add(new Row(label("Full Name:"), nameField));
-        form.add(new Row(label("Birth Date:"), birthDateField));
-        form.add(new Row(label("Passport Number:"), passportNumberField));
-        form.add(new Row(label("RNOKPP:"), RNOKPPField));
-        form.add(new Row(label("Specialty:"), specialtyField));
-        form.add(new Row(label("Experience:"), experienceField));
+        form.add(new FormRow(label("Address:"), addressField));
+        form.add(new FormRow(label("Full Name:"), nameField));
+        form.add(new FormRow(label("Birth Date:"), birthDateField));
+        form.add(new FormRow(label("Passport Number:"), passportNumberField));
+        form.add(new FormRow(label("RNOKPP:"), RNOKPPField));
+        form.add(new FormRow(label("Specialty:"), specialtyField));
+        form.add(new FormRow(label("Experience:"), experienceField));
 
         revalidate(); repaint();
     }

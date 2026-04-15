@@ -1,7 +1,8 @@
 package registration;
 
 import base.LogicController;
-import common.*;
+import common.Office;
+import common.SpecialtyCatalog;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

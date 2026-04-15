@@ -1,7 +1,7 @@
 package gui.retraining;
 
 import gui.base.DetailsPanel;
-import gui.components.Row;
+import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import registration.Profile;
 import retraining.Retraining;
@@ -11,9 +11,6 @@ import javax.swing.*;
 public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
     private final JLabel startDateValueLabel;
     private final JLabel endDateValueLabel;
-    private final JLabel specialtyValueLabel;
-    private final JLabel profileIdValueLabel;
-    private final ProfileDetailsPanel profileDetailsPanel;
     private final JLabel statusValueLabel;
 
     public RetrainingDetailsPanel(Retraining retraining, Profile profile) {
@@ -28,21 +25,21 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
             startDateValueLabel = label("null");
             endDateValueLabel = label("null");
         }
-        specialtyValueLabel = label(retraining.getSpecialty());
-        profileIdValueLabel = label(retraining.getProfileId());
+        JLabel idValueLabel = label(profile.getId());
+        JLabel specialtyValueLabel = label(retraining.getSpecialty());
         //Profile details panel
-        profileDetailsPanel = new ProfileDetailsPanel(profile);
+        ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
         statusValueLabel = label(retraining.getStatus().toString());
 
-        details.add(new Row(label("Start Date:"), startDateValueLabel));
-        details.add(new Row(label("End Date:"), endDateValueLabel));
-        details.add(new Row(label("Specialty:"), specialtyValueLabel));
-        details.add(new Row(label("Profile Id:"), profileIdValueLabel));
+        details.add(new TextRow(label("Retraining Id:"), idValueLabel));
+        details.add(new TextRow(label("Start Date:"), startDateValueLabel));
+        details.add(new TextRow(label("End Date:"), endDateValueLabel));
+        details.add(new TextRow(label("Specialty:"), specialtyValueLabel));
         details.add(profileDetails);
-        details.add(new Row(label("Status:"), statusValueLabel));
+        details.add(new TextRow(label("Status:"), statusValueLabel));
     }
 
     @Override

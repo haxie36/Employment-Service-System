@@ -12,11 +12,12 @@ import gui.vacancy.VacancyUIController;
 import registration.*;
 import retraining.RetrainingController;
 import retraining.RetrainingDAO;
-import vacancy.VacancyDAO;
 import vacancy.VacancyController;
+import vacancy.VacancyDAO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.print.PrinterException;
 
 public class Office {
     public void start() {

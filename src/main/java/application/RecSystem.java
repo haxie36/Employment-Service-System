@@ -1,9 +1,9 @@
 package application;
 
+import registration.Profile;
 import retraining.Retraining;
 import retraining.RetrainingStatus;
 import vacancy.Vacancy;
-import registration.Profile;
 import vacancy.VacancyStatus;
 
 import java.util.ArrayList;

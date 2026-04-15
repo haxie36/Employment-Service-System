@@ -1,14 +1,14 @@
 package gui.vacancy;
 
 import gui.base.EmptyPanel;
-import gui.main.ListPanel;
-import vacancy.VacInput;
-import vacancy.Vacancy;
 import gui.base.UIController;
+import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
-import vacancy.VacancyDAO;
+import vacancy.VacInput;
+import vacancy.Vacancy;
 import vacancy.VacancyController;
+import vacancy.VacancyDAO;
 
 import javax.swing.*;
 

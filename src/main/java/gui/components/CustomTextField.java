@@ -12,7 +12,8 @@ public class CustomTextField extends JTextField {
     }
     public CustomTextField(String text) {
         super(text);
-        setPreferredSize(new Dimension(240,30));
+        setPreferredSize(new Dimension(290,30));
+        setMaximumSize(new Dimension(290,30));
         //100 characters limit
         ((AbstractDocument) getDocument())
                 .setDocumentFilter(new LimitDocumentFilter(100));

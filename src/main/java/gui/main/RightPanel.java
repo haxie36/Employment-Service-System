@@ -15,14 +15,19 @@ public class RightPanel extends JPanel {
         setPreferredSize(new Dimension(320, 0));
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
         //temp
-        setBackground(Color.RED);
+        //setBackground(Color.RED);
 
-        JPanel top = new JPanel(new BorderLayout());
+        JPanel top = new JPanel(new BorderLayout(10, 10));
+        top.setBorder(
+                BorderFactory.createEmptyBorder(0,10,10,10)
+        );
         title = new JLabel("");
-        title.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+//        title.setBorder(
+//                BorderFactory.createEmptyBorder(10,10,10,10)
+//        );
         title.setFont(new Font(title.getFont().getFontName(),Font.BOLD,20));
         title.setPreferredSize(new Dimension(160, 50));
         newButton = new CustomButton("+ New  ");
@@ -45,5 +50,4 @@ public class RightPanel extends JPanel {
         revalidate(); repaint();
     }
     public CustomButton getNewButton() {return newButton;}
-    public JPanel getContent() {return content;}
 }

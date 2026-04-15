@@ -38,8 +38,9 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     }
 
     //Planning
-    public void planRetraining(Retraining retraining,
-                               LocalDate startDate, LocalDate endDate) {
+    public void planRetraining(Retraining retraining, PlanningInput planningInput) {
+        LocalDate startDate = planningInput.getStartDate();
+        LocalDate endDate = planningInput.getEndDate();
         if (!DateUtils.isValidPeriod(startDate, endDate)) {
             throw new IllegalArgumentException("Invalid Dates");
         }
@@ -49,9 +50,6 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
 
     //All-in-one for edition
     public void edit(Retraining retraining, PlanningInput editInput) {
-        if (!specialtyCatalog.isRealSpecialty(editInput.getSpecialty())) {
-            throw new IllegalArgumentException("Invalid Specialty");
-        }
         if (!DateUtils.isValidPeriod(editInput.getStartDate(), editInput.getEndDate())) {
             throw new IllegalArgumentException("Invalid Dates");
         }

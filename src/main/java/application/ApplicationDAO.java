@@ -21,18 +21,32 @@ public class ApplicationDAO extends EntityDAO<Application> {
                     "WHERE status_id = 0 " +
                     "AND profile_id = ? " +
                     "AND vacancy_id = ?";
+    private static final String RETRACT_APPLICATIONS_OF_VACANCY =
+            "UPDATE application SET status_id = 3 WHERE vacancy_id = ?";
 
     public boolean hasActiveApplications(int profileId, int vacancyId) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(GET_ACTIVE_APPLICATIONS)) {
-                statement.setInt(1, profileId);
-                statement.setInt(2, vacancyId);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    return resultSet.next();
-                }
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ACTIVE_APPLICATIONS)) {
+            statement.setInt(1, profileId);
+            statement.setInt(2, vacancyId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean retractApplicationsOfVacancy(int vacancyId) {
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(RETRACT_APPLICATIONS_OF_VACANCY)) {
+            statement.setInt(1, vacancyId);
+            int rows = statement.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Failed to update applications", e);
         }
     }
 
@@ -49,14 +63,13 @@ public class ApplicationDAO extends EntityDAO<Application> {
 
     @Override
     public boolean add(Application item) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(ADD)) {
-                statement.setInt(1, item.getProfileId());
-                statement.setInt(2, item.getVacancyId());
-                statement.setInt(3, item.getStatus().getId());
-                int rows = statement.executeUpdate();
-                return rows > 0;
-            }
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD)) {
+            statement.setInt(1, item.getProfileId());
+            statement.setInt(2, item.getVacancyId());
+            statement.setInt(3, item.getStatus().getId());
+            int rows = statement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to add application", e);
@@ -65,15 +78,13 @@ public class ApplicationDAO extends EntityDAO<Application> {
 
     @Override
     public Application getById(int id) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return map(resultSet);
-                    }
-                    return null;
-                }
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_BY_ID)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return map(resultSet);
+                }return null;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -83,13 +94,12 @@ public class ApplicationDAO extends EntityDAO<Application> {
 
     @Override
     public boolean update(Application item) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
-                statement.setInt(1, item.getStatus().getId());
-                statement.setInt(2, item.getId());
-                int rows = statement.executeUpdate();
-                return rows > 0;
-            }
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+            statement.setInt(1, item.getStatus().getId());
+            statement.setInt(2, item.getId());
+            int rows = statement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to update application", e);
@@ -98,12 +108,11 @@ public class ApplicationDAO extends EntityDAO<Application> {
 
     @Override
     public boolean delete(int id) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
-                statement.setInt(1, id);
-                int rows = statement.executeUpdate();
-                return rows > 0;
-            }
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE)) {
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to delete application", e);
@@ -113,15 +122,13 @@ public class ApplicationDAO extends EntityDAO<Application> {
     @Override
     public Application[] getAll() {
         ArrayList<Application> applications = new ArrayList<>();
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                try (ResultSet resultSet = statement.executeQuery(GET_ALL)) {
-                    while (resultSet.next()) {
-                        applications.add(map(resultSet));
-                    }
-                    return applications.toArray(new Application[0]);
-                }
+        try (Connection connection = DatabaseConnector.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(GET_ALL)) {
+            while (resultSet.next()) {
+                applications.add(map(resultSet));
             }
+            return applications.toArray(new Application[0]);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to get all applications", e);

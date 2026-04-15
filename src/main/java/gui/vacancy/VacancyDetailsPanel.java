@@ -2,55 +2,56 @@ package gui.vacancy;
 
 import gui.base.DetailsPanel;
 import gui.components.CustomTextArea;
-import gui.components.Row;
+import gui.components.TextAreaRow;
+import gui.components.TextRow;
 import vacancy.Vacancy;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class VacancyDetailsPanel extends DetailsPanel<Vacancy> {
-    private final JLabel titleLabel;
-    private final JLabel idLbl;
-    private final JLabel companyLbl;
-    private final JLabel contactLbl;
-    private final JLabel specialtyLbl;
-    private final JLabel experienceLbl;
+    private final JLabel titleValueLabel;
+    private final JLabel idValueLabel;
+    private final JLabel companyValueLabel;
+    private final JLabel contactValueLabel;
+    private final JLabel specialtyValueLabel;
+    private final JLabel experienceValueLabel;
     private final CustomTextArea descriptionArea;
-    private final JLabel statusLbl;
+    private final JLabel statusValueLabel;
     
     public VacancyDetailsPanel(Vacancy vacancy) {
-        titleLabel = label(vacancy.getTitle());
-        titleLabel.setFont(new Font("Arial",Font.BOLD,16));
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        idLbl = label(vacancy.getId());
-        companyLbl = label(vacancy.getCompany());
-        contactLbl = label(vacancy.getContact());
-        specialtyLbl = label(vacancy.getSpecialty());
-        experienceLbl = label(String.valueOf(vacancy.getMinExperience()));
+        titleValueLabel = label(vacancy.getTitle());
+        titleValueLabel.setFont(new Font("Arial",Font.BOLD,16));
+        titleValueLabel.setBorder(BorderFactory.createEmptyBorder(3,10,5,10));
+        idValueLabel = label(vacancy.getId());
+        companyValueLabel = label(vacancy.getCompany());
+        contactValueLabel = label(vacancy.getContact());
+        specialtyValueLabel = label(vacancy.getSpecialty());
+        experienceValueLabel = label(String.valueOf(vacancy.getMinExperience()));
         descriptionArea = new CustomTextArea(vacancy.getDescription(), false);
-        statusLbl = label(vacancy.getStatus().toString());
+        statusValueLabel = label(vacancy.getStatus().toString());
 
-        details.add(titleLabel);
-        details.add(new Row(label("Id:"), idLbl));
-        details.add(new Row(label("Company Name:"), companyLbl));
-        details.add(new Row(label("Contact Number:"), contactLbl));
-        details.add(new Row(label("Specialty:"), specialtyLbl));
-        details.add(new Row(label("Experience Requirements:"), experienceLbl));
-        details.add(new Row(label("Description:"), descriptionArea));
-        details.add(new Row(label("Status:"), statusLbl));
+        details.add(titleValueLabel);
+        details.add(new TextRow(label("Vacancy Id:"), idValueLabel));
+        details.add(new TextRow(label("Company Name:"), companyValueLabel));
+        details.add(new TextRow(label("Contact Number:"), contactValueLabel));
+        details.add(new TextRow(label("Specialty:"), specialtyValueLabel));
+        details.add(new TextRow(label("Experience Requirements:"), experienceValueLabel));
+        details.add(new TextAreaRow(label("Description:"), descriptionArea));
+        details.add(new TextRow(label("Status:"), statusValueLabel));
 
         revalidate(); repaint();
     }
     
     @Override
     public void update(Vacancy vacancy) {
-        titleLabel.setText(vacancy.getTitle());
-        idLbl.setText(String.valueOf(vacancy.getId()));
-        companyLbl.setText(String.valueOf(vacancy.getCompany()));
-        contactLbl.setText(String.valueOf(vacancy.getContact()));
-        specialtyLbl.setText(String.valueOf(vacancy.getSpecialty()));
-        experienceLbl.setText(String.valueOf(vacancy.getMinExperience()));
+        titleValueLabel.setText(vacancy.getTitle());
+        idValueLabel.setText(String.valueOf(vacancy.getId()));
+        companyValueLabel.setText(String.valueOf(vacancy.getCompany()));
+        contactValueLabel.setText(String.valueOf(vacancy.getContact()));
+        specialtyValueLabel.setText(String.valueOf(vacancy.getSpecialty()));
+        experienceValueLabel.setText(String.valueOf(vacancy.getMinExperience()));
         descriptionArea.setText(String.valueOf(vacancy.getDescription()));
-        statusLbl.setText(String.valueOf(vacancy.getStatus()));
+        statusValueLabel.setText(String.valueOf(vacancy.getStatus()));
     }
 }

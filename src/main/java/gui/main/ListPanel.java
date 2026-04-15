@@ -11,10 +11,10 @@ public class ListPanel<T> extends JPanel {
         super(new BorderLayout());
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
         //temp
-        setBackground(Color.BLUE);
+        //setBackground(Color.BLUE);
 
         model = new DefaultListModel<>();
         for (T item : items) {model.addElement(item);}

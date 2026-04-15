@@ -1,10 +1,14 @@
 package gui.retraining;
 
 import gui.base.FormPanel;
-import gui.components.*;
+import gui.components.CustomButton;
+import gui.components.CustomTextField;
+import gui.components.FormRow;
 import gui.profile.ProfileDetailsPanel;
 import registration.Profile;
 import retraining.RetrInput;
+
+import javax.swing.*;
 
 public class RetrainingFormPanel extends FormPanel<RetrInput> {
     private final CustomTextField specialtyField;
@@ -18,9 +22,10 @@ public class RetrainingFormPanel extends FormPanel<RetrInput> {
         passportNumberField = new CustomTextField();
         CustomButton findBtn = new CustomButton("Find");
         findBtn.addActionListener(e -> onFind.run());
+        findBtn.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-        form.add(new Row(label("Specialty:"), specialtyField));
-        form.add(new Row(label("Passport Number:"), passportNumberField));
+        form.add(new FormRow(label("Specialty:"), specialtyField));
+        form.add(new FormRow(label("Passport Number:"), passportNumberField));
         form.add(findBtn);
         form.add(profileDetailsPanel.getDetails());
 

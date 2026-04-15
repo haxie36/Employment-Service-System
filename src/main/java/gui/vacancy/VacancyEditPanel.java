@@ -1,10 +1,7 @@
 package gui.vacancy;
 
 import gui.base.FormPanel;
-import gui.components.CustomTextArea;
-import gui.components.CustomTextField;
-import gui.components.EnumComboBox;
-import gui.components.Row;
+import gui.components.*;
 import vacancy.VacInput;
 import vacancy.Vacancy;
 import vacancy.VacancyStatus;
@@ -14,7 +11,6 @@ import java.awt.*;
 
 public class VacancyEditPanel extends FormPanel<VacInput> {
     private final JLabel titleValueLabel;
-    private final JLabel idValueLabel;
     private final JLabel companyValueLabel;
     private final CustomTextField contactField;
     private final JLabel specialtyValueLabel;
@@ -25,8 +21,8 @@ public class VacancyEditPanel extends FormPanel<VacInput> {
     public VacancyEditPanel(Vacancy vacancy) {
         titleValueLabel = label(vacancy.getTitle());
         titleValueLabel.setFont(new Font("Arial",Font.BOLD,16));
-        titleValueLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        idValueLabel = label(vacancy.getId());
+        titleValueLabel.setBorder(BorderFactory.createEmptyBorder(0,10,5,10));
+        JLabel idValueLabel = label(vacancy.getId());
         companyValueLabel = label(vacancy.getCompany());
         contactField = new CustomTextField(vacancy.getContact());
         specialtyValueLabel = label(vacancy.getSpecialty());
@@ -35,14 +31,21 @@ public class VacancyEditPanel extends FormPanel<VacInput> {
         statusComboBox = new EnumComboBox<>(VacancyStatus.class);
         statusComboBox.setSelectedItem(vacancy.getStatus());
 
+        //Template button
+        CustomButton templateButton = new CustomButton("Template");
+        templateButton.addActionListener(e -> applyTemplate());
+        TextRow buttonRow = new TextRow(templateButton, null);
+        buttonRow.setMaximumSize(new Dimension(300, 50));
+
         form.add(titleValueLabel);
-        form.add(new Row(label("Id:"), idValueLabel));
-        form.add(new Row(label("Company Name:"), companyValueLabel));
-        form.add(new Row(label("Contact Number:"), contactField));
-        form.add(new Row(label("Specialty:"), specialtyValueLabel));
-        form.add(new Row(label("Experience Requirements:"), experienceValueLabel));
-        form.add(new Row(label("Description:"), descriptionArea));
-        form.add(new Row(label("Status:"), statusComboBox));
+        form.add(new TextRow(label("Vacancy Id:"), idValueLabel));
+        form.add(new TextRow(label("Company Name:"), companyValueLabel));
+        form.add(new FormRow(label("Contact Number:"), contactField));
+        form.add(new TextRow(label("Specialty:"), specialtyValueLabel));
+        form.add(new TextRow(label("Experience Requirements:"), experienceValueLabel));
+        form.add(new TextAreaRow(label("Description:"), descriptionArea));
+        form.add(buttonRow);
+        form.add(new TextRow(label("Status:"), statusComboBox));
 
         revalidate(); repaint();
     }
@@ -75,4 +78,18 @@ public class VacancyEditPanel extends FormPanel<VacInput> {
 
     @Override
     public void clearForm() {}
+
+    private String getTemplate() {
+        return """
+            Salary:
+            
+            Skill requirements:
+            
+            Responsibilities:
+            
+            Conditions:
+            
+            """;
+    }
+    public void applyTemplate() {descriptionArea.setText(getTemplate());}
 }

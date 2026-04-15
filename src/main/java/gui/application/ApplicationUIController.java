@@ -1,12 +1,12 @@
 package gui.application;
 
 import application.AppInput;
+import application.Application;
 import application.ApplicationController;
 import application.ApplicationDAO;
-import application.Application;
 import gui.base.EmptyPanel;
-import gui.main.ListPanel;
 import gui.base.UIController;
+import gui.main.ListPanel;
 import gui.main.MainWindow;
 import gui.main.RightPanel;
 import gui.vacancy.VacancyDetailsPanel;

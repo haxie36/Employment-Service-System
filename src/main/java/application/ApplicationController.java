@@ -2,10 +2,10 @@ package application;
 
 import base.LogicController;
 import registration.Profile;
-import retraining.RetrainingDAO;
-import vacancy.VacancyDAO;
-import vacancy.Vacancy;
 import registration.ProfileDAO;
+import retraining.RetrainingDAO;
+import vacancy.Vacancy;
+import vacancy.VacancyDAO;
 
 public class ApplicationController extends LogicController<Application, AppInput, ApplicationDAO> {
     private final ProfileDAO profileDAO;

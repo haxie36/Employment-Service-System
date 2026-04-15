@@ -1,13 +1,10 @@
 package gui.vacancy;
 
 import gui.base.FormPanel;
-import gui.components.CustomButton;
-import gui.components.CustomTextArea;
-import gui.components.CustomTextField;
-import gui.components.Row;
+import gui.components.*;
 import vacancy.VacInput;
 
-import javax.swing.*;
+import java.awt.*;
 
 public class VacancyFormPanel extends FormPanel<VacInput> {
     private final CustomTextField titleField;
@@ -15,7 +12,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
     private final CustomTextField contactField;
     private final CustomTextField specialtyField;
     private final CustomTextField experienceField;
-    private final CustomTextArea descriptionField;
+    private final CustomTextArea descriptionArea;
 
     public VacancyFormPanel() {
         titleField = new CustomTextField();
@@ -23,18 +20,20 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
         contactField = new CustomTextField();
         specialtyField = new CustomTextField();
         experienceField = new CustomTextField();
-        descriptionField = new CustomTextArea();
+        descriptionArea = new CustomTextArea();
 
-        form.add(new Row(label("Title:"), titleField));
-        form.add(new Row(label("Company Name:"), companyField));
-        form.add(new Row(label("Contact Number:"), contactField));
-        form.add(new Row(label("Specialty:"), specialtyField));
-        form.add(new Row(label("Experience Requirements:"), experienceField));
-        form.add(new Row(label("Description:"), descriptionField));
-
+        form.add(new FormRow(label("Title:"), titleField));
+        form.add(new FormRow(label("Company Name:"), companyField));
+        form.add(new FormRow(label("Contact Number:"), contactField));
+        form.add(new FormRow(label("Specialty:"), specialtyField));
+        form.add(new FormRow(label("Experience Requirements:"), experienceField));
+        form.add(new TextAreaRow(label("Description:"), descriptionArea));
+        //Template button
         CustomButton templateButton = new CustomButton("Template");
         templateButton.addActionListener(e -> applyTemplate());
-        form.add(templateButton);
+        TextRow buttonRow = new TextRow(templateButton, null);
+        buttonRow.setMaximumSize(new Dimension(300, 50));
+        form.add(buttonRow);
 
         revalidate(); repaint();
     }
@@ -47,7 +46,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
                 || contactField.getText().isEmpty()
                 || specialtyField.getText().isEmpty()
                 || experienceField.getText().isEmpty()
-                || descriptionField.getText().isEmpty()) {
+                || descriptionArea.getText().isEmpty()) {
             throw new Exception("Please fill all the fields!");
         }
         try {
@@ -56,7 +55,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
                     companyField.getText(),
                     contactField.getText(), specialtyField.getText(),
                     Integer.parseInt(experienceField.getText()),
-                    descriptionField.getText());
+                    descriptionArea.getText());
         } catch (Exception e) {
             throw new Exception("Experience must be an integer!");
         }
@@ -68,7 +67,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
         contactField.setText(input.getContact());
         specialtyField.setText(input.getSpecialty());
         experienceField.setText(String.valueOf(input.getMinExperience()));
-        descriptionField.setText(input.getDescription());
+        descriptionArea.setText(input.getDescription());
     }
 
     @Override
@@ -77,7 +76,7 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
         contactField.setText("");
         specialtyField.setText("");
         experienceField.setText("");
-        descriptionField.setText("");
+        descriptionArea.setText("");
     }
 
     private String getTemplate() {
@@ -92,7 +91,5 @@ public class VacancyFormPanel extends FormPanel<VacInput> {
             
             """;
     }
-    public void applyTemplate() {
-        descriptionField.setText(getTemplate());
-    }
+    public void applyTemplate() {descriptionArea.setText(getTemplate());}
 }

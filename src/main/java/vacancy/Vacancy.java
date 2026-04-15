@@ -1,8 +1,5 @@
 package vacancy;
 
-import application.Application;
-import application.ApplicationStatus;
-import application.ApplicationDAO;
 import base.HasId;
 
 public class Vacancy implements HasId {
@@ -29,22 +26,8 @@ public class Vacancy implements HasId {
 
 
     //Change own status and change own applications' statuses
-    public void changeStatus(int status, ApplicationDAO applicationDAO){
+    public void changeStatus(int status){
         setStatus(VacancyStatus.fromId(status));
-        Application[] apps = applicationDAO.getAll();
-        if (status!=VacancyStatus.OPEN.getId()){
-            for (Application app : apps) {
-                if (app.getStatus() == ApplicationStatus.ACTIVE) {
-                    app.setStatus(ApplicationStatus.RETRACTED);
-                }
-            }
-        } else{
-            for (Application app : apps) {
-                if (app.getStatus() == ApplicationStatus.RETRACTED) {
-                    app.setStatus(ApplicationStatus.ACTIVE);
-                }
-            }
-        }
     }
 
     public int getId() {return id;}
@@ -56,30 +39,12 @@ public class Vacancy implements HasId {
     public String getDescription() {return description;}
     public VacancyStatus getStatus() {return status;}
     public void setId(int id) {this.id = id;}
-    public boolean setTitle(String title) {
-        if (title == null) return false;
-        this.title = title;
-        return true;
-    }
-    public boolean setCompany(String company) {
-        if (company.length()<3) return false;
-        this.company = company;
-        return true;
-    }
+    public void setTitle(String title) {this.title = title;}
+    public void setCompany(String company) {this.company = company;}
     public void setContact(String contact) {this.contact = contact;}
     public void setSpecialty(String specialty) {this.specialty = specialty;}
-    public boolean setMinExperience(int minExperience) {
-        if (minExperience >= 0) {
-            this.minExperience = minExperience;
-            return true;
-        }return false;
-    }
-    public boolean setDescription(String description) {
-        if (description.length()>=3){
-            this.description = description;
-            return true;
-        }return false;
-    }
+    public void setMinExperience(int minExperience) {this.minExperience = minExperience;}
+    public void setDescription(String description) {this.description = description;}
     public void setStatus(VacancyStatus status) {this.status = status;}
 
     @Override

@@ -1,6 +1,8 @@
 package common;
 
-import javax.swing.text.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 public class LimitDocumentFilter extends DocumentFilter {
     private final int limit;

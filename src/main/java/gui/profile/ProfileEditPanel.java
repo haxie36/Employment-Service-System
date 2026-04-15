@@ -1,11 +1,12 @@
 package gui.profile;
 
 import common.Passport;
-import registration.Profile;
+import gui.base.FormPanel;
 import gui.components.CustomDateField;
 import gui.components.CustomTextField;
-import gui.base.FormPanel;
-import gui.components.Row;
+import gui.components.FormRow;
+import gui.components.TextRow;
+import registration.Profile;
 import registration.RegInput;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class ProfileEditPanel extends FormPanel<RegInput> {
     private final CustomTextField experienceField;
 
     public ProfileEditPanel(Profile profile) {
+        JLabel idValueLabel = label(profile.getId());
         nameField = new CustomTextField(profile.getName());
         birthDateField = new CustomDateField(profile.getBirthDate());
         passportNumberField = new CustomTextField(profile.getPassportNumber());
@@ -28,13 +30,13 @@ public class ProfileEditPanel extends FormPanel<RegInput> {
         specialtyField = new CustomTextField(profile.getSpecialty());
         experienceField = new CustomTextField(String.valueOf(profile.getExperience()));
 
-        form.add(new Row(label("Id:"), label(profile.getId())));
-        form.add(new Row(label("Full Name:"), nameField));
-        form.add(new Row(label("Birth Date:"), birthDateField));
-        form.add(new Row(label("Passport Number:"), passportNumberField));
-        form.add(new Row(label("RNOKPP:"), RNOKPPField));
-        form.add(new Row(label("Specialty:"), specialtyField));
-        form.add(new Row(label("Experience:"), experienceField));
+        form.add(new TextRow(label("Profile Id:"), idValueLabel));
+        form.add(new FormRow(label("Full Name:"), nameField));
+        form.add(new FormRow(label("Birth Date:"), birthDateField));
+        form.add(new FormRow(label("Passport Number:"), passportNumberField));
+        form.add(new FormRow(label("RNOKPP:"), RNOKPPField));
+        form.add(new FormRow(label("Specialty:"), specialtyField));
+        form.add(new FormRow(label("Experience:"), experienceField));
 
         revalidate(); repaint();
     }
