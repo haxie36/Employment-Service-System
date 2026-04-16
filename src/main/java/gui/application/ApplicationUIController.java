@@ -116,7 +116,7 @@ public class ApplicationUIController extends UIController<Application, AppInput,
             try {
                 AppInput finalInput = new AppInput(
                         findProfileForm.getFoundProfile().getPassportNumber(),
-                        selectedVacancy
+                        selectedVacancy.getId()
                 );
                 controller.create(finalInput);
                 //FeedBack
@@ -124,7 +124,7 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                 forcedListUpdate();
                 rightPanel.setContent(new EmptyPanel());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(mainWindow, ex.getMessage());
+                vacancyDetailsPanel.setStatusText(ex.getMessage());
             }
         });
         //Cancel

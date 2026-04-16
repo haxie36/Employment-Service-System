@@ -6,6 +6,7 @@ import logic.profile.ProfileDAO;
 import logic.retraining.RetrainingDAO;
 import logic.vacancy.Vacancy;
 import logic.vacancy.VacancyDAO;
+import logic.vacancy.VacancyStatus;
 
 public class ApplicationController extends LogicController<Application, AppInput, ApplicationDAO> {
     private final ProfileDAO profileDAO;
@@ -38,15 +39,19 @@ public class ApplicationController extends LogicController<Application, AppInput
         if (profile == null) {
             throw new IllegalArgumentException("Profile not found!");
         }
+        Vacancy vacancy = vacancyDAO.getById(input.getVacancyId());
+        if (vacancy == null || vacancy.getStatus() != VacancyStatus.OPEN) {
+            throw new IllegalArgumentException("Vacancy is not open!");
+        }
 
         newCreation();
         if (hasActiveApplications(
                 profile.getId(),
-                input.getVacancy().getId())) {
+                input.getVacancyId())) {
             throw new IllegalArgumentException("Active Application exists!");
         }
         creation.setProfileId(profile.getId());
-        creation.setVacancyId(input.getVacancy().getId());
+        creation.setVacancyId(input.getVacancyId());
         if (!save()) throw new IllegalArgumentException("Save failed!");
     }
 

@@ -4,11 +4,13 @@ import gui.base.FormPanel;
 import gui.components.CustomButton;
 import gui.components.CustomTextField;
 import gui.components.FormRow;
+import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import logic.profile.Profile;
 import logic.retraining.RetrInput;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class RetrainingFormPanel extends FormPanel<RetrInput> {
     private final CustomTextField specialtyField;
@@ -22,11 +24,12 @@ public class RetrainingFormPanel extends FormPanel<RetrInput> {
         passportNumberField = new CustomTextField();
         CustomButton findBtn = new CustomButton("Find");
         findBtn.addActionListener(e -> onFind.run());
-        findBtn.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        TextRow buttonRow = new TextRow(findBtn, null);
+        buttonRow.setMaximumSize(new Dimension(300, 50));
 
         form.add(new FormRow(label("Specialty:"), specialtyField));
         form.add(new FormRow(label("Passport Number:"), passportNumberField));
-        form.add(findBtn);
+        form.add(buttonRow);
         form.add(profileDetailsPanel.getDetails());
 
         revalidate(); repaint();
