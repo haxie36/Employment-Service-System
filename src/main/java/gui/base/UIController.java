@@ -12,8 +12,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 
-public abstract class UIController<T extends HasId, I, EC extends EntityDAO<T>,
-        C extends LogicController<T, I, EC>> {
+public abstract class UIController<T extends HasId, I, D extends EntityDAO<T>,
+        C extends LogicController<T, I, D>> {
     protected final MainWindow mainWindow;
     protected final C controller;
 
