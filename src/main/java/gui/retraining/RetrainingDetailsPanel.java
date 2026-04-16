@@ -5,6 +5,7 @@ import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
 import logic.profile.Profile;
 import logic.retraining.Retraining;
+import logic.retraining.RetrainingStatus;
 
 import javax.swing.*;
 
@@ -15,18 +16,27 @@ public class RetrainingDetailsPanel extends DetailsPanel<Retraining> {
 
     public RetrainingDetailsPanel(Retraining retraining, Profile profile) {
         super("Plan");
-        //You either Plan the retraining or Edit it, can't do both
-        if (retraining.getStartDate() != null) {
-            additionalBtn.setEnabled(false);
-            startDateValueLabel = label(retraining.getStartDate().toString());
-            endDateValueLabel = label(retraining.getEndDate().toString());
-        } else {
+        //If Retraining is complete, you should not be able to edit it
+        if (retraining.getStatus() == RetrainingStatus.COMPLETED) {
             editBtn.setEnabled(false);
-            startDateValueLabel = label("null");
-            endDateValueLabel = label("null");
+            additionalBtn.setEnabled(false);
+        }
+        //You either Plan the retraining or Edit it, can't do both
+        else {
+            if (retraining.getStartDate() != null) {
+                additionalBtn.setEnabled(false);
+            } else {
+                editBtn.setEnabled(false);
+            }
         }
         JLabel idValueLabel = label(profile.getId());
         JLabel specialtyValueLabel = label(retraining.getSpecialty());
+        startDateValueLabel = label(
+                retraining.getStartDate() != null ? retraining.getStartDate().toString() : "null"
+        );
+        endDateValueLabel = label(
+                retraining.getEndDate() != null ? retraining.getEndDate().toString() : "null"
+        );
         //Profile details panel
         ProfileDetailsPanel profileDetailsPanel = new ProfileDetailsPanel(profile);
         JPanel profileDetails = profileDetailsPanel.getDetails();
