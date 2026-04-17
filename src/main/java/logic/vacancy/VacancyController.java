@@ -44,7 +44,7 @@ public class VacancyController extends LogicController<Vacancy, VacInput, Vacanc
     }
 
     //Edit
-    public void editVacancy(Vacancy vacancy, VacInput input, int status) {
+    public void edit(Vacancy vacancy, VacInput input, int status) {
         if (input.getContact().length() < 3 || input.getContact().length() > 100)
             throw new IllegalArgumentException("Invalid Contact!");
         //Changing status throws exception on its own (if status is out of range)

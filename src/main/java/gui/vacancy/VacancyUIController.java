@@ -73,7 +73,7 @@ public class VacancyUIController extends UIController<Vacancy, VacInput, Vacancy
                 vacancyEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
-                        controller.editVacancy(selected,
+                        controller.edit(selected,
                                 vacancyEditPanel.getInputData(),
                                 vacancyEditPanel.getStatus());
                         //FeedBack
