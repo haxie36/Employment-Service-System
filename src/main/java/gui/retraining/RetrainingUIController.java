@@ -89,7 +89,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                 retrainingPlanningPanel.setOnSave(() -> {
                     try {
                         PlanningInput planningInput = retrainingPlanningPanel.getInputData();
-                        controller.planRetraining(selected, planningInput);
+                        controller.plan(selected, planningInput);
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Retraining Planning Successful");
                         updateList(); //Required, as planning a retraining changes its status

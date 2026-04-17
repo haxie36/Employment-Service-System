@@ -38,7 +38,7 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     }
 
     //Planning
-    public void planRetraining(Retraining retraining, PlanningInput planningInput) {
+    public void plan(Retraining retraining, PlanningInput planningInput) {
         LocalDate startDate = planningInput.getStartDate();
         LocalDate endDate = planningInput.getEndDate();
         if (!DateUtils.isValidPeriod(startDate, endDate)) {
