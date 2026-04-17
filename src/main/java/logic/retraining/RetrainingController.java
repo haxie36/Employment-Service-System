@@ -38,9 +38,9 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     }
 
     //Planning
-    public void plan(Retraining retraining, PlanningInput planningInput) {
-        LocalDate startDate = planningInput.getStartDate();
-        LocalDate endDate = planningInput.getEndDate();
+    public void plan(Retraining retraining, PlanningInput input) {
+        LocalDate startDate = input.getStartDate();
+        LocalDate endDate = input.getEndDate();
         if (!DateUtils.isValidPeriod(startDate, endDate)) {
             throw new IllegalArgumentException("Invalid Dates");
         }
@@ -49,12 +49,12 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
     }
 
     //All-in-one for edition
-    public void edit(Retraining retraining, PlanningInput editInput) {
-        if (!DateUtils.isValidPeriod(editInput.getStartDate(), editInput.getEndDate())) {
+    public void edit(Retraining retraining, PlanningInput input) {
+        if (!DateUtils.isValidPeriod(input.getStartDate(), input.getEndDate())) {
             throw new IllegalArgumentException("Invalid Dates");
         }
         //Changing status throws exception on its own (if status is out of range)
-        retraining.update(editInput);
+        retraining.update(input);
         DAO.update(retraining);
     }
 
