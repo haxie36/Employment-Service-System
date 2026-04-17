@@ -73,7 +73,7 @@ public class ProfileUIController extends UIController<Profile, RegInput, Profile
                 profileEditPanel.setOnSave(() -> {
                     try {
                         //Edit and update the list
-                        controller.editProfile(selected,
+                        controller.edit(selected,
                                 profileEditPanel.getInputData());
                         //FeedBack message
                         JOptionPane.showMessageDialog(mainWindow, "Profile Edit Successful");

@@ -59,7 +59,7 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
     }
 
     //Edit
-    public void editProfile(Profile profile, RegInput input) {
+    public void edit(Profile profile, RegInput input) {
         validatePassportInfo(input);
         if (DAO.existsByPassportExcept(profile.getId(),
                 input.getPassport().getPassportNumber()))
