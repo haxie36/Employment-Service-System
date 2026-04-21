@@ -25,6 +25,15 @@ public class Retraining implements HasId {
         this.profileId = profileId;
         this.status = status;
     }
+    // Tests
+    public Retraining(int id){
+        this.id = id;
+        startDate = LocalDate.now();
+        endDate = startDate;
+        specialty = "121";
+        profileId = id;
+        status = RetrainingStatus.NEW;
+    }
 
     //Set dates and assign status
     public void plan(LocalDate startDate, LocalDate endDate){

@@ -23,7 +23,10 @@ public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>
 
     public void clear(){creation=null;}
 
-    public boolean delete(T toBeDeleted){return DAO.delete(toBeDeleted.getId());}
+    public boolean delete(T toBeDeleted){
+        if (toBeDeleted == null){return false;}
+        return DAO.delete(toBeDeleted.getId());
+    }
 
     public T[] getAll(){return DAO.getAll();}
 

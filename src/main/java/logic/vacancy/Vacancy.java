@@ -23,7 +23,18 @@ public class Vacancy implements HasId {
         this.description = description;
         this.status = status;
     }
+    // Tests
+    public Vacancy(int id){
+        this();
+        this.id = id;
+        this.title = "test";
+        this.company = "test";
+        this.contact = "test";
+        this.specialty = "121";
+        this.minExperience = id-1;
+        this.description = "test";
 
+    }
 
     //Change own status and change own applications' statuses
     public void changeStatus(int status){

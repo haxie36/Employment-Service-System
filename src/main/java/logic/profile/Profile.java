@@ -25,7 +25,14 @@ public class Profile implements HasId {
         this.experience = experience;
     }
     // Tests
-    public Profile(String passportNumber) { this.passportNumber = passportNumber; }
+    public Profile(int id) {
+        this.id = id;
+        this.passportNumber = String.valueOf(id).repeat(8);
+        this.RNOKPP = String.valueOf(id).repeat(10);
+        this.name = "test";
+        this.specialty = "121";
+        this.experience = id-1;
+    }
 
     public int getId() {return id;}
     public String getName() {return name;}

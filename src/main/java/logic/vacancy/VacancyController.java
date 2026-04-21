@@ -22,6 +22,8 @@ public class VacancyController extends LogicController<Vacancy, VacInput, Vacanc
 
     //All-in-one
     public void create(VacInput input) {
+        if (input == null)
+            throw new IllegalArgumentException("Invalid Input!");
         if (input.getTitle().length() < 3 || input.getTitle().length() > 100)
             throw new IllegalArgumentException("Invalid Title!");
         if (input.getCompany().length() < 3 || input.getCompany().length() > 100)
@@ -45,6 +47,9 @@ public class VacancyController extends LogicController<Vacancy, VacInput, Vacanc
 
     //Edit
     public void edit(Vacancy vacancy, VacInput input, int status) {
+        if (vacancy == null) {return;}
+        if (input == null)
+            throw new IllegalArgumentException("Invalid Input!");
         if (input.getContact().length() < 3 || input.getContact().length() > 100)
             throw new IllegalArgumentException("Invalid Contact!");
         //Changing status throws exception on its own (if status is out of range)

@@ -23,6 +23,13 @@ public class Application implements HasId {
         this.applicationDate = applicationDate;
         this.status = status;
     }
+    // Tests
+    public Application(int id){
+        this();
+        this.id=id;
+        profileId=id;
+        vacancyId=id;
+    }
 
     public int getId() {return id;}
     public int getProfileId() {return profileId;}

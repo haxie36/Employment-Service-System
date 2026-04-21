@@ -44,10 +44,14 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
 
     //All-in-one
     public void create(RegInput input) {
+        if (input == null)
+            throw new IllegalArgumentException("Invalid Input!");
         if (!serviceArea.isServiceArea(input.getAddress()))
             throw new IllegalArgumentException("Address is not valid!");
         validatePassportInfo(input);
-        if (DAO.isRegistered(input.getPassport().getPassportNumber()))
+        if (DAO.isRegistered(
+                input.getPassport().getPassportNumber(),
+                input.getPassport().getRNOKPP()))
             throw new IllegalArgumentException("Profile is already registered!");
         validateSkills(input);
 
@@ -60,6 +64,9 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
 
     //Edit
     public void edit(Profile profile, RegInput input) {
+        if (profile == null) {return;}
+        if (input == null)
+            throw new IllegalArgumentException("Invalid Input!");
         validatePassportInfo(input);
         if (DAO.existsByPassportExcept(profile.getId(),
                 input.getPassport().getPassportNumber()))
@@ -80,7 +87,8 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
             throw new IllegalArgumentException("Invalid Passport Number!");
         if (input.getPassport().getRNOKPP().length() != 10)
             throw new IllegalArgumentException("Invalid RNOKPP!");
-        if (input.getPassport().getName().length() < 3)
+        if (input.getPassport().getName().length() < 3
+                || input.getPassport().getName().length() > 100)
             throw new IllegalArgumentException("Invalid Name!");
         if (ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) > 120
         || ChronoUnit.YEARS.between(input.getPassport().getBirthday(), LocalDate.now()) < 18)

@@ -24,8 +24,8 @@ public class ProfileDAO extends EntityDAO<Profile> {
     private static final String GET_ALL = "SELECT * FROM profile ORDER BY profile_id";
 
     //Check for profile is registered
-    public boolean isRegistered(String passportNumber) {
-        return getByPassport(passportNumber) != null;
+    public boolean isRegistered(String passportNumber, String rnokpp) {
+        return getByPassport(passportNumber) != null && getByRNOKPP(rnokpp) != null;
     }
 
     public boolean existsByPassportExcept(int id, String passportNumber) {
@@ -89,7 +89,6 @@ public class ProfileDAO extends EntityDAO<Profile> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to update profile", e);
-
         }
     }
 

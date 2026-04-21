@@ -20,6 +20,12 @@ public class RetrainingDAO extends EntityDAO<Retraining> {
     private static final String DELETE = "DELETE FROM retraining WHERE retraining_id = ?";
     private static final String GET_ALL = "SELECT * FROM retraining  ORDER BY retraining_id";
 
+    private static final String GET_RETRAININGS_FOR =
+            "SELECT * FROM retraining " +
+                    "WHERE status_id < 4 " +
+                    "AND profile_id = ? " +
+                    "AND specialty_number = ?";
+
     @Override
     protected Retraining map(ResultSet rs) throws SQLException {
         Date sDate = rs.getDate("start_date");
@@ -102,7 +108,7 @@ public class RetrainingDAO extends EntityDAO<Retraining> {
                 int rows = statement.executeUpdate();
                 return rows > 0;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to delete retraining", e);
         }
@@ -120,9 +126,23 @@ public class RetrainingDAO extends EntityDAO<Retraining> {
                     return retrainings.toArray(new Retraining[0]);
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Failed to get all retrainings", e);
+        }
+    }
+
+    public boolean hasSameRetrainings(int profileId, String specialty) {
+        try (Connection connection = DatabaseConnector.getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_RETRAININGS_FOR)) {
+            statement.setInt(1, profileId);
+            statement.setString(2, specialty);
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Failed to connect to database", e);
         }
     }
 }

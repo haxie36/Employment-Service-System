@@ -35,6 +35,8 @@ public class ApplicationController extends LogicController<Application, AppInput
 
     //All in one
     public void create(AppInput input) {
+        if (input == null)
+            throw new IllegalArgumentException("Invalid Input!");
         Profile profile = profileDAO.getByPassport(input.getPassportNumber());
         if (profile == null) {
             throw new IllegalArgumentException("Profile not found!");
@@ -43,20 +45,24 @@ public class ApplicationController extends LogicController<Application, AppInput
         if (vacancy == null || vacancy.getStatus() != VacancyStatus.OPEN) {
             throw new IllegalArgumentException("Vacancy is not open!");
         }
-
-        newCreation();
+        if (profile.getExperience() < vacancy.getMinExperience()) {
+            throw new IllegalArgumentException("Experience is too low!");
+        }
         if (hasActiveApplications(
                 profile.getId(),
                 input.getVacancyId())) {
             throw new IllegalArgumentException("Active Application exists!");
         }
+
+        newCreation();
         creation.setProfileId(profile.getId());
         creation.setVacancyId(input.getVacancyId());
-        if (!save()) throw new IllegalArgumentException("Save failed!");
+        if (!save()) throw new RuntimeException("Save failed!");
     }
 
     //Edit
     public void changeApplicationStatus(Application application, int status) {
+        if (application == null) {return;}
         //Changing status throws exception on its own (if status is out of range)
         application.setStatus(ApplicationStatus.fromId(status));
         DAO.update(application);
