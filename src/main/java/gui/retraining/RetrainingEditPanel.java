@@ -16,7 +16,7 @@ import javax.swing.*;
 public class RetrainingEditPanel extends FormPanel<PlanningInput> {
     private final CustomDateField startDateField;
     private final CustomDateField endDateField;
-    private final EnumComboBox<RetrainingStatus> statusComboBox;
+    private final JComboBox<RetrainingStatus> statusComboBox;
 
     public RetrainingEditPanel(Retraining retraining, Profile profile) {
         JLabel idValueLabel = label(retraining.getId());
@@ -33,8 +33,11 @@ public class RetrainingEditPanel extends FormPanel<PlanningInput> {
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
-        statusComboBox = new EnumComboBox<>(RetrainingStatus.class);
-        statusComboBox.setSelectedIndex(retraining.getStatus().getId());
+        RetrainingStatus[] temp = RetrainingStatus.class.getEnumConstants();
+        RetrainingStatus[] allowedStatuses = new RetrainingStatus[temp.length-1];
+        System.arraycopy(temp, 1, allowedStatuses, 0, temp.length-1);
+        statusComboBox = new JComboBox<>(allowedStatuses);
+        statusComboBox.setSelectedIndex(retraining.getStatus().getId()-1);
 
         form.add(new TextRow(label("Retraining Id"), idValueLabel));
         form.add(new FormRow(label("Start Date:"), startDateField));
