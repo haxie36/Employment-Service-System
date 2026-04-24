@@ -105,7 +105,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                     rightPanel.setContent(retrainingDetailsPanel);
                 });
                 //Set the panel
-                rightPanel.setContent(retrainingDetailsPanel);
+                rightPanel.setContent(retrainingPlanningPanel);
             });
             //Edit
             retrainingDetailsPanel.setOnEdit(() -> {
@@ -130,6 +130,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                 retrainingEditPanel.setOnCancel(() -> {
                     rightPanel.setContent(retrainingDetailsPanel);
                 });
+                rightPanel.setContent(retrainingEditPanel);
             });
             //Delete
             retrainingDetailsPanel.setOnDelete(() -> {
