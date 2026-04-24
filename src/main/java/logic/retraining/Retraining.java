@@ -45,13 +45,15 @@ public class Retraining implements HasId {
     //Auto-assign statuses based on start and end dates
     private void assignStatus() {
         if (startDate == null || endDate == null) {status=RetrainingStatus.NEW;}
+        else if (startDate.isAfter(LocalDate.now()) && !endDate.isBefore(startDate)) {this.status = RetrainingStatus.SCHEDULED;}
         else if (startDate.isBefore(LocalDate.now()) && !endDate.isBefore(LocalDate.now())) {status=RetrainingStatus.IN_PROGRESS;}
         else if (endDate.isBefore(LocalDate.now())) {status=RetrainingStatus.COMPLETED;}
     }
 
     public void update(PlanningInput input) {
-        plan(input.getStartDate(), input.getEndDate());
         this.status = RetrainingStatus.fromId(input.getStatus());
+        this.startDate = input.getStartDate();
+        this.endDate = input.getEndDate();
     }
 
     public int getId() {return id;}

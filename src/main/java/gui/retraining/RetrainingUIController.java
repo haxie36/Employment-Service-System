@@ -44,6 +44,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                         throw new IllegalArgumentException("Profile not found!");
                     }
                     retrForm.updateProfileDetails(foundProfile);
+                    retrForm.setStatusText("");
                 } catch (Exception ex) {
                     retrForm.setStatusText(ex.getMessage());
                 }
@@ -52,6 +53,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
             retrForm.setOnSave(() -> {
                 try {
                     controller.create(retrForm.getInputData());
+                    retrForm.setStatusText("");
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Retraining Creation Successful");
                     updateList();
@@ -90,6 +92,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                     try {
                         PlanningInput planningInput = retrainingPlanningPanel.getInputData();
                         controller.plan(selected, planningInput);
+                        retrainingPlanningPanel.setStatusText("");
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Retraining Planning Successful");
                         updateList(); //Required, as planning a retraining changes its status
@@ -113,6 +116,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                         //Edit and update the list
                         PlanningInput editInput = retrainingEditPanel.getInputData();
                         controller.edit(selected, editInput);
+                        retrainingEditPanel.setStatusText("");
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Retraining Edit Successful");
                         //Update

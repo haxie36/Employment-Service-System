@@ -13,8 +13,7 @@ public class DrACCreate {
                 new TestProfileDAO(),
                 new TestVacancyDAO(),
                 null,
-                null
-        );
+                null);
     }
 
     private static void test(AppInput input) {
@@ -24,6 +23,7 @@ public class DrACCreate {
             System.out.println("PASS");
         } catch (Exception e) {
             System.out.println("NOT PASS");
+            System.out.println(e.getMessage());
         }
     }
 

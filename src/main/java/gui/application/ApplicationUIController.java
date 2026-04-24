@@ -54,6 +54,7 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                         throw new IllegalArgumentException("Profile not found!");
                     }
                     findProfileForm.updateProfileDetails(foundProfile);
+                    findProfileForm.setStatusText("");
                 } catch (Exception ex) {
                     findProfileForm.setStatusText(ex.getMessage());
                 }
@@ -161,6 +162,7 @@ public class ApplicationUIController extends UIController<Application, AppInput,
                     try {
                         controller.changeApplicationStatus(selected,
                                 applicationEditPanel.getStatus());
+                        applicationEditPanel.setStatusText("");
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
                         //Update

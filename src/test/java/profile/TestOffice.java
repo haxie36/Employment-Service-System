@@ -8,5 +8,7 @@ public class TestOffice extends Office {
     public void start() {}
 
     @Override
-    public void printCertificate(String profilePassportNumber, ProfileDAO profileDAO) {}
+    public void printCertificate(String profilePassportNumber, ProfileDAO profileDAO) {
+        System.out.println("Certificate");
+    }
 }

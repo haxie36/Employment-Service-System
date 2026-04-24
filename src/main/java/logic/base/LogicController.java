@@ -10,13 +10,12 @@ public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>
 
     public abstract void newCreation();
 
-    public boolean save(){
-        if (creation!=null){
-            DAO.add(creation);
-            clear();
-            return true;
+    public void save(){
+        if (creation == null) {
+            throw new IllegalArgumentException("Save is imposible!");
         }
-        return false;
+        DAO.add(creation);
+        clear();
     }
 
     public abstract void create(I input);
@@ -24,7 +23,8 @@ public abstract class LogicController<T extends HasId, I, D extends EntityDAO<T>
     public void clear(){creation=null;}
 
     public boolean delete(T toBeDeleted){
-        if (toBeDeleted == null){return false;}
+        if (toBeDeleted == null)
+            throw new IllegalArgumentException("Object is null!");
         return DAO.delete(toBeDeleted.getId());
     }
 

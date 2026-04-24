@@ -32,14 +32,13 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
     }
 
     @Override
-    public boolean save(){
-        if (creation!=null){
-            DAO.add(creation);
-            printCertification();
-            clear();
-            return true;
+    public void save(){
+        if (creation == null) {
+            throw new IllegalArgumentException("Save is imposible!");
         }
-        return false;
+        DAO.add(creation);
+        printCertification();
+        clear();
     }
 
     //All-in-one
@@ -59,12 +58,13 @@ public class RegistrationController extends LogicController<Profile, RegInput, P
         creation.setPassportInfo(input.getPassport());
         creation.setSpecialty(input.getSpecialty());
         creation.setExperience(input.getExperience());
-        if (!save()) throw new RuntimeException("Save failed!");
+        save();
     }
 
     //Edit
     public void edit(Profile profile, RegInput input) {
-        if (profile == null) {return;}
+        if (profile == null)
+            throw new IllegalArgumentException("Object is null!");
         if (input == null)
             throw new IllegalArgumentException("Invalid Input!");
         validatePassportInfo(input);

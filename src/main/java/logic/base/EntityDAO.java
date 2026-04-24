@@ -3,7 +3,7 @@ package logic.base;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class EntityDAO<T extends HasId> { //A custom collection class
+public abstract class EntityDAO<T extends HasId> {
 
     protected abstract T map(ResultSet rs) throws SQLException;
 

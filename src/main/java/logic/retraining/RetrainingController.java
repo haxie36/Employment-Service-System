@@ -16,7 +16,6 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
         super(retrainingDAO);
         this.profileDAO = profileDAO;
         this.specialtyCatalog = specialtyCatalog;
-        this.DAO = retrainingDAO;
     }
 
     @Override
@@ -38,18 +37,19 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
         newCreation();
         creation.setSpecialty(input.getSpecialty());
         creation.setProfileId(profile.getId());
-        if (!save()) throw new RuntimeException("Save failed!");
+        save();
     }
 
     //Planning
     public void plan(Retraining retraining, PlanningInput input) {
-        if (retraining == null) {return;}
+        if (retraining == null)
+            throw new IllegalArgumentException("Object is null!");
         if (input == null)
             throw new IllegalArgumentException("Invalid Input!");
         LocalDate startDate = input.getStartDate();
         LocalDate endDate = input.getEndDate();
         if (!DateUtils.isValidPeriod(startDate, endDate)) {
-            throw new IllegalArgumentException("Invalid Dates");
+            throw new IllegalArgumentException("Invalid Dates!");
         }
         retraining.plan(startDate, endDate);
         DAO.update(retraining);
@@ -57,11 +57,12 @@ public class RetrainingController extends LogicController<Retraining, RetrInput,
 
     //All-in-one for edition
     public void edit(Retraining retraining, PlanningInput input) {
-        if (retraining == null) {return;}
+        if (retraining == null)
+            throw new IllegalArgumentException("Object is null!");
         if (input == null)
             throw new IllegalArgumentException("Invalid Input!");
         if (!DateUtils.isValidPeriod(input.getStartDate(), input.getEndDate())) {
-            throw new IllegalArgumentException("Invalid Dates");
+            throw new IllegalArgumentException("Invalid Dates!");
         }
         //Changing status throws exception on its own (if status is out of range)
         retraining.update(input);

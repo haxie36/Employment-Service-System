@@ -57,12 +57,13 @@ public class ApplicationController extends LogicController<Application, AppInput
         newCreation();
         creation.setProfileId(profile.getId());
         creation.setVacancyId(input.getVacancyId());
-        if (!save()) throw new RuntimeException("Save failed!");
+        save();
     }
 
     //Edit
     public void changeApplicationStatus(Application application, int status) {
-        if (application == null) {return;}
+        if (application == null)
+            throw new IllegalArgumentException("Object is null!");
         //Changing status throws exception on its own (if status is out of range)
         application.setStatus(ApplicationStatus.fromId(status));
         DAO.update(application);

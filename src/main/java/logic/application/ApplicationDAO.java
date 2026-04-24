@@ -22,7 +22,7 @@ public class ApplicationDAO extends EntityDAO<Application> {
                     "AND profile_id = ? " +
                     "AND vacancy_id = ?";
     private static final String RETRACT_APPLICATIONS_OF_VACANCY =
-            "UPDATE application SET status_id = 3 WHERE vacancy_id = ?";
+            "UPDATE application SET status_id = 3 WHERE vacancy_id = ? AND status_id = 0";
 
     public boolean hasActiveApplications(int profileId, int vacancyId) {
         try (Connection connection = DatabaseConnector.getConnection();

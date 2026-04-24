@@ -15,8 +15,7 @@ public class DrAC {
                 new TestProfileDAO(),
                 new TestVacancyDAO(),
                 null,
-                null
-        );
+                null);
     }
 
     private static void test(AppInput[] inputs) {
@@ -25,24 +24,24 @@ public class DrAC {
         for (AppInput input : inputs) {
             try {
                 controller.create(input);
-            }  catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            }  catch (Exception e) {System.out.println(e.getMessage());}
         }
         System.out.println(Arrays.toString(controller.getAll()));
         Application lastAdded = controller.getById(5);
 
         System.out.println(lastAdded);
-        controller.changeApplicationStatus(lastAdded, 3);
+        try {
+            controller.changeApplicationStatus(lastAdded, 3);
+        } catch (Exception e) {System.out.println(e.getMessage());}
         System.out.println(Arrays.toString(controller.getAll()));
-
         Application firstAdded = controller.getById(3);
-        controller.delete(firstAdded);
+        try {
+            controller.delete(firstAdded);
+        } catch (Exception e) {System.out.println(e.getMessage());}
         System.out.println(Arrays.toString(controller.getAll()));
     }
 
     public static void main(String[] args) {
-        //1
         AppInput[] inputs1 = new AppInput[]{
                 new AppInput("33333333", 2),
                 new AppInput("33333333", 1),
@@ -50,7 +49,7 @@ public class DrAC {
         };
         System.out.println("#1");
         test(inputs1);
-        System.out.println("\n".repeat(3));
+        System.out.print("\n".repeat(3));
         //2
         AppInput[] inputs2 = new AppInput[]{
                 new AppInput("33333333", 2),
@@ -66,7 +65,7 @@ public class DrAC {
                 new AppInput("22222222", 2),
                 null
         };
-        System.out.println("#3");
+        System.out.print("#3");
         test(inputs3);
     }
 }

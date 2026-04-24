@@ -37,6 +37,7 @@ public class VacancyUIController extends UIController<Vacancy, VacInput, Vacancy
             vacForm.setOnSave(() -> {
                 try{
                     controller.create(vacForm.getInputData());
+                    vacForm.setStatusText("");
                     //FeedBack
                     JOptionPane.showMessageDialog(mainWindow, "Vacancy Creation Successful!");
                     updateList(); //Updating the list with a new vacancy
@@ -76,6 +77,7 @@ public class VacancyUIController extends UIController<Vacancy, VacInput, Vacancy
                         controller.edit(selected,
                                 vacancyEditPanel.getInputData(),
                                 vacancyEditPanel.getStatus());
+                        vacancyEditPanel.setStatusText("");
                         //FeedBack
                         JOptionPane.showMessageDialog(mainWindow, "Status Update Successful!");
                         //Update

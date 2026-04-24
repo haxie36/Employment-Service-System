@@ -14,7 +14,6 @@ public class TestRetrainingDAO extends RetrainingDAO {
     public TestRetrainingDAO() {
         retrainings = new ArrayList<>(List.of(new Retraining[]{
                 new Retraining(1),
-                new Retraining(2),
         }));
     }
 

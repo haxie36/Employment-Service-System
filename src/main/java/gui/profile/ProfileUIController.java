@@ -37,6 +37,7 @@ public class ProfileUIController extends UIController<Profile, RegInput, Profile
             regForm.setOnSave(() -> {
                 try{
                     controller.create(regForm.getInputData());
+                    regForm.setStatusText("");
                     //FeedBack message
                     JOptionPane.showMessageDialog(mainWindow, "Registration Successful");
                     updateList(); //Updates the list with a new profile
@@ -75,6 +76,7 @@ public class ProfileUIController extends UIController<Profile, RegInput, Profile
                         //Edit and update the list
                         controller.edit(selected,
                                 profileEditPanel.getInputData());
+                        profileEditPanel.setStatusText("");
                         //FeedBack message
                         JOptionPane.showMessageDialog(mainWindow, "Profile Edit Successful");
                         //Update

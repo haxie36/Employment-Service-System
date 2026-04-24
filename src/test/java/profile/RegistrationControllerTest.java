@@ -28,13 +28,14 @@ class RegistrationControllerTest {
     @Test
     void testCreate() {
         RegInput[] inputs = new RegInput[]{
+                null,
                 new RegInput("invalid", new Passport("111", LocalDate.now(), "11111111","1111111111"), "1", -1),
                 new RegInput("test", new Passport("111", LocalDate.parse("1999-01-01"), "11111111","1111111111"), "1", -1),
                 new RegInput("test", new Passport("111", LocalDate.parse("1999-01-01"), "44444444","4444444444"), "1", -1),
                 new RegInput("test", new Passport("111", LocalDate.parse("1999-01-01"), "44444444","4444444444"), "121", -1),
                 new RegInput("test", new Passport("111", LocalDate.parse("1999-01-01"), "44444444","4444444444"), "121", 1)
         };
-        boolean[] shouldPass = new boolean[]{false,false,false,false,true};
+        boolean[] shouldPass = new boolean[]{false,false,false,false,false,true};
 
         for (int i = 0; i < shouldPass.length; i++) {
             int finalI = i;
