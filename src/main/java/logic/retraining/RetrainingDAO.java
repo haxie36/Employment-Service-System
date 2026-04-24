@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class RetrainingDAO extends EntityDAO<Retraining> {
     private static final String ADD =
             "INSERT INTO retraining " +
-                    "(start_date, end_date, specialty_number, profile_id, status_id) " +
-                    "VALUES (?,?,?,?,?)";
+                    "(specialty_number, profile_id, status_id) " +
+                    "VALUES (?,?,?)";
     private static final String GET_BY_ID = "SELECT * FROM retraining WHERE retraining_id = ?";
     private static final String UPDATE =
             "UPDATE retraining " +
@@ -46,11 +46,9 @@ public class RetrainingDAO extends EntityDAO<Retraining> {
     public boolean add(Retraining item) {
         try (Connection connection = DatabaseConnector.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(ADD)) {
-                statement.setDate(1, Date.valueOf(item.getStartDate()));
-                statement.setDate(2, Date.valueOf(item.getEndDate()));
-                statement.setString(3, item.getSpecialty());
-                statement.setInt(4, item.getProfileId());
-                statement.setInt(5, item.getStatus().getId());
+                statement.setString(1, item.getSpecialty());
+                statement.setInt(2, item.getProfileId());
+                statement.setInt(3, item.getStatus().getId());
                 int rows = statement.executeUpdate();
                 return rows > 0;
             }
