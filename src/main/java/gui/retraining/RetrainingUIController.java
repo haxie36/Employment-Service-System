@@ -105,7 +105,7 @@ public class RetrainingUIController extends UIController<Retraining, RetrInput, 
                     rightPanel.setContent(retrainingDetailsPanel);
                 });
                 //Set the panel
-                rightPanel.setContent(retrainingDetailsPanel);
+                rightPanel.setContent(retrainingPlanningPanel);
             });
             //Edit
             retrainingDetailsPanel.setOnEdit(() -> {
