@@ -2,7 +2,6 @@ package gui.retraining;
 
 import gui.base.FormPanel;
 import gui.components.CustomDateField;
-import gui.components.EnumComboBox;
 import gui.components.FormRow;
 import gui.components.TextRow;
 import gui.profile.ProfileDetailsPanel;
@@ -33,9 +32,9 @@ public class RetrainingEditPanel extends FormPanel<PlanningInput> {
         JPanel profileDetails = profileDetailsPanel.getDetails();
         profileDetails.setBorder(BorderFactory.createTitledBorder("Profile"));
         //Status
-        RetrainingStatus[] temp = RetrainingStatus.class.getEnumConstants();
-        RetrainingStatus[] allowedStatuses = new RetrainingStatus[temp.length-1];
-        System.arraycopy(temp, 1, allowedStatuses, 0, temp.length-1);
+        RetrainingStatus[] allStatuses = RetrainingStatus.class.getEnumConstants();
+        RetrainingStatus[] allowedStatuses = new RetrainingStatus[allStatuses.length-1];
+        System.arraycopy(allStatuses, 1, allowedStatuses, 0, allStatuses.length-1);
         statusComboBox = new JComboBox<>(allowedStatuses);
         statusComboBox.setSelectedIndex(retraining.getStatus().getId()-1);
 
